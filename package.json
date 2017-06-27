@@ -28,7 +28,7 @@
     "babel-register": "^6.7.2",
     "bootstrap": "^3.3.7",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
-    "react-bootstrap": "^0.31.0",
+    "react-bootstrap": "^0.31.0"
   },
   "babel": {
     "presets": [
