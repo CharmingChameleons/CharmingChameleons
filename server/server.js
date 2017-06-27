@@ -11,6 +11,15 @@ app.use(express.static(path.join(__dirname, '../client/public')));
 //   res.send(../public/index.html);
 // });
 
+// <<<<<<< HEAD
+// =======
+// db.getAllListings()
+// .then((data) => {
+// 	console.log('In server index.js')
+// 	console.log(data);
+// })
+
+// >>>>>>> pool works
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);
 })
