@@ -8,16 +8,18 @@
     "node": ">=6.4.0"
   },
   "scripts": {
-    "start": "nodemon server/server.js",
-    "build": "./node_modules/.bin/webpack -d --watch"
+    "start": "node server/server.js",
+    "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
+    "heroku-postbuild" : "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors"
   },
   "dependencies": {
     "express": "^4.15.3",
     "pg": "6.4.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "sqlite3": "^3.1.8",
-    "webpack-dev-server": "^2.5.0"
+    "webpack-dev-server": "^2.5.0",
+    "webpack": "^3.0.0",
+    "sqlite3": "^3.1.8"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
@@ -28,8 +30,7 @@
     "babel-register": "^6.7.2",
     "bootstrap": "^3.3.7",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
-    "react-bootstrap": "^0.31.0",
-    "webpack": "^3.0.0"
+    "react-bootstrap": "^0.31.0"
   },
   "babel": {
     "presets": [
