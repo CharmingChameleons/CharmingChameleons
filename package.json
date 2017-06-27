@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors"
+    "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
+    "heroku-postbuild" : "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors"
   },
   "dependencies": {
     "express": "^4.15.3",
