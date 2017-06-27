@@ -3,7 +3,7 @@
   "scripts": {
   },
   "env": {
-    "NPM_CONFIG_PRODUCTION": "FALSE"
+    "NPM_CONFIG_PRODUCTION": "false"
   },
   "formation": {
   },
