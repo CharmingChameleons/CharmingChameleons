@@ -9,14 +9,15 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "postinstall": "./node_modules/.bin/webpack -d --watch",
+    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress",
     "build": "./node_modules/.bin/webpack -d --watch"
   },
   "dependencies": {
     "express": "^4.15.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "webpack-dev-server": "^2.5.0"
+    "webpack-dev-server": "^2.5.0",
+    "webpack": "^3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
@@ -28,7 +29,6 @@
     "bootstrap": "^3.3.7",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "react-bootstrap": "^0.31.0",
-    "webpack": "^3.0.0"
   },
   "babel": {
     "presets": [
