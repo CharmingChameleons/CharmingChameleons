@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "postinstall": "webpack",
+    "postinstall": "./node_modules/.bin/webpack -d --watch",
     "build": "./node_modules/.bin/webpack -d --watch"
   },
   "dependencies": {
