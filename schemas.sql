@@ -99,10 +99,10 @@ CREATE TABLE images (
 -- -- 
 -- -- ---
 
-INSERT INTO users (username) VALUES (Priyanka);
-INSERT INTO users (username) VALUES (Henri);
-INSERT INTO users (username) VALUES (Sara);
-INSERT INTO users (username) VALUES (Shihao);
+INSERT INTO users (username) VALUES ('Priyanka');
+INSERT INTO users (username) VALUES ('Henri');
+INSERT INTO users (username) VALUES ('Sara');
+INSERT INTO users (username) VALUES ('Shihao');
 
 
 -- -- ---
