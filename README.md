@@ -1,13 +1,13 @@
-# Project Name
+# $hare.io
 
-> Pithy project description
+> Share.io is an app made for users to lend/borrow household belongings.
 
 ## Team
 
-  - teamMember
-  - teamMember
-  - teamMember
-  - teamMember
+  - Shi-Hao
+  - Henri
+  - Sara
+  - Priyanka
 
 ## Table of Contents
 
@@ -26,10 +26,8 @@
 ## Requirements
 
 - Node 6.4.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- SQLite3
+- React
 
 ## Development
 
