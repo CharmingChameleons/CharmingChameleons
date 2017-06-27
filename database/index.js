@@ -2,6 +2,7 @@ var pg = require('pg');
 var Promise = require('bluebird');
 
 var config = {
+	
   user: 'sara', // name of the user account
   database: 'shareio', // name of the database
   max: 10, // max number of clients in the pool
@@ -29,89 +30,87 @@ var pool = new pg.Pool(config)
   		}
  		)
  	},
+	createBookings: (params) => {
+		console.log(params);
+		var queryString = 'INSERT INTO bookings (listingId, borrowerId) VALUES ($1, $2) returning id'
+		var queryArgs = params
 
-	//create new booking
-	// createBookings: (params) => {
-	// 	console.log(params);
-	// 	var queryString = 'INSERT INTO bookings (listingId, borrowerId) VALUES (params[0], params[1])'
-	// 	var queryArgs = params
+		return new Promise (
+			(resolve, reject) => {
+				pool.query(queryString, queryArgs, (err, rows) => {
+					if (err) {
+						reject (err)
+						console.log(err);
+					} else {
+						console.log('got the rows');
+						resolve(rows)
+					}
+				})
+			}
+		)
+	},
 
-	// 	return new Promise (
-	// 		(resolve, reject) => {
-	// 			pool.query(queryString, queryArgs, (err, rows) => {
-	// 				if (err) {
-	// 					//reject (err)
-	// 					//console.log(err);
-	// 				} else {
-	// 					console.log('got the rows');
-	// 					//resolve(rows)
-	// 				}
-	// 			})
-	// 		}
-	// 	)
+	//Get all listings for user
+	//params -> array of two intergers
+	getListingsForUser: (params) => {
+ 
+		var queryString = 'SELECT * FROM listings LEFT OUTER JOIN bookings \
+							ON (listings.id = bookings.listingId) \
+						   	WHERE listings.lenderId = $1'
 
-	// }
+		var queryArgs = params
+
+		return new Promise (
+			(resolve, reject) => {
+				pool.query(queryString, queryArgs, (err, rows) => {
+					if (err) {
+						reject (err)
+					} else {
+						console.log('got listing for user');
+						resolve(rows)
+					}
+				})
+			}
+		)
+	},
+//Get username based on id
+	getUserName: (params) => {
+		var queryString = "SELECT * FROM users WHERE id = $1"
+		var queryArgs = params
+
+		return new Promise (
+			(resolve, reject) => {
+				pool.query(queryString, queryArgs, (err, rows) => {
+					if (err) {
+						reject (err)
+					} else {
+						console.log('got username');
+						resolve(rows)
+					}
+				})
+			}
+		)
+	},
+
+		// //Get user id based on username
+	getUserId: (params) => {
+		var queryString = "SELECT * FROM users WHERE username = $1"
+
+		var queryArgs = params
+
+		return new Promise (
+			(resolve, reject) => {
+				pool.query(queryString, queryArgs, (err, rows) => {
+					if (err) {
+						reject (err)
+					} else {
+						console.log('user id');
+						resolve(rows)
+					}
+				})
+			}
+		)
+	}
 
 }
-	//Get all listings for user
-	// getListingsForUser: (params) => {
- 
-	// 	var queryString = "SELECT * FROM listings LEFT OUTER JOIN bookings \
-	// 						ON (listings.id = booking.listingId) \
-	// 					   	WHERE listings.lenderId = ?"
-
-	// 	var queryArgs = params
-
-	// 	return new Promise (
-	// 		(resolve, reject) => {
-	// 			db.query(queryString, queryArgs, (err, rows) => {
-	// 				if (err) {
-	// 					reject (err)
-	// 				} else {
-	// 					resolve(rows)
-	// 				}
-	// 			})
-	// 		}
-	// 	)
-	// },
-
-	// //Get username based on id
-	// getUserName: (params) => {
-	// 	var queryString = "SELECT * FROM users WHERE id = ?"
-
-	// 	var queryArgs = params
-
-	// 	return new Promise (
-	// 		(resolve, reject) => {
-	// 			db.query(queryString, queryArgs, (err, rows) => {
-	// 				if (err) {
-	// 					reject (err)
-	// 				} else {
-	// 					resolve(rows)
-	// 				}
-	// 			})
-	// 		}
-	// 	)
-	// },
-
-	// //Get user id based on username
-	// getUserId: (params) => {
-	// 	var queryString = "SELECT * FROM users WHERE username = ?"
-
-	// 	var queryArgs = params
-
-	// 	return new Promise (
-	// 		(resolve, reject) => {
-	// 			db.query(queryString, queryArgs, (err, rows) => {
-	// 				if (err) {
-	// 					reject (err)
-	// 				} else {
-	// 					resolve(rows)
-	// 				}
-	// 			})
-	// 		}
-	// 	)
-	// }
-
-//}
-
+	
