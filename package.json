@@ -8,7 +8,8 @@
     "node": ">=6.4.0"
   },
   "scripts": {
-    "start": "nodemon server/server.js",
+    "start": "node server/server.js",
+    "postinstall": "webpack",
     "build": "./node_modules/.bin/webpack -d --watch"
   },
   "dependencies": {
