@@ -33,10 +33,8 @@ console.log(config);
 var pool = new pg.Pool(config)
 
  module.exports = {
-
- //returns all listings
+ //Select all listings
  	getAllListings: () => {
-
 		return new Promise (
  			(resolve, reject) => {
  				pool.query('SELECT * from listings', function (err, result) {
@@ -45,37 +43,15 @@ var pool = new pg.Pool(config)
 				      reject(err)
 				    }
 				    else {
-				    	console.log('got all the listings')
+				    	console.log('In getlistings', result)
 				    	resolve(JSON.parse(JSON.stringify(result.rows)))
 				    }
-				})
+				})			
   		}
  		)
  	},
- 	//Input: replace the following with its values[name, description, cost, tags]
- 	//Output: returns the id of the listing object created => [{id: 1}]
- 	createListing: (params) => {
-		console.log(params);
-		var queryString = 'INSERT INTO listings (name, description, cost, tags) VALUES ($1, $2, $3, $4) returning id'
-		var queryArgs = params
 
-		return new Promise (
-			(resolve, reject) => {
-				pool.query(queryString, queryArgs, (err, rows) => {
-					if (err) {
-						reject (err)
-						console.log(err);
-					} else {
-						console.log('added this item to DB');
-						resolve(JSON.parse(JSON.stringify(rows.rows)))
-					}
-				})
-			}
-		)
-	},
-	//Input: Replace the following with its values[listingId, borrowerId] --> internal use
-  //Output: returns the id of the booking object created => [{id: 1}]
-	createBookings: (params) => {
+   createBookings: (params) => {
 		console.log(params);
 		var queryString = 'INSERT INTO bookings (listingId, borrowerId) VALUES ($1, $2) returning id'
 		var queryArgs = params
@@ -118,6 +94,7 @@ var pool = new pg.Pool(config)
 
 	//Input: Replace the following with its values[userid]
   //Output: Returns the row containing that user id -> array
+
 	getUserName: (params) => {
 		var queryString = "SELECT * FROM users WHERE id = $1"
 		var queryArgs = params
@@ -155,5 +132,4 @@ var pool = new pg.Pool(config)
 			}
 		)
 	}
-
 }
