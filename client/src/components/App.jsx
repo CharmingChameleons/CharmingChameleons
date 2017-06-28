@@ -5,9 +5,9 @@ import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
 import Booking from './Booking.jsx'
 import CreateListing from './createListing.jsx'
-
-var $ = require('jquery');
 import Profile from './Profile.jsx'
+
+const $ = require('jquery');
 
 
 class App extends React.Component {

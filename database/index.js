@@ -3,10 +3,10 @@ const pg = require('pg');
 const url = require('url');
 
 let config = {
-  user: "Priyanka", // name of the user account
-  //host: "localhost",
-  //password: "test",
-  database: "shareio",
+  user: "henri", // name of the user account
+  host: "localhost",
+  password: "test",
+  database: "henri",
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
 };
@@ -83,9 +83,9 @@ var pool = new pg.Pool(config)
 			}
 		)
 	},
-	
 
-	
+
+
 
 	createBookings: (params) => {
 
