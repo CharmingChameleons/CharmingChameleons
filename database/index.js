@@ -1,5 +1,6 @@
 var pg = require('pg');
 var Promise = require('bluebird');
+const url = require('url');
 
 var host = "localhost";
 var password = 'test';
