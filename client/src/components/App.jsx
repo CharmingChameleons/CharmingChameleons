@@ -1,5 +1,5 @@
 import React from 'react'
-import NavB from './Nav.jsx'
+import NavB from './NavB.jsx'
 import Listings from './Listings.jsx'
 import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
@@ -29,6 +29,7 @@ class App extends React.Component {
 		this.setState({
 			login: true
 		})
+    console.log('login', this.state.login);
 	}
 
   currentRender() {

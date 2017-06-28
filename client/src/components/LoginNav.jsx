@@ -10,18 +10,18 @@ import Signup from './Signup.jsx'
 class LoginNav extends React.Component {
 
 	constructor (props) {
-		super(props)
+		super(props);
 
 		this.state = {
 			showLoginModal: false,
 			showSignUpModal: false
-		}
+		};
 
-		this.handleLogin = this.handleLogin.bind(this)
-		this.closeLoginModal = this.closeLoginModal.bind(this)
+		this.handleLogin = this.handleLogin.bind(this);
+		this.closeLoginModal = this.closeLoginModal.bind(this);
 
-		this.handleSignUp = this.handleSignUp.bind(this)
-		this.closeSignUpModal = this.closeSignUpModal.bind(this)
+		this.handleSignUp = this.handleSignUp.bind(this);
+		this.closeSignUpModal = this.closeSignUpModal.bind(this);
 	}
 
 	handleLogin() {
