@@ -3,6 +3,7 @@ import NavB from './Nav.jsx'
 import Listings from './Listings.jsx'
 import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
+import CreateListing from './createListing.jsx'
 var $ = require('jquery');
 
 
@@ -56,6 +57,7 @@ class App extends React.Component {
 			    <NavB/>
 			    {this.currentRender()}
 			    <Signup />
+			    <CreateListing />
 
 			  </div>
 		)

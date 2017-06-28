@@ -1,4 +1,5 @@
 const path = require('path');
+var cors = require('cors');
 var express = require('express');
 var db = require('../database')
 
@@ -6,7 +7,7 @@ var app = express();
 var util = require('./lib/hashUtils');
 var middleware = require('./middleware');
 
-var cors = require('cors');
+
 const passport = require('passport');   
 const LocalStrategy = require('passport-local').Strategy
 const cookieParser = require('cookie-parser');
@@ -15,11 +16,12 @@ const bodyParser = require('body-parser');
 
 var port = process.env.PORT || 3000;
 
+app.use(cors());
+app.options('*', cors())
 //Use body parser for parsing the request querystring
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/public')));
-
 
 
 //Initialize passport and express
@@ -83,21 +85,19 @@ app.get('/listings',
   console.log('request received');
   db.getAllListings()
     .then((data) => {
-      console.log('grabbed all listings', data);
-      //res.end(JSON.stringify(data));
-      res.end();
+     // console.log('grabbed all listings', data);
+      res.end(JSON.stringify(data));
     });
 });
 
-//test function 
-db.createListing(['sara', 'sfsfsfsfsfsf', 2, 'tag22222s'])
-.then((data) => {
-	console.log('In server index.js----------------------------------->')
-	console.log(data);
-})
-
-
-
+app.post('/createlisting', 
+(req, res) => {
+  db.createListing(req.body.params)
+    .then((data) => {
+      console.log('Created an entry');
+      res.end(JSON.stringify(data));
+    });
+});
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);

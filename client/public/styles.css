@@ -10,3 +10,9 @@
   width: 190px;
   border: solid 1px #cccccc;
 }
+
+#createListng FormControl{
+	padding: 4px;
+	border: 2px black solid;
+
+}
