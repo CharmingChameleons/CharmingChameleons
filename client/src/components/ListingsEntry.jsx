@@ -12,7 +12,7 @@ const ListingsEntry = (props) => (
         <p>tags: {props.listing.tags}</p>
         <p>
           <Button bsStyle="primary">Book</Button>&nbsp;
-          <Button bsStyle="default">Save</Button>
+          <Button onClick={ function() { props.onListingClick(props.listing) } } bsStyle="default">Show listing</Button>
         </p>
       </Thumbnail>
     </Col>
