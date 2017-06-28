@@ -37,13 +37,13 @@ app.post('/login', function(req, res, next) {
 		.then((result) => {
 			//If yes, create/overwrite session details
 			if (result === true) {
-				console.log(req.headers['user-agent'])
 				session.createNewSession(req.headers['user-agent'], req.body.username)
 				.then((session) => {
 					req.session.id = session.sessionId //token based on user-agent
 					req.session.username = session.username   //username 
 					//store in db?? No for now
-		    		res.setHeader(200).send('Login successful')
+					console.log('In app.post/Login before res')
+		    		res.status(201).send('Login successful')
 				})
 				.catch((err) => {
 					res.redirect('/')

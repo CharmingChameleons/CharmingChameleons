@@ -6,13 +6,25 @@ import Signup from './Signup.jsx'
 var $ = require('jquery');
 
 class App extends React.Component {
+
 	constructor (props) {
 		super(props);
-    this.state = {
-    	currentRender: 'landing',
-      listings: [],
-      listing: {}
-    };
+
+	    this.state = {
+	    	currentRender: 'landing',
+	      	listings: [],
+	      	listing: {},
+	      	login: false
+	    };
+
+	    this.loginUser = this.loginUser.bind(this)
+	}
+
+	loginUser() {
+		console.log('reached loginUser')
+		this.setState({
+			login: true
+		})
 	}
 
 	currentRender() {
@@ -33,28 +45,27 @@ class App extends React.Component {
 		});
 	}
 
-  componentDidMount() {
-    $.ajax({
-      type: 'GET',
-      url: '/listings',
-      success: (data) => {
-        this.setState({
-          listings: JSON.parse(data)
-        })
-      },
-      error: (err) => {
-        console.log('failed', err);
-      }
+  	componentDidMount() {
+	    $.ajax({
+	      type: 'GET',
+	      url: '/listings',
+	      success: (data) => {
+	        this.setState({
+	          listings: JSON.parse(data)
+	        })
+	      },
+	      error: (err) => {
+	        console.log('failed', err);
+	      }
 
-    });
-  }
+	    });
+  	}
 
 	render () {
 		return (
 			  <div>
-			    <NavB/>
+			    <NavB login={this.state.login} loginUser={this.loginUser} />
 			    {this.currentRender()}
-			    <Signup />
 			  </div>
 		)
 	}
