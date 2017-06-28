@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
     	currentRender: 'landing',
       listings: [],
-      listing: {}
+      listing: {},
       // dummydata
       currentUser: {
       	id: 3,
@@ -39,6 +39,7 @@ class App extends React.Component {
 			return <Booking 
 				listing={this.state.listing}
 				onBackClick={this.handleBackClick.bind(this)} 
+				onConfirmClick={this.handleConfirmBooking.bind(this)}
 			/>
 		}
 	}
@@ -66,9 +67,28 @@ class App extends React.Component {
 
 	handleConfirmBooking(listing) {
 		// send ajax post request to the server
-			// if successful, 
-				// render button to say 'Booked!' on booking page
-				// pop-up alert to the user
+		console.log('listing', listing);
+		let data = [listing.id, this.state.currentUser.id];
+		console.log('data', data);
+
+		$.ajax({
+			type: 'POST',
+			url: '/confirm-booking',
+			dataType: 'application/json', 
+			data: {
+				booking: data
+			},
+			success: (data) => {
+				console.log('data successfully sent');
+				// if successful, 
+					// render button to say 'Booked!' on booking page
+					// pop-up alert to the user
+			},
+			error: (err) => {
+				console.log('failed booking', err);
+			}
+		})
+
 	}
 
   componentDidMount() {

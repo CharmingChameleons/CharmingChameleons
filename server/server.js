@@ -86,6 +86,19 @@ app.get('/listings',
     });
 });
 
+app.post('/confirm-booking',
+(req, res) => {
+	for (let i = 0; i < req.body.booking.length; i++) {
+		req.body.booking[i] = parseInt(req.body.booking[i]);
+	}
+	console.log('request received', req.body.booking);
+	db.createBookings(req.body.booking)
+		.then((data) => {
+			console.log('new booking added', data);
+			res.end(JSON.stringify(data));
+		});
+});
+
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);
 });
