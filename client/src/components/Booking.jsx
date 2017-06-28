@@ -20,7 +20,7 @@ const Booking = (props) => (
 
         Hit 'Confirm Booking' to Continue Your Transaction
         <p>
-          <Button bsStyle="primary">Confirm Booking</Button>&nbsp;
+          <Button onClick={ function() {props.onConfirmClick(props.listing)} } bsStyle="primary">Confirm Booking</Button>&nbsp;
         </p>
       </Row>
     </Grid>

@@ -50,11 +50,12 @@ var pool = new pg.Pool(config);
  	getAvailableListings: () => {
  		return new Promise (
  			(resolve, reject) => {
- 				pool.query('SELECT listings.id, listings.name, listings.description, listings.cost, listings.tags FROM listings INNER JOIN bookings ON listings.id != bookings.listingid', function (err, result) {
+ 				pool.query('SELECT * FROM listings WHERE listings.id NOT IN (SELECT listingid FROM bookings)', function (err, result) {
  					if (err) {
  						console.log(err);
  						reject(err);
  					} else {
+ 						console.log(result);
  						resolve(JSON.parse(JSON.stringify(result.rows)));
  					}
  				});
@@ -63,19 +64,18 @@ var pool = new pg.Pool(config);
  	},
 
 	createBookings: (params) => {
-
-		var queryString = 'INSERT INTO bookings (listingId, borrowerId) VALUES ($1, $2) returning id'
-		var queryArgs = params
-
+		var queryString = 'INSERT INTO bookings (listingId, borrowerId) VALUES ($1, $2) returning id';
+		var queryArgs = params;
+		console.log('query', queryArgs);
 		return new Promise (
 			(resolve, reject) => {
 				pool.query(queryString, queryArgs, (err, rows) => {
 					if (err) {
-						reject(err)
+						reject(err);
 						console.log(err);
 					} else {
 						console.log('got data from createBookings');
-						resolve(JSON.parse(JSON.stringify(rows.rows)))
+						resolve(JSON.parse(JSON.stringify(rows.rows)));
 					}
 				})
 			}
