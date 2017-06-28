@@ -83,6 +83,13 @@ class App extends React.Component {
 
   }
 
+	handleBookingClick(listing) {
+		this.setState({
+			listing: listing,
+			currentRender: 'booking'
+		})
+	}
+
   componentDidMount() {
     $.ajax({
       type: 'GET',
