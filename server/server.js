@@ -1,17 +1,16 @@
 const path = require('path');
 var express = require('express');
-var db = require('../database')
+var db = require('../database');
+var session = require('./models/session');
 
 var app = express();
 var util = require('./lib/hashUtils');
 var middleware = require('./middleware');
 
 var cors = require('cors');
-const passport = require('passport');   
-const LocalStrategy = require('passport-local').Strategy
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
 const bodyParser = require('body-parser');
+
+var cookieSession = require('cookie-session')
 
 var port = process.env.PORT || 3000;
 
@@ -19,31 +18,54 @@ var port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/public')));
+app.use(cors());
 
-//Initialize passport and express
-app.use(passport.initialize());
-app.use(passport.session());
+app.set('trust proxy', 1) // trust first proxy
 
-app.get('/login', function(req, res, next) {
-	//On login check whether new login details
+app.use(cookieSession({
+  name: 'session',
+  keys: ['sessionmgmt'],
 
-	middleware.authenticate(req.body.username, req.body.password)
-	.then((result) => {
-		if (result === true) {
-	    	res.setHeader(200).send('Login successful')
-	    } else {
-	    	res.redirect('/')
-		}
-	})
-	.catch((err) => {
-		console.log(err)
-		res.redirect('/')
-	})
+  // Cookie Options
+  maxAge: 5 * 60 * 60 * 1000 // 5 hours
+}))
+
+app.post('/login', function(req, res, next) {
+
+	//check authenticated user
+	middleware.authenticateLogin(req.body.username, req.body.password)
+		.then((result) => {
+			//If yes, create/overwrite session details
+			if (result === true) {
+				session.createNewSession(req.headers['user-agent'], req.body.username)
+				.then((session) => {
+					req.session.id = session.sessionId //token based on user-agent
+					req.session.username = session.username   //username 
+					//store in db?? No for now
+					console.log('In app.post/Login before res')
+		    		res.status(201).send('Login successful')
+				})
+				.catch((err) => {
+					res.redirect('/')
+				})
+		    } else {
+		   		throw result
+			}
+		})
+		.catch((err) => {
+			//If no, not a authenticated user
+				//clear cookies and redirect to signup page
+			res.redirect('/')
+		})
+		.error((err) => {
+			console.log(err)
+			res.redirect('/')
+		})
 });
 
 app.post('/signup', function(req, res, next) {
 
-	middleware.authenticate(req.body.username, req.body.password)
+	middleware.authenticateLogin(req.body.username, req.body.password)
 	.then((result) => {
 		if(result) {
 			//User found
@@ -62,6 +84,13 @@ app.post('/signup', function(req, res, next) {
 			db.createUser(args)
 			.then((data) => {
 				console.log('user created')
+				//Create new session cookie
+				console.log(req.headers['user-agent'])
+				return session.createNewSession(req.headers['user-agent'], req.body.username)
+			})
+			.then((session) => {
+				req.session.id = session.sessionId 		  //token based on user-agent
+				req.session.username = session.username   //username 
 				res.status(201).send('User created successfully')
 			})
 			.catch((err) => {
@@ -78,10 +107,8 @@ app.post('/signup', function(req, res, next) {
 
 app.get('/listings', 
 (req, res) => {
-  console.log('request received');
   db.getAllListings()
     .then((data) => {
-      console.log('grabbed all listings', data);
       res.end(JSON.stringify(data));
     });
 });
