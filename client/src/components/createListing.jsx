@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
@@ -130,6 +131,40 @@ const CreateListing = React.createClass({
 
           <Button onClick={this.handleChange}>Create</Button>
 
+=======
+const CreateListing = React.createClass({
+  getInitialState() {
+    return {
+      value: ''
+    };
+  },
+
+  getValidationState() {
+    const length = this.state.value.length;
+    if (length > 10) return 'success';
+    else if (length > 5) return 'warning';
+    else if (length > 0) return 'error';
+  },
+
+  handleChange(e) {
+    this.setState({ value: e.target.value });
+  },
+
+  render() {
+    return (
+      <form>
+        <FormGroup
+          controlId="formBasicText"
+          validationState={this.getValidationState()}
+        >
+          <ControlLabel>Working example with validation</ControlLabel>
+          <FormControl
+            type="text"
+            value={this.state.value}
+            placeholder="Enter text"
+            onChange={this.handleChange}
+          />
+>>>>>>> new component
           <FormControl.Feedback />
           <HelpBlock>Validation is based on string length.</HelpBlock>
         </FormGroup>
@@ -140,3 +175,7 @@ const CreateListing = React.createClass({
 
 
 export default CreateListing
+<<<<<<< HEAD
+=======
+//ReactDOM.render(<FormExample />, mountNode);
+>>>>>>> new component

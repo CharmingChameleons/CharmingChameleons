@@ -6,6 +6,7 @@ import Signup from './Signup.jsx'
 import Booking from './Booking.jsx'
 var $ = require('jquery');
 
+
 class App extends React.Component {
 	constructor (props) {
 		super(props);
@@ -115,6 +116,7 @@ class App extends React.Component {
 			  <div>
 			    <NavB login={this.state.login} loginUser={this.loginUser} />
 			    {this.currentRender()}
+			    <Signup />
 			  </div>
 		)
 	}
