@@ -78,10 +78,8 @@ app.post('/signup', function(req, res, next) {
 
 app.get('/listings', 
 (req, res) => {
-  console.log('request received');
   db.getAvailableListings()
     .then((data) => {
-      console.log('grabbed all listings', data);
       res.end(JSON.stringify(data));
     });
 });
@@ -94,8 +92,10 @@ app.post('/confirm-booking',
 	console.log('request received', req.body.booking);
 	db.createBookings(req.body.booking)
 		.then((data) => {
-			console.log('new booking added', data);
-			res.end(JSON.stringify(data));
+			res.status(201).send('Booking created successfully');
+		})
+		.catch((err) => {
+			res.status(500).send('Booking not created');
 		});
 });
 
