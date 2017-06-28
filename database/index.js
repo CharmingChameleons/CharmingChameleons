@@ -50,6 +50,7 @@ var pool = new pg.Pool(config)
  	},
 
 	createBookings: (params) => {
+
 		var queryString = 'INSERT INTO bookings (listingId, borrowerId) VALUES ($1, $2) returning id'
 		var queryArgs = params
 
@@ -112,10 +113,30 @@ var pool = new pg.Pool(config)
 	},
 
 	//Input: Replace the following with its values['username']
-  //Output: Returns the row containing that name -> arra
+  	//Output: Returns the row containing that name -> arra
+
 
 	getUserId: (params) => {
 		var queryString = "SELECT * FROM users WHERE username = $1"
+		var queryArgs = params
+
+		return new Promise (
+			(resolve, reject) => {
+				pool.query(queryString, queryArgs, (err, data) => {
+					if (err) {
+						reject (err)
+					} else {
+						resolve(JSON.parse(JSON.stringify(data.rows)))
+					}
+				})
+			}
+		)
+	},
+
+	//Create New User
+	createUser: (params) => {
+
+		var queryString = 'INSERT INTO users (username, hash, salt) VALUES ($1, $2, $3) returning id'
 		var queryArgs = params
 
 		return new Promise (
@@ -146,6 +167,7 @@ var pool = new pg.Pool(config)
 					} else {
 						console.log('user id');
 						resolve(JSON.parse(JSON.stringify(rows.rows)))
+
 					}
 				})
 			}
