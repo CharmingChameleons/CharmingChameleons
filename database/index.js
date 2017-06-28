@@ -44,7 +44,7 @@ var pool = new pg.Pool(config)
 				    else {
 				    	resolve(JSON.parse(JSON.stringify(result.rows)))
 				    }
-				})			
+				})
   		}
  		)
  	},

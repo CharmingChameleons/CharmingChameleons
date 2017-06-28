@@ -1,0 +1,12 @@
+.thumbnail{
+    width : 100%;
+    height: 44%;
+    overflow: auto;
+}
+
+
+.thumbnail  img {
+  height: 120px;
+  width: 190px;
+  border: solid 1px #cccccc;
+}
