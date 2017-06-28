@@ -11,13 +11,11 @@ var middleware = require('./middleware');
 
 
 var cors = require('cors');
-
-
-const passport = require('passport');   
+const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const bodyParser = require('body-parser');
-
 var cookieSession = require('cookie-session')
 
 var port = process.env.PORT || 3000;
@@ -44,7 +42,7 @@ app.use(cookieSession({
   keys: ['sessionmgmt'],
 
   // Cookie Options
-  cookie: { 
+  cookie: {
   	httpOnly: true,
   	secure: true
    },
@@ -65,7 +63,7 @@ app.post('/login', function(req, res, next) {
 				session.createNewSession(req.headers['user-agent'], req.body.username)
 				.then((session) => {
 					req.session.id = session.sessionId //token based on user-agent
-					req.session.username = session.username   //username 
+					req.session.username = session.username   //username
 					req.session.save();
 					//store in db?? No for now
 					console.log('In app.post/Login before res')
@@ -121,7 +119,7 @@ app.post('/signup', function(req, res, next) {
 			})
 			.then((session) => {
 				req.session.id = session.sessionId 		  //token based on user-agent
-				req.session.username = session.username   //username 
+				req.session.username = session.username   //username
 				req.session.save()
 				res.status(201).send(user)
 			})
@@ -145,7 +143,7 @@ app.get('/listings',
     });
 });
 
-app.post('/confirm-booking', middleware.authenticate, 
+app.post('/confirm-booking', middleware.authenticate,
 (req, res) => {
 	for (let i = 0; i < req.body.booking.length; i++) {
 		req.body.booking[i] = parseInt(req.body.booking[i]);
@@ -160,10 +158,19 @@ app.post('/confirm-booking', middleware.authenticate,
 		});
 });
 
+app.get('/userlisting', (req, res) => {
+  console.log('request received userlisting');
+  db.getListingsForUser([1])
+    .then((data) => {
+      console.log('grabbed all listings for ...', data);
+      res.end(JSON.stringify(data));
+    });
+})
 
 
 
-app.post('/createlisting', 
+
+app.post('/createlisting',
 (req, res) => {
   db.createListing(req.body.params)
     .then((data) => {
