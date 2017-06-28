@@ -14,6 +14,7 @@ const Listings = (props) => (
             key={listing.name} 
             listing={listing}
             onListingClick={props.onListingClick}
+            onBookingClick={props.onBookingClick}
           />
         )}
         </Row>
