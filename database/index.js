@@ -68,6 +68,7 @@ var pool = new pg.Pool(config)
 			}
 		)
 	},
+	
 
 	createBookings: (params) => {
 

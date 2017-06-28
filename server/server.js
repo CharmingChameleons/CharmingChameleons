@@ -20,6 +20,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/public')));
 
+
+
 //Initialize passport and express
 app.use(passport.initialize());
 app.use(passport.session());
@@ -82,9 +84,20 @@ app.get('/listings',
   db.getAllListings()
     .then((data) => {
       console.log('grabbed all listings', data);
-      res.end(JSON.stringify(data));
+      //res.end(JSON.stringify(data));
+      res.end();
     });
 });
+
+//test function 
+db.createListing(['sara', 'sfsfsfsfsfsf', 2, 'tag22222s'])
+.then((data) => {
+	console.log('In server index.js----------------------------------->')
+	console.log(data);
+})
+
+
+
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);
