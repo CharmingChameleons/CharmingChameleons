@@ -1,12 +1,13 @@
 var pg = require('pg');
 var Promise = require('bluebird');
+
 const url = require('url');
+
 let config = {
-  user: "postgres", // name of the user account
-  host: "localhost",
-  password: "test",
+  user: "Priyanka", // name of the user account
+  //host: "localhost",
+  //password: "test",
   database: "shareio",
-  //   port: port, // name of the database
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
 }
@@ -48,8 +49,8 @@ var pool = new pg.Pool(config)
  		)
  	},
 
-   createBookings: (params) => {
-		console.log(params);
+	createBookings: (params) => {
+
 		var queryString = 'INSERT INTO bookings (listingId, borrowerId) VALUES ($1, $2) returning id'
 		var queryArgs = params
 
@@ -67,6 +68,7 @@ var pool = new pg.Pool(config)
 			}
 		)
 	},
+
   //Input: Replace the following with its values[userid]
   //Output: Returns all the listings that belongs to one user-> array
 	getListingsForUser: (params) => {
@@ -111,9 +113,49 @@ var pool = new pg.Pool(config)
 	},
 
 	//Input: Replace the following with its values['username']
-  //Output: Returns the row containing that name -> array
+  	//Output: Returns the row containing that name -> arra
+
+
 	getUserId: (params) => {
 		var queryString = "SELECT * FROM users WHERE username = $1"
+		var queryArgs = params
+
+		return new Promise (
+			(resolve, reject) => {
+				pool.query(queryString, queryArgs, (err, data) => {
+					if (err) {
+						reject (err)
+					} else {
+						resolve(JSON.parse(JSON.stringify(data.rows)))
+					}
+				})
+			}
+		)
+	},
+
+	//Create New User
+	createUser: (params) => {
+
+		var queryString = 'INSERT INTO users (username, hash, salt) VALUES ($1, $2, $3) returning id'
+		var queryArgs = params
+
+		return new Promise (
+			(resolve, reject) => {
+				pool.query(queryString, queryArgs, (err, data) => {
+					if (err) {
+						reject (err)
+					} else {
+						resolve(JSON.parse(JSON.stringify(data.rows)))
+					}
+				})
+			}
+		)
+	},
+
+	//Create New User
+	createUser: (params) => {
+
+		var queryString = 'INSERT INTO users (username, hash, salt) VALUES ($1, $2, $3) returning id'
 		var queryArgs = params
 
 		return new Promise (
@@ -121,9 +163,11 @@ var pool = new pg.Pool(config)
 				pool.query(queryString, queryArgs, (err, rows) => {
 					if (err) {
 						reject (err)
+						console.log(err);
 					} else {
 						console.log('user id');
 						resolve(JSON.parse(JSON.stringify(rows.rows)))
+
 					}
 				})
 			}
