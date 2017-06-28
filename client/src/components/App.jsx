@@ -3,6 +3,7 @@ import NavB from './Nav.jsx'
 import Listings from './Listings.jsx'
 import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
+import Booking from './Booking.jsx'
 var $ = require('jquery');
 
 class App extends React.Component {
@@ -18,9 +19,22 @@ class App extends React.Component {
 	currentRender() {
 		var render = this.state.currentRender;
 		if (render === 'landing') {
-			return <Listings onListingClick={ this.handleSelectListing.bind(this) } listings={this.state.listings}/>;
+			return <Listings 
+				onListingClick={this.handleSelectListing.bind(this)} 
+				onBookingClick={this.handleBookingClick.bind(this)}
+				listings={this.state.listings}
+			/>;
 		} else if (render === 'selectedListing') {
-			return <SelectedListing onBackClick={ this.handleBackClick.bind(this) } listing={this.state.listing}/>
+			return <SelectedListing 
+				onBackClick={this.handleBackClick.bind(this)} 
+				onBookingClick={this.handleBookingClick.bind(this)}
+				listing={this.state.listing}
+			/>;
+		} else if (render === 'booking') {
+			return <Booking 
+				listing={this.state.listing}
+				onBackClick={this.handleBackClick.bind(this)} 
+			/>
 		}
 	}
 
@@ -35,6 +49,13 @@ class App extends React.Component {
 	handleBackClick() {
 		this.setState({
 			currentRender: 'landing'
+		})
+	}
+
+	handleBookingClick(listing) {
+		this.setState({
+			listing: listing,
+			currentRender: 'booking'
 		})
 	}
 
