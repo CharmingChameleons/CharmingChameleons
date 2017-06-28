@@ -1,4 +1,5 @@
 var Promise = require('bluebird')
+var db = require('../../database')
 
 module.exports = {
 	authenticate: (username, password) => {
