@@ -1,5 +1,5 @@
 import React from 'react'
-import NavB from './Nav.jsx'
+import NavB from './NavB.jsx'
 import Listings from './Listings.jsx'
 import Form from 'react-bootstrap/lib/Form'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
@@ -62,7 +62,7 @@ class Signup extends React.Component{
 
 	render () {
 		return (
-			<Form horizontal  onSubmit={this.signUp} >
+			<Form horizontal >
 			    <FormGroup controlId="formHorizontalEmail">
 			      <Col componentClass={ControlLabel} sm={2}>
 			        Username
@@ -83,7 +83,7 @@ class Signup extends React.Component{
 
 			    <FormGroup>
 			      <Col smOffset={2} sm={10}>
-			        <Button type="submit" >
+			        <Button onClick={this.signUp}>
 			          Create New Account
 			        </Button>
 			      </Col>

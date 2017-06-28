@@ -1,5 +1,5 @@
 import React from 'react'
-import NavB from './Nav.jsx'
+import NavB from './NavB.jsx'
 import Listings from './Listings.jsx'
 import Form from 'react-bootstrap/lib/Form'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
@@ -36,7 +36,6 @@ class Login extends React.Component{
 	}
 
 	login () {
-
 		this.props.closeLoginModal()
 		var loginUser = this.props.loginUser
 		console.log('In Login.jsx', this.state.username, this.state.password)
@@ -62,7 +61,7 @@ class Login extends React.Component{
 
 	render () {
 		return (
-			<Form horizontal  onSubmit={this.login} >
+			<Form horizontal>
 			    <FormGroup controlId="formHorizontalEmail">
 			      <Col componentClass={ControlLabel} sm={2}>
 			        Username
@@ -83,7 +82,7 @@ class Login extends React.Component{
 
 			    <FormGroup>
 			      <Col smOffset={2} sm={10}>
-			        <Button type="submit" >
+			        <Button onClick={this.login} >
 			          Login
 			        </Button>
 			      </Col>
