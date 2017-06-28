@@ -1,18 +1,38 @@
 var pg = require('pg');
 var Promise = require('bluebird');
+const url = require('url');
 
-var config = {
-	
-  user: 'sara', // name of the user account
-  database: 'shareio', // name of the database
+
+let config = {
+  user: "henri", // name of the user account
+  host: "localhost",
+  password: "test",
+  database: "henri",
+  //   port: port, // name of the database
   max: 10, // max number of clients in the pool
-  idleTimeoutMillis: 30000 // how long a client is allowed to remain idle before being closed
+  idleTimeoutMillis: 30000,
 }
 
+if (process.env.DATABASE_URL) {
+
+  const params = url.parse(process.env.DATABASE_URL);
+  const auth = params.auth.split(':');
+
+  config = {
+    user: auth[0],
+    password: auth[1],
+    host: params.hostname,
+    port: params.port,
+    database: params.pathname.split('/')[1],
+    ssl: true
+  };
+}
+
+//create connection
+console.log(config);
 var pool = new pg.Pool(config)
 
  module.exports = {
- 
  //Select all listings
  	getAllListings: () => {
 		return new Promise (
@@ -30,7 +50,8 @@ var pool = new pg.Pool(config)
   		}
  		)
  	},
-	createBookings: (params) => {
+
+   createBookings: (params) => {
 		console.log(params);
 		var queryString = 'INSERT INTO bookings (listingId, borrowerId) VALUES ($1, $2) returning id'
 		var queryArgs = params
@@ -42,22 +63,19 @@ var pool = new pg.Pool(config)
 						reject (err)
 						console.log(err);
 					} else {
-						console.log('got the rows');
-						resolve(rows)
+						console.log('got data from createBookings');
+						resolve(JSON.parse(JSON.stringify(rows.rows)))
 					}
 				})
 			}
 		)
 	},
-
-	//Get all listings for user
-	//params -> array of two intergers
+  //Input: Replace the following with its values[userid]
+  //Output: Returns all the listings that belongs to one user-> array
 	getListingsForUser: (params) => {
- 
 		var queryString = 'SELECT * FROM listings LEFT OUTER JOIN bookings \
 							ON (listings.id = bookings.listingId) \
 						   	WHERE listings.lenderId = $1'
-
 		var queryArgs = params
 
 		return new Promise (
@@ -67,13 +85,16 @@ var pool = new pg.Pool(config)
 						reject (err)
 					} else {
 						console.log('got listing for user');
-						resolve(rows)
+						resolve(JSON.parse(JSON.stringify(rows.rows)))
 					}
 				})
 			}
 		)
 	},
-//Get username based on id
+
+	//Input: Replace the following with its values[userid]
+  //Output: Returns the row containing that user id -> array
+
 	getUserName: (params) => {
 		var queryString = "SELECT * FROM users WHERE id = $1"
 		var queryArgs = params
@@ -85,17 +106,17 @@ var pool = new pg.Pool(config)
 						reject (err)
 					} else {
 						console.log('got username');
-						resolve(rows)
+						resolve(JSON.parse(JSON.stringify(rows.rows)))
 					}
 				})
 			}
 		)
 	},
 
-		// //Get user id based on username
+	//Input: Replace the following with its values['username']
+  //Output: Returns the row containing that name -> array
 	getUserId: (params) => {
 		var queryString = "SELECT * FROM users WHERE username = $1"
-
 		var queryArgs = params
 
 		return new Promise (
@@ -105,12 +126,10 @@ var pool = new pg.Pool(config)
 						reject (err)
 					} else {
 						console.log('user id');
-						resolve(rows)
+						resolve(JSON.parse(JSON.stringify(rows.rows)))
 					}
 				})
 			}
 		)
 	}
-
 }
-	

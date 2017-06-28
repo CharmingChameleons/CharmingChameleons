@@ -14,6 +14,8 @@ app.use(express.static(path.join(__dirname, '../client/public')));
 
 
 
+db.getAllListings()
+
 db.getUserId(['sara'])
 .then((data) => {
 	console.log('In server index.js')
