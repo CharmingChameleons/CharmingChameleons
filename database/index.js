@@ -115,6 +115,5 @@ var pool = new pg.Pool(config)
 			}
 		)
 	}
-
 }
 	

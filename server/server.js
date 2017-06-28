@@ -20,12 +20,6 @@ app.get('/listings',
     });
 });
 
-// db.getUserId(['sara'])
-//   .then((data) => {
-//   	console.log('In server index.js');
-//   	console.log(data);
-//   });
-
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);
 });
