@@ -6,13 +6,25 @@ import Signup from './Signup.jsx'
 var $ = require('jquery');
 
 class App extends React.Component {
+
 	constructor (props) {
 		super(props);
-    this.state = {
-    	currentRender: 'landing',
-      listings: [],
-      listing: {}
-    };
+
+	    this.state = {
+	    	currentRender: 'landing',
+	      	listings: [],
+	      	listing: {},
+	      	login: false
+	    };
+
+	    this.loginUser = this.loginUser.bind(this)
+	}
+
+	loginUser() {
+		console.log('reached loginUser')
+		this.setState({
+			login: true
+		})
 	}
 
 	currentRender() {
@@ -57,9 +69,8 @@ class App extends React.Component {
 	render () {
 		return (
 			  <div>
-			    <NavB/>
+			    <NavB login={this.state.login} loginUser={this.loginUser} />
 			    {this.currentRender()}
-			    <Signup />
 			  </div>
 		)
 	}

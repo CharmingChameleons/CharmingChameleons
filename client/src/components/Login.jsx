@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/lib/Button'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import $ from 'jquery'
 
-class Signup extends React.Component{
+class Login extends React.Component{
 	constructor (props) {
 		super (props)
 
@@ -18,7 +18,7 @@ class Signup extends React.Component{
 			password: ''
 		}
 
-		this.signUp = this.signUp.bind(this)
+		this.login = this.login.bind(this)
 		this.handleUsername = this.handleUsername.bind(this)
 		this.handlePassword = this.handlePassword.bind(this)
 	}
@@ -35,15 +35,15 @@ class Signup extends React.Component{
 		})
 	}
 
-	signUp () {
+	login () {
 
-		this.props.closeSignUpModal()
+		this.props.closeLoginModal()
 		var loginUser = this.props.loginUser
-		console.log(this.state.username, this.state.password)
+		console.log('In Login.jsx', this.state.username, this.state.password)
 		var username = this.state.username
 		var password = this.state.password
 		$.ajax({
-			url: 'http://127.0.0.1:3000/signup',
+			url: 'http://127.0.0.1:3000/login',
 			method: 'POST',
 			data: {
 				'username': username,
@@ -62,7 +62,7 @@ class Signup extends React.Component{
 
 	render () {
 		return (
-			<Form horizontal  onSubmit={this.signUp} >
+			<Form horizontal  onSubmit={this.login} >
 			    <FormGroup controlId="formHorizontalEmail">
 			      <Col componentClass={ControlLabel} sm={2}>
 			        Username
@@ -84,7 +84,7 @@ class Signup extends React.Component{
 			    <FormGroup>
 			      <Col smOffset={2} sm={10}>
 			        <Button type="submit" >
-			          Create New Account
+			          Login
 			        </Button>
 			      </Col>
 			    </FormGroup>
@@ -93,4 +93,4 @@ class Signup extends React.Component{
 	}
 }
 
-export default Signup
+export default Login

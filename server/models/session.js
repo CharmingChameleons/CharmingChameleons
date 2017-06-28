@@ -24,12 +24,11 @@ module.exports = {
 		return new Promise (
 			(resolve, reject) => {
 				var sessionId = util.createHash(userAgent, username)
-				console.log(sessionId)
 				var session = {
 					'sessionId': sessionId,
 					'username': username
 				}
-				return session
+				resolve(session)
 			}
 		)
 	}
