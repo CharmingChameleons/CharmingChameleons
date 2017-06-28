@@ -11,14 +11,19 @@ class App extends React.Component {
 	constructor (props) {
 		super(props);
 
-	    this.state = {
-	    	currentRender: 'landing',
-	      	listings: [],
-	      	listing: {},
-	      	login: false
-	    };
+    this.state = {
+    	currentRender: 'landing',
+    	listings: [],
+    	listing: {},
+    	login: false
+      // dummydata
+      currentUser: {
+        id: 3,
+        username: 'Shihao',
+      }
+    };
 
-	    this.loginUser = this.loginUser.bind(this)
+    this.loginUser = this.loginUser.bind(this)
 	}
 
 	loginUser() {
@@ -69,6 +74,13 @@ class App extends React.Component {
 			listing: listing,
 			currentRender: 'booking'
 		})
+	}
+
+	handleConfirmBooking(listing) {
+		// send ajax post request to the server
+			// if successful, 
+				// render button to say 'Booked!' on booking page
+				// pop-up alert to the user
 	}
 
   componentDidMount() {
