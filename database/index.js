@@ -11,12 +11,13 @@ var database = 'henri';
 if (process.env.DATABASE_URL) {
   const params = url.parse(process.env.DATABASE_URL);
   const auth = params.auth.split(':');
+  console.log(params);
+  console.log(auth);
   user = auth[0];
   password: auth[1];
   host: params.hostname;
   port: params.port;
   database: params.pathname.split('/')[1];
-  pg.defaults.ssl = true;
 }
 
 var config = {
@@ -26,8 +27,9 @@ var config = {
   database: database,
   port: port, // name of the database
   max: 10, // max number of clients in the pool
-  idleTimeoutMillis: 30000
- // how long a client is allowed to remain idle before being closed
+  idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+  ssl: true
+
 }
 
 //create connection
