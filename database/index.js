@@ -1,6 +1,5 @@
-var pg = require('pg');
-var Promise = require('bluebird');
-
+const Promise = require('bluebird');
+const pg = require('pg');
 const url = require('url');
 
 let config = {
@@ -10,7 +9,7 @@ let config = {
   database: "shareio",
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
-}
+};
 
 if (process.env.DATABASE_URL) {
 
@@ -26,10 +25,10 @@ if (process.env.DATABASE_URL) {
     database: params.pathname.split('/')[1],
     ssl: true
   };
-}
+};
 
 //create connection
-var pool = new pg.Pool(config)
+var pool = new pg.Pool(config);
 
  module.exports = {
  //Select all listings
@@ -38,14 +37,28 @@ var pool = new pg.Pool(config)
  			(resolve, reject) => {
  				pool.query('SELECT * from listings', function (err, result) {
 				    if (err) {
-				      console.log(err)
-				      reject(err)
-				    }
-				    else {
-				    	resolve(JSON.parse(JSON.stringify(result.rows)))
+				      console.log(err);
+				      reject(err);
+				    } else {
+				    	resolve(JSON.parse(JSON.stringify(result.rows)));
 				    }
 				})
   		}
+ 		)
+ 	},
+
+ 	getAvailableListings: () => {
+ 		return new Promise (
+ 			(resolve, reject) => {
+ 				pool.query('SELECT listings.id, listings.name, listings.description, listings.cost, listings.tags FROM listings INNER JOIN bookings ON listings.id != bookings.listingid', function (err, result) {
+ 					if (err) {
+ 						console.log(err);
+ 						reject(err);
+ 					} else {
+ 						resolve(JSON.parse(JSON.stringify(result.rows)));
+ 					}
+ 				});
+ 			}
  		)
  	},
 
@@ -58,7 +71,7 @@ var pool = new pg.Pool(config)
 			(resolve, reject) => {
 				pool.query(queryString, queryArgs, (err, rows) => {
 					if (err) {
-						reject (err)
+						reject(err)
 						console.log(err);
 					} else {
 						console.log('got data from createBookings');

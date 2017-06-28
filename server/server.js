@@ -1,6 +1,6 @@
 const path = require('path');
 var express = require('express');
-var db = require('../database')
+var db = require('../database');
 
 var app = express();
 var util = require('./lib/hashUtils');
@@ -79,7 +79,7 @@ app.post('/signup', function(req, res, next) {
 app.get('/listings', 
 (req, res) => {
   console.log('request received');
-  db.getAllListings()
+  db.getAvailableListings()
     .then((data) => {
       console.log('grabbed all listings', data);
       res.end(JSON.stringify(data));
