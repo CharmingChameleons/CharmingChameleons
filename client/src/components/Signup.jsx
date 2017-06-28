@@ -43,7 +43,7 @@ class Signup extends React.Component{
 		var username = this.state.username
 		var password = this.state.password
 		$.ajax({
-			url: 'http://127.0.0.1:3000/signup',
+			url: '/signup',
 			method: 'POST',
 			data: {
 				'username': username,

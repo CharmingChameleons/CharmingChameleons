@@ -12,7 +12,8 @@
     "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
     "start-test": "nodemon server/server.js",
     "build-test": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors --watch",
-    "heroku-postbuild": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors"
+    "heroku-postbuild": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
+    "build-database": "psql -U postgres -d shareio -a -f schemas.sql -h 127.0.0.1 -W"
   },
   "dependencies": {
     "babel-cli": "^6.7.5",

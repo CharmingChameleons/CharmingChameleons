@@ -3,6 +3,7 @@ var express = require('express');
 var db = require('../database');
 var session = require('./models/session');
 
+
 var app = express();
 var util = require('./lib/hashUtils');
 var middleware = require('./middleware');
@@ -107,10 +108,25 @@ app.post('/signup', function(req, res, next) {
 
 app.get('/listings', 
 (req, res) => {
-  db.getAllListings()
+  db.getAvailableListings()
     .then((data) => {
       res.end(JSON.stringify(data));
     });
+});
+
+app.post('/confirm-booking',
+(req, res) => {
+	for (let i = 0; i < req.body.booking.length; i++) {
+		req.body.booking[i] = parseInt(req.body.booking[i]);
+	}
+	console.log('request received', req.body.booking);
+	db.createBookings(req.body.booking)
+		.then((data) => {
+			res.status(201).send('Booking created successfully');
+		})
+		.catch((err) => {
+			res.status(500).send('Booking not created');
+		});
 });
 
 app.listen(port, function(req, res) {
