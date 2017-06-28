@@ -3,7 +3,7 @@ var Promise = require('bluebird');
 
 var config = {
 	
-  user: 'sara', // name of the user account
+  user: 'Priyanka', // name of the user account
   database: 'shareio', // name of the database
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000 // how long a client is allowed to remain idle before being closed
@@ -30,8 +30,9 @@ var pool = new pg.Pool(config)
   		}
  		)
  	},
+
 	createBookings: (params) => {
-		console.log(params);
+
 		var queryString = 'INSERT INTO bookings (listingId, borrowerId) VALUES ($1, $2) returning id'
 		var queryArgs = params
 
@@ -92,7 +93,7 @@ var pool = new pg.Pool(config)
 		)
 	},
 
-		// //Get user id based on username
+	//Get user id based on username
 	getUserId: (params) => {
 		var queryString = "SELECT * FROM users WHERE username = $1"
 
@@ -100,11 +101,31 @@ var pool = new pg.Pool(config)
 
 		return new Promise (
 			(resolve, reject) => {
-				pool.query(queryString, queryArgs, (err, rows) => {
+				pool.query(queryString, queryArgs, (err, data) => {
 					if (err) {
 						reject (err)
 					} else {
-						console.log('user id');
+						resolve(JSON.parse(JSON.stringify(data.rows)))
+					}
+				})
+			}
+		)
+	},
+
+	//Create New User
+	createUser: (params) => {
+
+		var queryString = 'INSERT INTO users (username, hash, salt) VALUES ($1, $2, $3) returning id'
+		var queryArgs = params
+
+		return new Promise (
+			(resolve, reject) => {
+				pool.query(queryString, queryArgs, (err, rows) => {
+					if (err) {
+						reject (err)
+						console.log(err);
+					} else {
+						console.log('user created succesfully');
 						resolve(rows)
 					}
 				})
