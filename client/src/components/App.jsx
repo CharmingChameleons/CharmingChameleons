@@ -7,6 +7,7 @@ import Booking from './Booking.jsx'
 import CreateListing from './createListing.jsx'
 
 var $ = require('jquery');
+import Profile from './Profile.jsx'
 
 
 class App extends React.Component {
@@ -58,21 +59,21 @@ class App extends React.Component {
   currentRender() {
     var render = this.state.currentRender;
     if (render === 'landing') {
-      return <Listings 
-        onListingClick={this.handleSelectListing.bind(this)} 
+      return <Listings
+        onListingClick={this.handleSelectListing.bind(this)}
         onBookingClick={this.handleBookingClick.bind(this)}
         listings={this.state.listings}
       />;
     } else if (render === 'selectedListing') {
-      return <SelectedListing 
-        onBackClick={this.handleBackClick.bind(this)} 
+      return <SelectedListing
+        onBackClick={this.handleBackClick.bind(this)}
         onBookingClick={this.handleBookingClick.bind(this)}
         listing={this.state.listing}
       />;
     } else if (render === 'booking') {
-      return <Booking 
+      return <Booking
         listing={this.state.listing}
-        onBackClick={this.handleBackClick.bind(this)} 
+        onBackClick={this.handleBackClick.bind(this)}
         onConfirmClick={this.handleConfirmBooking.bind(this)}
       />
     } else if (render === 'createlisting') {
@@ -116,13 +117,14 @@ class App extends React.Component {
 
   handleConfirmBooking(listing) {
     let data = [listing.id, this.state.currentUser.id];
- 
+
     if (this.state.login) {
       $.ajax({
         type: 'POST',
         url: '/confirm-booking',
         data: { booking: data },
         success: (data) => {
+          alert('Your item was booked! Please contact your vendor to arrange a pickup/delivery');
           console.log('data', data);
           // create button with state
         },
@@ -133,6 +135,7 @@ class App extends React.Component {
     } else {
         this.setPromptLoginModal()
     }
+
   }
 
 
@@ -156,11 +159,16 @@ class App extends React.Component {
 	render () {
 		return (
 			  <div>
-			    <NavB login={this.state.login} loginUser={this.loginUser} promptLoginModal={this.state.promptLoginModal} 
-            resetLoginModal={this.resetLoginModal} onLogoClick={this.handleLogoClick.bind(this)} 
-            onCreateClick={this.handleCreateListing.bind(this)}/>
+			    <NavB
+            login={this.state.login}
+            loginUser={this.loginUser}
+            promptLoginModal={this.state.promptLoginModal}
+            resetLoginModal={this.resetLoginModal}
+            onLogoClick={this.handleLogoClick.bind(this)}
+            onCreateClick={this.handleCreateListing.bind(this)}
+          />
 			    {this.currentRender()}
-
+			    <Signup />
 			  </div>
 		)
 	}
