@@ -141,25 +141,6 @@ var pool = new pg.Pool(config)
 
 		return new Promise (
 			(resolve, reject) => {
-				pool.query(queryString, queryArgs, (err, data) => {
-					if (err) {
-						reject (err)
-					} else {
-						resolve(JSON.parse(JSON.stringify(data.rows)))
-					}
-				})
-			}
-		)
-	},
-
-	//Create New User
-	createUser: (params) => {
-
-		var queryString = 'INSERT INTO users (username, hash, salt) VALUES ($1, $2, $3) returning id'
-		var queryArgs = params
-
-		return new Promise (
-			(resolve, reject) => {
 				pool.query(queryString, queryArgs, (err, rows) => {
 					if (err) {
 						reject (err)
