@@ -6,10 +6,10 @@ var config = {
   user: 'postgres', // name of the user account
   database: 'shareio', // name of the database
   max: 10, // max number of clients in the pool
-  idleTimeoutMillis: 30000 // how long a client is allowed to remain idle before being closed
+  idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
   /** COMMENT OUT THE CONFIG BELOW FOR NON-LINUX **/
-	password: 'test', // password utilized for linux distributions. comment out on Macs
-  host: 'localhost',// localhost required for linux distributions. 
+	password: 'test', // password utilized for linux distributions. 
+  host: 'localhost' // localhost required for linux distributions. 
 
 }
 
