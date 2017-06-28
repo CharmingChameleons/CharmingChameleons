@@ -17,11 +17,10 @@ class App extends React.Component {
 
 	currentRender() {
 		var render = this.state.currentRender;
-		console.log('render', this.state.currentRender);
 		if (render === 'landing') {
-			return <Listings onListingClick={this.handleSelectListing.bind(this)} listings={this.state.listings}/>;
+			return <Listings onListingClick={ this.handleSelectListing.bind(this) } listings={this.state.listings}/>;
 		} else if (render === 'selectedListing') {
-			return <SelectedListing listing={this.state.listing}/>
+			return <SelectedListing onBackClick={ this.handleBackClick.bind(this) } listing={this.state.listing}/>
 		}
 	}
 
@@ -31,6 +30,12 @@ class App extends React.Component {
 			listing: listing,
 			currentRender: 'selectedListing'
 		});
+	}
+
+	handleBackClick() {
+		this.setState({
+			currentRender: 'landing'
+		})
 	}
 
   componentDidMount() {

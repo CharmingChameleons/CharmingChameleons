@@ -1,16 +1,22 @@
 import React from 'react';
 import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row'
+import Button from 'react-bootstrap/lib/Button'
 
 const SelectedListing = (props) => (
   <div>
     <h2>{props.listing.name}</h2>
+    <Button onClick={ function() {props.onBackClick()} } bsStyle="primary">Back</Button>
     <Grid>
       <Row>
+        <img src={'./images/listings/' + props.listing.id + '/1.jpg'} alt="242x200"/> <br/>
         Description: {props.listing.description} <br/>
-        Price: {props.listing.cost} <br/>
+        Price: ${props.listing.cost} <br/>
         Tags: {props.listing.tags} <br/>
-      </Row>
+        <p>
+          <Button bsStyle="primary">Book</Button>&nbsp;
+        </p>
+        </Row>
     </Grid>
   </div>
 )
