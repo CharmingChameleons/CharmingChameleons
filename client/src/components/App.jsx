@@ -4,6 +4,7 @@ import Listings from './Listings.jsx'
 import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
 import Booking from './Booking.jsx'
+import CreateListing from './createListing.jsx'
 var $ = require('jquery');
 
 
@@ -117,6 +118,7 @@ class App extends React.Component {
 			    <NavB login={this.state.login} loginUser={this.loginUser} />
 			    {this.currentRender()}
 			    <Signup />
+			    <CreateListing />
 			  </div>
 		)
 	}

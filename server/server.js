@@ -1,4 +1,5 @@
 const path = require('path');
+var cors = require('cors');
 var express = require('express');
 var db = require('../database');
 var session = require('./models/session');
@@ -8,13 +9,23 @@ var app = express();
 var util = require('./lib/hashUtils');
 var middleware = require('./middleware');
 
+<<<<<<< HEAD
 var cors = require('cors');
+=======
+
+const passport = require('passport');   
+const LocalStrategy = require('passport-local').Strategy
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+>>>>>>> create lisitng works except image
 const bodyParser = require('body-parser');
 
 var cookieSession = require('cookie-session')
 
 var port = process.env.PORT || 3000;
 
+app.use(cors());
+app.options('*', cors())
 //Use body parser for parsing the request querystring
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,7 +33,6 @@ app.use(express.static(path.join(__dirname, '../client/public')));
 app.use(cors());
 
 app.set('trust proxy', 1) // trust first proxy
-
 
 
 //Initialize passport and express
@@ -117,10 +127,15 @@ app.get('/listings',
 (req, res) => {
   db.getAvailableListings()
     .then((data) => {
+<<<<<<< HEAD
+=======
+     // console.log('grabbed all listings', data);
+>>>>>>> create lisitng works except image
       res.end(JSON.stringify(data));
     });
 });
 
+<<<<<<< HEAD
 app.post('/confirm-booking',
 (req, res) => {
 	for (let i = 0; i < req.body.booking.length; i++) {
@@ -137,6 +152,16 @@ app.post('/confirm-booking',
 });
 
 
+=======
+app.post('/createlisting', 
+(req, res) => {
+  db.createListing(req.body.params)
+    .then((data) => {
+      console.log('Created an entry');
+      res.end(JSON.stringify(data));
+    });
+});
+>>>>>>> create lisitng works except image
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);
