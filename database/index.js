@@ -1,8 +1,6 @@
 var pg = require('pg');
 var Promise = require('bluebird');
 const url = require('url');
-
-
 let config = {
   user: "henri", // name of the user account
   host: "localhost",
