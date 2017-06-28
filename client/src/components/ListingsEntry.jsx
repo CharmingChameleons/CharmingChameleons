@@ -11,7 +11,7 @@ const ListingsEntry = (props) => (
         <h4>{props.listing.description}</h4>
         <p>tags: {props.listing.tags}</p>
         <p>
-          <Button bsStyle="primary">Book</Button>&nbsp;
+          <Button onClick={ function() { props.onBookingClick(props.listing) } } bsStyle="primary">Book</Button>&nbsp;
           <Button onClick={ function() { props.onListingClick(props.listing) } } bsStyle="default">Show listing</Button>
         </p>
       </Thumbnail>
