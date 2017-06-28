@@ -23,6 +23,13 @@ app.use(cors());
 
 app.set('trust proxy', 1) // trust first proxy
 
+
+
+//Initialize passport and express
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use(cookieSession({
   name: 'session',
   keys: ['sessionmgmt'],
@@ -128,6 +135,8 @@ app.post('/confirm-booking',
 			res.status(500).send('Booking not created');
 		});
 });
+
+
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);
