@@ -27,10 +27,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "sqlite3": "^3.1.8",
-<<<<<<< f79ffa383e59f773faf59595171291b171d54fa0
     "validate-npm-package-license": "^3.0.1",
-=======
->>>>>>> added linux configuration for database index.js
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.5.0"
   },
