@@ -5,14 +5,18 @@ import Button from 'react-bootstrap/lib/Button'
 
 const SelectedListing = (props) => (
   <div>
-    <h2>{props.listing.name}</h2>
-    <Button onClick={ function() {props.onBackClick()} } bsStyle="primary">Back</Button>
     <Grid>
+    <h2>{props.listing.name}</h2>
+    <Button onClick={ function() {props.onBackClick()} } bsStyle="primary">Back</Button> 
+    <br/>
+    <br/>
       <Row>
-        <img src={'./images/listings/' + props.listing.id + '/1.jpg'} alt="242x200"/> <br/>
+        <img className='listing' src={'./images/listings/' + props.listing.id + '/1.jpg'} alt="242x200"/> <br/>
+        <br/> 
         Description: {props.listing.description} <br/>
         Price: ${props.listing.cost} <br/>
         Tags: {props.listing.tags} <br/>
+        <br/>
         <p>
           <Button bsStyle="primary">Book</Button>&nbsp;
         </p>
