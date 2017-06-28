@@ -1,19 +1,18 @@
 var pg = require('pg');
 var Promise = require('bluebird');
 const url = require('url');
-
-
 let config = {
-  user: "henri", // name of the user account
+  user: "postgres", // name of the user account
   host: "localhost",
   password: "test",
-  database: "henri",
+  database: "shareio",
   //   port: port, // name of the database
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
 }
 
 if (process.env.DATABASE_URL) {
+
 
   const params = url.parse(process.env.DATABASE_URL);
   const auth = params.auth.split(':');
@@ -29,7 +28,6 @@ if (process.env.DATABASE_URL) {
 }
 
 //create connection
-console.log(config);
 var pool = new pg.Pool(config)
 
  module.exports = {
@@ -43,7 +41,6 @@ var pool = new pg.Pool(config)
 				      reject(err)
 				    }
 				    else {
-				    	console.log('In getlistings', result)
 				    	resolve(JSON.parse(JSON.stringify(result.rows)))
 				    }
 				})			

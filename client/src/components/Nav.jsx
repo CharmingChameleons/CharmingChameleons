@@ -6,10 +6,6 @@ import NavItem from 'react-bootstrap/lib/NavItem'
 import NavDropdown from 'react-bootstrap/lib/NavDropdown'
 import MenuItem from 'react-bootstrap/lib/MenuItem'
 
-
-
-
-
 const NavB = () => (
   <Navbar inverse collapseOnSelect>
       <Navbar.Header>
