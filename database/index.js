@@ -3,18 +3,27 @@ var Promise = require('bluebird');
 
 var host = "localhost";
 var password = 'test';
+var user = 'henri';
+var port = '25470' ;
+var database = 'henri';
 
 if (process.env.DATABASE_URL) {
-  host = process.env.DATABASE_URL;
-  password = 'password';
+  const params = url.parse(process.env.DATABASE_URL);
+  const auth = params.auth.split(':');
+  user = auth[0];
+  password: auth[1];
+  host: params.hostname;
+  port: params.port;
+  database: params.pathname.split('/')[1];
   pg.defaults.ssl = true;
 }
 
 var config = {
-  user: 'henri', // name of the user account
+  user: user, // name of the user account
   host: host,
   password: password,
-  database: 'henri', // name of the database
+  database: database,
+  port: port, // name of the database
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000
  // how long a client is allowed to remain idle before being closed
