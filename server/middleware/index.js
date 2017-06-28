@@ -1,8 +1,9 @@
 var Promise = require('bluebird')
 var db = require('../../database')
+var util = require('../lib/hashUtils')
 
 module.exports = {
-	authenticate: (username, password) => {
+	authenticateLogin: (username, password) => {
 
 		return new Promise (
 			(resolve, reject) => {
@@ -33,39 +34,14 @@ module.exports = {
 				    	reject(err)
 				    })
 		})	
+	},
+
+	authenticate: (req, res, next) => {
+
+		if (util.compareHash(req.headers['user-agent'], req.session.sessionId, req.session.username)) {
+			next()
+		} else {
+			res.redirect('/login');
+		}		
 	}
 } 
-
-// //Use Passport Locale Strategy for authentication
-// passport.use(new LocalStrategy (  
-// 	(username, password, done) => {
-// 		var params = []
-// 		params.push(username)
-// 	    db.getUserId(params)
-// 	    .then((user) => {
-
-// 	    	//Check for password
-// 	    	if (!user) {
-// 	    		return done(null, false)
-// 	    	}
-
-// 	    	//Verify whether hash stored in db is same as hash created by password
-// 	    	if (!(util.compareHash(user.hash, password, user.salt))) {
-// 	    		return done(null, false)
-// 	    	}
-
-// 	    	return done (null, user)
-// 	    })
-// 	    .error((err) => {
-// 	    	return done(null, false)
-// 	    })
-// 	}
-// ))
-
-// //Create session and store session details in Postgres Db
-// app.use(session({  
-// 	secret: 'awesome',	
-// 	store: ,
-// 	resave: false,
-// 	saveUninitialized: false
-// }))
