@@ -7,6 +7,7 @@ var password = 'test';
 if (process.env.DATABASE_URL) {
   host = process.env.DATABASE_URL;
   password = 'password';
+  pg.defaults.ssl = true;
 }
 
 var config = {
