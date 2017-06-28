@@ -108,12 +108,7 @@ app.post('/signup', function(req, res, next) {
 
 app.get('/listings', 
 (req, res) => {
-<<<<<<< 285f6a90c86b609feb1fbc45f72e195cdde611a9
-  db.getAllListings()
-=======
-  console.log('request received');
   db.getAvailableListings()
->>>>>>> only listings that are available are listed
     .then((data) => {
       res.end(JSON.stringify(data));
     });
@@ -127,8 +122,10 @@ app.post('/confirm-booking',
 	console.log('request received', req.body.booking);
 	db.createBookings(req.body.booking)
 		.then((data) => {
-			console.log('new booking added', data);
-			res.end(JSON.stringify(data));
+			res.status(201).send('Booking created successfully');
+		})
+		.catch((err) => {
+			res.status(500).send('Booking not created');
 		});
 });
 

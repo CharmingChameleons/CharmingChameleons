@@ -7,7 +7,6 @@ import Booking from './Booking.jsx'
 var $ = require('jquery');
 
 class App extends React.Component {
-
 	constructor (props) {
 		super(props);
 
@@ -22,7 +21,6 @@ class App extends React.Component {
         username: 'Shihao',
       }
     };
-
     this.loginUser = this.loginUser.bind(this)
 	}
 
@@ -33,75 +31,67 @@ class App extends React.Component {
 		})
 	}
 
-	currentRender() {
-		var render = this.state.currentRender;
-		if (render === 'landing') {
-			return <Listings 
-				onListingClick={this.handleSelectListing.bind(this)} 
-				onBookingClick={this.handleBookingClick.bind(this)}
-				listings={this.state.listings}
-			/>;
-		} else if (render === 'selectedListing') {
-			return <SelectedListing 
-				onBackClick={this.handleBackClick.bind(this)} 
-				onBookingClick={this.handleBookingClick.bind(this)}
-				listing={this.state.listing}
-			/>;
-		} else if (render === 'booking') {
-			return <Booking 
-				listing={this.state.listing}
-				onBackClick={this.handleBackClick.bind(this)} 
-				onConfirmClick={this.handleConfirmBooking.bind(this)}
-			/>
-		}
-	}
+  currentRender() {
+    var render = this.state.currentRender;
+    if (render === 'landing') {
+      return <Listings 
+        onListingClick={this.handleSelectListing.bind(this)} 
+        onBookingClick={this.handleBookingClick.bind(this)}
+        listings={this.state.listings}
+      />;
+    } else if (render === 'selectedListing') {
+      return <SelectedListing 
+        onBackClick={this.handleBackClick.bind(this)} 
+        onBookingClick={this.handleBookingClick.bind(this)}
+        listing={this.state.listing}
+      />;
+    } else if (render === 'booking') {
+      return <Booking 
+        listing={this.state.listing}
+        onBackClick={this.handleBackClick.bind(this)} 
+        onConfirmClick={this.handleConfirmBooking.bind(this)}
+      />
+    }
+  }
 
-	handleSelectListing(listing) {
-		console.log('button clicked!', listing);
-		this.setState({
-			listing: listing,
-			currentRender: 'selectedListing'
-		});
-	}
+  handleSelectListing(listing) {
+    console.log('button clicked!', listing);
+    this.setState({
+      listing: listing,
+      currentRender: 'selectedListing'
+    });
+  }
 
-	handleBackClick() {
-		this.setState({
-			currentRender: 'landing'
-		})
-	}
+  handleBackClick() {
+    this.setState({
+      currentRender: 'landing'
+    })
+  }
 
-	handleBookingClick(listing) {
-		this.setState({
-			listing: listing,
-			currentRender: 'booking'
-		})
-	}
+  handleBookingClick(listing) {
+    this.setState({
+      listing: listing,
+      currentRender: 'booking'
+    })
+  }
 
-	handleConfirmBooking(listing) {
-		// send ajax post request to the server
-		console.log('listing', listing);
-		let data = [listing.id, this.state.currentUser.id];
-		console.log('data', data);
+  handleConfirmBooking(listing) {
+    let data = [listing.id, this.state.currentUser.id];
 
-		$.ajax({
-			type: 'POST',
-			url: '/confirm-booking',
-			dataType: 'application/json', 
-			data: {
-				booking: data
-			},
-			success: (data) => {
-				console.log('data successfully sent');
-				// if successful, 
-					// render button to say 'Booked!' on booking page
-					// pop-up alert to the user
-			},
-			error: (err) => {
-				console.log('failed booking', err);
-			}
-		})
+    $.ajax({
+      type: 'POST',
+      url: '/confirm-booking',
+      data: { booking: data },
+      success: (data) => {
+        alert('Your item was booked! Please contact your vendor to arrange a pickup/delivery'); 
+        // create button with state
+      },
+      error: (err) => {
+        console.log('failed booking', err);
+      }
+    })
 
-	}
+  }
 
   componentDidMount() {
     $.ajax({
