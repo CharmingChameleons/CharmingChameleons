@@ -5,6 +5,7 @@ import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
 var $ = require('jquery');
 
+
 class App extends React.Component {
 	constructor (props) {
 		super(props);
@@ -55,6 +56,7 @@ class App extends React.Component {
 			    <NavB/>
 			    {this.currentRender()}
 			    <Signup />
+
 			  </div>
 		)
 	}
