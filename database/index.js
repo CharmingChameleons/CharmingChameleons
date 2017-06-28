@@ -4,9 +4,9 @@ var Promise = require('bluebird');
 const url = require('url');
 
 let config = {
-  user: "postgres", // name of the user account
-  host: "localhost",
-  password: "test",
+  user: "sara", // name of the user account
+  //host: "localhost",
+  //password: "test",
   database: "shareio",
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
@@ -48,6 +48,26 @@ var pool = new pg.Pool(config)
   		}
  		)
  	},
+ 		//Input: replace the following with its values[name, description, cost, tags]
+ 	//Output: returns the id of the listing object created => [{id: 1}]
+ 	createListing: (params) => {
+		var queryString = 'INSERT INTO listings (name, description, cost, tags) VALUES ($1, $2, $3, $4) returning id'
+		var queryArgs = params
+
+		return new Promise (
+			(resolve, reject) => {
+				pool.query(queryString, queryArgs, (err, rows) => {
+					if (err) {
+						reject (err)
+						console.log(err);
+					} else {
+						console.log('added this item to DB');
+						resolve(JSON.parse(JSON.stringify(rows.rows)))
+					}
+				})
+			}
+		)
+	},
 
 	createBookings: (params) => {
 
