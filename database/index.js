@@ -13,6 +13,7 @@ let config = {
 
 if (process.env.DATABASE_URL) {
 
+
   const params = url.parse(process.env.DATABASE_URL);
   const auth = params.auth.split(':');
 
