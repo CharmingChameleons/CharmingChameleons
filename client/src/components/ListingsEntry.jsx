@@ -7,7 +7,7 @@ const ListingsEntry = (props) => (
     <div>
     <h4>{props.listing.name}</h4>
     <Col xs={6} md={4}>
-      <Thumbnail src={'./images/listings/' + props.listing.lenderId + '/1.jpg'} alt="242x200">
+      <Thumbnail src={'./images/listings/' + props.listing.id + '/1.jpg'} alt="242x200">
         <h3>{props.listing.description}</h3>
         <p>tags: {props.listing.tags}</p>
         <p>
