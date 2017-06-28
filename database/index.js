@@ -3,9 +3,9 @@ const pg = require('pg');
 const url = require('url');
 
 let config = {
-  user: "Priyanka", // name of the user account
-  //host: "localhost",
-  //password: "test",
+  user: "postgres", // name of the user account
+  host: "localhost",
+  password: "test",
   database: "shareio",
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
