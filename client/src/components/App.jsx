@@ -93,7 +93,6 @@ class App extends React.Component {
   }
 
   handleSelectListing(listing) {
-    console.log('button clicked!', listing);
     this.setState({
       listing: listing,
       currentRender: 'selectedListing'
@@ -120,7 +119,6 @@ class App extends React.Component {
   }
 
   handleLogoClick() {
-    console.log('boom boom');
     this.setState({
       currentRender: 'landing'
     })
