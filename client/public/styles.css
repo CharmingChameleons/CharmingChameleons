@@ -12,8 +12,18 @@
 
 
 .listing {
+  display: block;
+  margin: auto;
   height: 500px;
   width: auto;
   border: solid 1px #cccccc;
+}
 
+.listing-title {
+  text-align: center;
+}
+
+.button-book {
+  display: block;
+  margin: auto;
 }
