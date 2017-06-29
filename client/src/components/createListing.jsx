@@ -28,6 +28,7 @@ const CreateListing = React.createClass({
   // },
 
   handleChange(e) {
+<<<<<<< HEAD
     // this.setState({
     //   name: $('#name').val(),
     //   description: $('#description').val(),
@@ -44,6 +45,18 @@ const CreateListing = React.createClass({
     this.postData(p);
   },
   postData(p) {
+=======
+    this.setState({
+      name: $('#name').val(),
+      description: $('#description').val(),
+      cost: $('#cost').val(),
+      tags: $('#tags').val(),
+      images: $('#formControlsFile')[0].files
+    })
+    this.postData();
+  },
+  postData() {
+>>>>>>> 5d628fc3697a02831e0226d1690a830005cdf1f4
     // image stuff
     // var _data = new FormData();
     // var imagedata = document.querySelector('input[type="file"]').files[0];
@@ -60,6 +73,7 @@ const CreateListing = React.createClass({
       data: {
         //'images': _data,
         'params': p},
+
       success: (data) => {
 
         console.log('success', data)

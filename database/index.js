@@ -48,6 +48,7 @@ var pool = new pg.Pool(config)
   		}
  		)
  	},
+
    getAvailableListings: () => {
     return new Promise (
       (resolve, reject) => {
@@ -82,6 +83,8 @@ var pool = new pg.Pool(config)
 			}
 		)
 	},
+	
+
 	
 
 	createBookings: (params) => {

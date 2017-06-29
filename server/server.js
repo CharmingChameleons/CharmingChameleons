@@ -9,6 +9,7 @@ var app = express();
 var util = require('./lib/hashUtils');
 var middleware = require('./middleware');
 
+
 var cors = require('cors');
 
 
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, '../client/public')));
 app.use(cors());
 
 app.set('trust proxy', 1) // trust first proxy
+
 
 
 //Initialize passport and express
@@ -142,6 +144,7 @@ app.post('/confirm-booking',
 			res.status(500).send('Booking not created');
 		});
 });
+
 
 
 
