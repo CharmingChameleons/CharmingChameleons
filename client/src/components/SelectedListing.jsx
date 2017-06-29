@@ -8,8 +8,6 @@ const SelectedListing = (props) => (
   <div>
     <Grid>
     <Button onClick={ function() {props.onBackClick()} } bsStyle="primary">Back</Button> 
-    <br/>
-    <br/>
     <Panel bsStyle="primary">
       <h2 className='listing-title'>{props.listing.name}</h2>
     </Panel>
