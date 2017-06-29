@@ -9,15 +9,12 @@ var app = express();
 var util = require('./lib/hashUtils');
 var middleware = require('./middleware');
 
-<<<<<<< HEAD
 var cors = require('cors');
-=======
+
 
 const passport = require('passport');   
 const LocalStrategy = require('passport-local').Strategy
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
->>>>>>> create lisitng works except image
 const bodyParser = require('body-parser');
 
 var cookieSession = require('cookie-session')
@@ -127,15 +124,10 @@ app.get('/listings',
 (req, res) => {
   db.getAvailableListings()
     .then((data) => {
-<<<<<<< HEAD
-=======
-     // console.log('grabbed all listings', data);
->>>>>>> create lisitng works except image
       res.end(JSON.stringify(data));
     });
 });
 
-<<<<<<< HEAD
 app.post('/confirm-booking',
 (req, res) => {
 	for (let i = 0; i < req.body.booking.length; i++) {
@@ -152,7 +144,7 @@ app.post('/confirm-booking',
 });
 
 
-=======
+
 app.post('/createlisting', 
 (req, res) => {
   db.createListing(req.body.params)
@@ -161,7 +153,6 @@ app.post('/createlisting',
       res.end(JSON.stringify(data));
     });
 });
->>>>>>> create lisitng works except image
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);

@@ -1,4 +1,3 @@
-
 import React from 'react'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
@@ -29,16 +28,22 @@ const CreateListing = React.createClass({
   // },
 
   handleChange(e) {
-    this.setState({
-      name: $('#name').val(),
-      description: $('#description').val(),
-      cost: $('#cost').val(),
-      tags: $('#tags').val(),
-      images: $('#formControlsFile')[0].files
-    })
-    this.postData();
+    // this.setState({
+    //   name: $('#name').val(),
+    //   description: $('#description').val(),
+    //   cost: $('#cost').val(),
+    //   tags: $('#tags').val(),
+    //   images: $('#formControlsFile')[0].files
+    // })
+    var p = [];
+    p.push($('#name').val());
+    p.push($('#description').val());
+    p.push($('#cost').val());
+    p.push($('#tags').val());
+    //p.push($('#formControlsFile')[0].files);
+    this.postData(p);
   },
-  postData() {
+  postData(p) {
     // image stuff
     // var _data = new FormData();
     // var imagedata = document.querySelector('input[type="file"]').files[0];
@@ -54,12 +59,7 @@ const CreateListing = React.createClass({
       dataType: 'json',
       data: {
         //'images': _data,
-        'params': 
-          [state.name,
-          state.description,
-          state.cost,
-          state.tags
-          ]},
+        'params': p},
       success: (data) => {
 
         console.log('success', data)
