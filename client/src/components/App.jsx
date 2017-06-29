@@ -135,6 +135,7 @@ class App extends React.Component {
 			    <NavB 
             login={this.state.login} 
             loginUser={this.loginUser} 
+            onLogoClick={this.handleLogoClick.bind(this)} 
             onCreateClick={this.handleCreateListing.bind(this)}
           />
 			    {this.currentRender()}
