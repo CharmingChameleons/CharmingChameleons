@@ -2,8 +2,7 @@ const path = require('path');
 var cors = require('cors');
 var express = require('express');
 var db = require('../database');
-var session = require('./models/session');
-
+var sessions = require('./models/session');
 
 var app = express();
 var util = require('./lib/hashUtils');
@@ -11,12 +10,14 @@ var middleware = require('./middleware');
 
 
 var cors = require('cors');
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 var cookieSession = require('cookie-session')
+
 
 var port = process.env.PORT || 3000;
 
@@ -65,6 +66,7 @@ app.post('/login', function(req, res, next) {
 					req.session.id = session.sessionId //token based on user-agent
 					req.session.username = session.username   //username
 					req.session.save();
+
 					//store in db?? No for now
 					console.log('In app.post/Login before res')
 		    		res.status(201).send(user)
@@ -122,6 +124,8 @@ app.post('/signup', function(req, res, next) {
 				req.session.username = session.username   //username
 				req.session.save()
 				res.status(201).send(user)
+
+
 			})
 			.catch((err) => {
 				console.log('err in creating new user', err)
@@ -144,6 +148,7 @@ app.get('/listings',
 });
 
 app.post('/confirm-booking', middleware.authenticate,
+
 (req, res) => {
 	for (let i = 0; i < req.body.booking.length; i++) {
 		req.body.booking[i] = parseInt(req.body.booking[i]);
@@ -165,7 +170,8 @@ app.get('/userlisting', (req, res) => {
       console.log('grabbed all listings for ...', data);
       res.end(JSON.stringify(data));
     });
-})
+});
+
 
 
 

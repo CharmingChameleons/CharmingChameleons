@@ -75,9 +75,17 @@ class App extends React.Component {
         listing={this.state.listing}
         onBackClick={this.handleBackClick.bind(this)}
         onConfirmClick={this.handleConfirmBooking.bind(this)}
+<<<<<<< 8808f2b799787453ebba8307b4d2753be5541097
       />
     } else if (render === 'createlisting') {
       return <CreateListing />
+=======
+      />;
+    } else if(render === 'profile'){
+      return <Profile
+        onBackClick={this.handleBackClick.bind(this)}
+      />;
+>>>>>>> git hell
     }
 
   }
@@ -94,6 +102,13 @@ class App extends React.Component {
       currentRender: 'createlisting'
     })
   }
+
+  handleSelectProfile() {
+    this.setState({
+      currentRender: 'profile'
+    })
+  }
+
 
   handleBackClick() {
     this.setState({
@@ -166,6 +181,7 @@ class App extends React.Component {
             resetLoginModal={this.resetLoginModal}
             onLogoClick={this.handleLogoClick.bind(this)}
             onCreateClick={this.handleCreateListing.bind(this)}
+            onProfile={()=>{this.handleSelectProfile}}
           />
 			    {this.currentRender()}
 			    <Signup />

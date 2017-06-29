@@ -11,14 +11,9 @@
     "start": "node server/server.js",
     "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
     "start-test": "nodemon server/server.js",
-<<<<<<< ff51f73f7a107526f025e935120c0f2f0cad2ec8
     "build-test": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors --watch",
     "heroku-postbuild": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
     "build-database": "psql -U postgres -d shareio -a -f schemas.sql -h 127.0.0.1 -W"
-=======
-    "dev-build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors --watch",
-    "heroku-postbuild": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors"
->>>>>>> create Profile
   },
   "dependencies": {
     "babel-cli": "^6.7.5",
