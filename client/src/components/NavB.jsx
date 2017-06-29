@@ -18,7 +18,7 @@ class NavB extends React.Component {
       <Navbar inverse collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#">$hare.io</a>
+              <a href='#' onClick={this.props.onLogoClick}>$hare.io</a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

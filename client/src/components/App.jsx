@@ -80,6 +80,13 @@ class App extends React.Component {
     })
   }
 
+  handleLogoClick() {
+    console.log('boom boom');
+    this.setState({
+      currentRender: 'landing'
+    })
+  }
+
   handleBookingClick(listing) {
     this.setState({
       listing: listing,
@@ -128,6 +135,7 @@ class App extends React.Component {
 			    <NavB 
             login={this.state.login} 
             loginUser={this.loginUser} 
+            onLogoClick={this.handleLogoClick.bind(this)} 
             onCreateClick={this.handleCreateListing.bind(this)}
           />
 			    {this.currentRender()}
