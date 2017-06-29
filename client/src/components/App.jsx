@@ -4,7 +4,10 @@ import Listings from './Listings.jsx'
 import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
 import Booking from './Booking.jsx'
+import CreateListing from './createListing.jsx'
+
 var $ = require('jquery');
+
 
 class App extends React.Component {
 	constructor (props) {
@@ -52,7 +55,10 @@ class App extends React.Component {
         onBackClick={this.handleBackClick.bind(this)} 
         onConfirmClick={this.handleConfirmBooking.bind(this)}
       />
+    } else if (render === 'createlisting') {
+      return <CreateListing />
     }
+
   }
 
   handleSelectListing(listing) {
@@ -61,6 +67,11 @@ class App extends React.Component {
       listing: listing,
       currentRender: 'selectedListing'
     });
+  }
+  handleCreateListing() {
+    this.setState({
+      currentRender: 'createlisting'
+    })
   }
 
   handleBackClick() {
@@ -91,8 +102,9 @@ class App extends React.Component {
         console.log('failed booking', err);
       }
     })
-
   }
+
+
 
   componentDidMount() {
     $.ajax({
@@ -113,8 +125,13 @@ class App extends React.Component {
 	render () {
 		return (
 			  <div>
-			    <NavB login={this.state.login} loginUser={this.loginUser} />
+			    <NavB 
+            login={this.state.login} 
+            loginUser={this.loginUser} 
+            onCreateClick={this.handleCreateListing.bind(this)}
+          />
 			    {this.currentRender()}
+
 			  </div>
 		)
 	}
