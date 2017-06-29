@@ -28,7 +28,7 @@ const CreateListing = React.createClass({
   // },
 
   handleChange(e) {
-<<<<<<< HEAD
+
     // this.setState({
     //   name: $('#name').val(),
     //   description: $('#description').val(),
