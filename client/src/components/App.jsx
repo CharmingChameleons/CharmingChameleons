@@ -3,12 +3,9 @@ import NavB from './NavB.jsx'
 import Listings from './Listings.jsx'
 import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
-<<<<<<< HEAD
 import Booking from './Booking.jsx'
 import CreateListing from './CreateListing.jsx'
-=======
-import CreateListing from './createListing.jsx'
->>>>>>> 5d628fc3697a02831e0226d1690a830005cdf1f4
+
 var $ = require('jquery');
 
 
