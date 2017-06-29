@@ -2,7 +2,7 @@ const path = require('path');
 var cors = require('cors');
 var express = require('express');
 var db = require('../database');
-var sessions = require('./models/session');
+var session = require('./models/session');
 
 var app = express();
 var util = require('./lib/hashUtils');

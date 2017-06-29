@@ -34,8 +34,13 @@ class NavB extends React.Component {
                 <MenuItem eventKey={3.3}>Separated link</MenuItem>
               </NavDropdown>
             </Nav>
-            <LoginNav login={this.props.login} loginUser={this.props.loginUser} promptLoginModal={this.props.promptLoginModal} 
-                      resetLoginModal={this.props.resetLoginModal}/>
+            <LoginNav
+              login={this.props.login}
+              loginUser={this.props.loginUser}
+              promptLoginModal={this.props.promptLoginModal}
+              resetLoginModal={this.props.resetLoginModal}
+              handleSelectProfile={this.props.handleSelectProfile}
+              />
           </Navbar.Collapse>
         </Navbar>
     )
