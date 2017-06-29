@@ -4,7 +4,7 @@ import Listings from './Listings.jsx'
 import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
 import Booking from './Booking.jsx'
-import CreateListing from './CreateListing.jsx'
+import CreateListing from './createListing.jsx'
 
 var $ = require('jquery');
 
