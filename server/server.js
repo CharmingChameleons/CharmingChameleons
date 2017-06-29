@@ -1,4 +1,5 @@
 const path = require('path');
+var cors = require('cors');
 var express = require('express');
 var db = require('../database');
 var session = require('./models/session');
@@ -8,13 +9,21 @@ var app = express();
 var util = require('./lib/hashUtils');
 var middleware = require('./middleware');
 
+
 var cors = require('cors');
+
+
+const passport = require('passport');   
+const LocalStrategy = require('passport-local').Strategy
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 var cookieSession = require('cookie-session')
 
 var port = process.env.PORT || 3000;
 
+app.use(cors());
+app.options('*', cors())
 //Use body parser for parsing the request querystring
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,6 +31,13 @@ app.use(express.static(path.join(__dirname, '../client/public')));
 app.use(cors());
 
 app.set('trust proxy', 1) // trust first proxy
+
+
+
+//Initialize passport and express
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use(cookieSession({
   name: 'session',
@@ -127,6 +143,18 @@ app.post('/confirm-booking',
 		.catch((err) => {
 			res.status(500).send('Booking not created');
 		});
+});
+
+
+
+
+app.post('/createlisting', 
+(req, res) => {
+  db.createListing(req.body.params)
+    .then((data) => {
+      console.log('Created an entry');
+      res.end(JSON.stringify(data));
+    });
 });
 
 app.listen(port, function(req, res) {
