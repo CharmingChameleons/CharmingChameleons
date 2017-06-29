@@ -56,7 +56,7 @@ const CreateListing = React.createClass({
     var state = this.state;
     $.ajax({
 
-      url: 'http://127.0.0.1:3000/createlisting',
+      url: '/createlisting',
       method: 'POST',
       dataType: 'json',
       data: {
