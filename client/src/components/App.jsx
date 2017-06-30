@@ -10,6 +10,7 @@ import Profile from './Profile.jsx'
 const $ = require('jquery');
 
 
+
 class App extends React.Component {
 	constructor (props) {
 		super(props);
@@ -77,8 +78,7 @@ class App extends React.Component {
         onConfirmClick={this.handleConfirmBooking.bind(this)}
       />
     } else if (render === 'createlisting') {
-      return <CreateListing />
-      />;
+      return <CreateListing />;
     } else if(render === 'profile'){
       return <Profile
         onBackClick={this.handleBackClick.bind(this)}
@@ -101,6 +101,7 @@ class App extends React.Component {
   }
 
   handleSelectProfile() {
+    console.log('GO to Profile')
     this.setState({
       currentRender: 'profile'
     })
@@ -178,10 +179,9 @@ class App extends React.Component {
             resetLoginModal={this.resetLoginModal}
             onLogoClick={this.handleLogoClick.bind(this)}
             onCreateClick={this.handleCreateListing.bind(this)}
-            onProfile={this.handleSelectProfile.bind(this)}
+            handleSelectProfile={this.handleSelectProfile.bind(this)}
           />
 			    {this.currentRender()}
-			    <Signup />
 
 			  </div>
 		)

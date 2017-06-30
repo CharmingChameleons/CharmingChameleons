@@ -2,6 +2,8 @@ import React from 'react'
 import Col from 'react-bootstrap/lib/Col'
 import Thumbnail from 'react-bootstrap/lib/Thumbnail'
 import Button from 'react-bootstrap/lib/Button'
+import {deleteListing} from '../helpers/requests.js';
+
 
 const ListingsEntry = (props) => (
     <div>
@@ -13,6 +15,8 @@ const ListingsEntry = (props) => (
         <p>
           <Button onClick={ function() { props.onBookingClick(props.listing) } } bsStyle="primary">Book</Button>&nbsp;
           <Button onClick={ function() { props.onListingClick(props.listing) } } bsStyle="default">Show listing</Button>
+          <Button onClick={ function() { deleteListing(props.listing.id) } } bsStyle="default">deleteListing</Button>
+
         </p>
       </Thumbnail>
     </Col>
