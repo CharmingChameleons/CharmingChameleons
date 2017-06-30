@@ -36,7 +36,7 @@ module.exports = {
   getAllListings: () => {
     return new Promise (
       (resolve, reject) => {
-        pool.query('SELECT * from listings', function (err, result) {
+        pool.query('select listings.id, listings.name, listings.description, listings.cost, listings.tags, listings.lenderid, users.username from listings inner join users on users.id = listings.lenderid', function (err, result) {
             if (err) {
               console.log(err);
               reject(err);
@@ -62,7 +62,6 @@ module.exports = {
     )
   },
 
-<<<<<<< a35e0a86e3b31c0b77dea6b3a4e7503d168be0bd
  		//Input: replace the following with its values[name, description, cost, tags]
  	//Output: returns the id of the listing object created => [{id: 1}]
  	createListing: (params) => {
@@ -106,9 +105,9 @@ module.exports = {
 			}
 		)
 	},
-=======
+
   createListing: (params) => {
-    var queryString = 'INSERT INTO listings (name, description, cost, tags) VALUES ($1, $2, $3, $4) returning id'
+    var queryString = 'INSERT INTO listings (name, description, cost, tags, lenderId) VALUES ($1, $2, $3, $4, $5) returning id'
     var queryArgs = params
 
     return new Promise (
@@ -142,7 +141,6 @@ module.exports = {
       }
     )
   },
->>>>>>> delete listing done
 
   //Input: Replace the following with its values[userid]
   //Output: Returns all the listings that belongs to one user-> array

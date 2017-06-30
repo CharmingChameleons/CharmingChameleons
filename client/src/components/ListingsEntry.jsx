@@ -11,6 +11,7 @@ const ListingsEntry = (props) => (
     <h4>{props.listing.name}</h4>
       <Thumbnail src={'./images/listings/' + props.listing.id + '/1.jpg'} alt="242x200">
         <h4>{props.listing.description}</h4>
+        <p>lender: {props.listing.username}</p>
         <p>tags: {props.listing.tags}</p>
         <p>
           <Button onClick={ function() { props.onBookingClick(props.listing) } } bsStyle="primary">Book</Button>&nbsp;

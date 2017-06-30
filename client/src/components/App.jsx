@@ -78,7 +78,9 @@ class App extends React.Component {
         onConfirmClick={this.handleConfirmBooking.bind(this)}
       />
     } else if (render === 'createlisting') {
-      return <CreateListing />;
+      return <CreateListing
+        currentUserId={this.state.currentUser.id}
+        />;
     } else if(render === 'profile'){
       return <Profile
         onBackClick={this.handleBackClick.bind(this)}

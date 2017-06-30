@@ -16,11 +16,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-var cookieSession = require('cookie-session')
-<<<<<<< a35e0a86e3b31c0b77dea6b3a4e7503d168be0bd
+const cookieSession = require('cookie-session')
 
-=======
->>>>>>> delete listing done
 
 var port = process.env.PORT || 3000;
 
@@ -66,7 +63,7 @@ app.post('/login', function(req, res, next) {
 				}
 				session.createNewSession(req.headers['user-agent'], req.body.username)
 				.then((session) => {
-					req.session.id = session.sessionId //token based on user-agent
+					//req.session.id = session.sessionId //token based on user-agent
 					req.session.username = session.username   //username
 					req.session.save();
 
@@ -144,13 +141,13 @@ app.post('/signup', function(req, res, next) {
 
 app.get('/listings',
 (req, res) => {
-  db.getAvailableListings()
+  db.getAllListings()
     .then((data) => {
       res.end(JSON.stringify(data));
     });
 });
 
-app.post('/confirm-booking', middleware.authenticate,
+app.post('/confirm-booking',
 
 (req, res) => {
 	for (let i = 0; i < req.body.booking.length; i++) {
