@@ -21,12 +21,12 @@ module.exports = {
 
 				    		//Verify whether hash stored in db is same as hash created by password
 				    		if (util.compareHash(password, user[0].hash, user[0].salt)) {
-				    			resolve(true)
+				    			resolve(user[0])
 				    		} else {
 				    			resolve(false)
 				    		}
 
-				    		resolve(true)
+				    		resolve(user[0])
 				    	}
 				    	//return user
 				    })
@@ -37,11 +37,16 @@ module.exports = {
 	},
 
 	authenticate: (req, res, next) => {
+		console.log('In authenticate')
+
+		console.log('req.session.sessionId', req.session.sessionId)
+		console.log('req.session.username', req.session.username)
+		console.log(util.compareHash(req.headers['user-agent'], req.session.sessionId, req.session.username))
 
 		if (util.compareHash(req.headers['user-agent'], req.session.sessionId, req.session.username)) {
 			next()
 		} else {
-			res.redirect('/login');
+			res.status(500).send();
 		}		
 	}
 } 

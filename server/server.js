@@ -44,6 +44,10 @@ app.use(cookieSession({
   keys: ['sessionmgmt'],
 
   // Cookie Options
+  cookie: { 
+  	httpOnly: true,
+  	secure: true
+   },
   maxAge: 5 * 60 * 60 * 1000 // 5 hours
 }))
 
@@ -53,14 +57,19 @@ app.post('/login', function(req, res, next) {
 	middleware.authenticateLogin(req.body.username, req.body.password)
 		.then((result) => {
 			//If yes, create/overwrite session details
-			if (result === true) {
+			if (result !== false) {
+				var user = {
+					id: result.id,
+					username: result.username
+				}
 				session.createNewSession(req.headers['user-agent'], req.body.username)
 				.then((session) => {
 					req.session.id = session.sessionId //token based on user-agent
 					req.session.username = session.username   //username 
+					req.session.save();
 					//store in db?? No for now
 					console.log('In app.post/Login before res')
-		    		res.status(201).send('Login successful')
+		    		res.status(201).send(user)
 				})
 				.catch((err) => {
 					res.redirect('/')
@@ -82,6 +91,7 @@ app.post('/login', function(req, res, next) {
 
 app.post('/signup', function(req, res, next) {
 
+	var user = {}
 	middleware.authenticateLogin(req.body.username, req.body.password)
 	.then((result) => {
 		if(result) {
@@ -100,15 +110,20 @@ app.post('/signup', function(req, res, next) {
 			args.push(salt)
 			db.createUser(args)
 			.then((data) => {
+				console.log('signup', data[0].id)
+				user = {
+					id: data[0].id,
+					username: req.body.username
+				};
 				console.log('user created')
 				//Create new session cookie
-				console.log(req.headers['user-agent'])
 				return session.createNewSession(req.headers['user-agent'], req.body.username)
 			})
 			.then((session) => {
 				req.session.id = session.sessionId 		  //token based on user-agent
 				req.session.username = session.username   //username 
-				res.status(201).send('User created successfully')
+				req.session.save()
+				res.status(201).send(user)
 			})
 			.catch((err) => {
 				console.log('err in creating new user', err)
@@ -122,7 +137,7 @@ app.post('/signup', function(req, res, next) {
 	})
 });
 
-app.get('/listings', 
+app.get('/listings',
 (req, res) => {
   db.getAvailableListings()
     .then((data) => {
@@ -130,7 +145,7 @@ app.get('/listings',
     });
 });
 
-app.post('/confirm-booking',
+app.post('/confirm-booking', middleware.authenticate, 
 (req, res) => {
 	for (let i = 0; i < req.body.booking.length; i++) {
 		req.body.booking[i] = parseInt(req.body.booking[i]);
