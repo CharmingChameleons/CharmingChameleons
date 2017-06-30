@@ -21,12 +21,12 @@ module.exports = {
 
 				    		//Verify whether hash stored in db is same as hash created by password
 				    		if (util.compareHash(password, user[0].hash, user[0].salt)) {
-				    			resolve(true)
+				    			resolve(user[0])
 				    		} else {
 				    			resolve(false)
 				    		}
 
-				    		resolve(true)
+				    		resolve(user[0])
 				    	}
 				    	//return user
 				    })

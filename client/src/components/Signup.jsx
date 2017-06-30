@@ -49,9 +49,9 @@ class Signup extends React.Component{
 				'username': username,
 				'password': password
 			},
-			success: (data) => {
-				console.log('success', data)
-				loginUser()
+			success: (user) => {
+				console.log('success', user)
+				loginUser(user)
 			},
 			error: (err) => {
 				console.log('error', err)

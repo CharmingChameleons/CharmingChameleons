@@ -31,12 +31,16 @@ class App extends React.Component {
     this.setPromptLoginModal = this.setPromptLoginModal.bind(this)
 	}
 
-	loginUser() {
+	loginUser(user) {
 		console.log('reached loginUser')
 		this.setState({
-			login: true
+			login: true,
+      currentUser: {
+        id: user.id,
+        username: user.username
+      }
 		})
-    console.log('login', this.state.login);
+    console.log('login, currentUser', this.state.login, this.state.currentUser);
 	}
 
   resetLoginModal() {
