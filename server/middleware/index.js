@@ -37,11 +37,16 @@ module.exports = {
 	},
 
 	authenticate: (req, res, next) => {
+		console.log('In authenticate')
+
+		console.log('req.session.sessionId', req.session.sessionId)
+		console.log('req.session.username', req.session.username)
+		console.log(util.compareHash(req.headers['user-agent'], req.session.sessionId, req.session.username))
 
 		if (util.compareHash(req.headers['user-agent'], req.session.sessionId, req.session.username)) {
 			next()
 		} else {
-			res.redirect('/login');
+			res.status(500).send();
 		}		
 	}
 } 

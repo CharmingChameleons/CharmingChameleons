@@ -55,6 +55,12 @@ class LoginNav extends React.Component {
 	}
 
 	render () {
+
+		if (this.props.promptLoginModal) {
+			this.props.resetLoginModal()
+			this.handleLogin()
+		}
+
 		if (this.props.login) {
 
 			return (

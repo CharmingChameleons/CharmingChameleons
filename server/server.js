@@ -44,6 +44,10 @@ app.use(cookieSession({
   keys: ['sessionmgmt'],
 
   // Cookie Options
+  cookie: { 
+  	httpOnly: true,
+  	secure: true
+   },
   maxAge: 5 * 60 * 60 * 1000 // 5 hours
 }))
 
@@ -58,6 +62,7 @@ app.post('/login', function(req, res, next) {
 				.then((session) => {
 					req.session.id = session.sessionId //token based on user-agent
 					req.session.username = session.username   //username 
+					req.session.save();
 					//store in db?? No for now
 					console.log('In app.post/Login before res')
 		    		res.status(201).send('Login successful')
@@ -106,8 +111,9 @@ app.post('/signup', function(req, res, next) {
 				return session.createNewSession(req.headers['user-agent'], req.body.username)
 			})
 			.then((session) => {
-				req.session.id = session.sessionId 		  //token based on user-agent
-				req.session.username = session.username   //username 
+				req.session.cookie.id = session.sessionId 		  //token based on user-agent
+				req.session.cookie.username = session.username   //username 
+				req.session.save()
 				res.status(201).send('User created successfully')
 			})
 			.catch((err) => {
@@ -122,7 +128,7 @@ app.post('/signup', function(req, res, next) {
 	})
 });
 
-app.get('/listings', 
+app.get('/listings',
 (req, res) => {
   db.getAvailableListings()
     .then((data) => {
@@ -130,7 +136,7 @@ app.get('/listings',
     });
 });
 
-app.post('/confirm-booking',
+app.post('/confirm-booking', middleware.authenticate, 
 (req, res) => {
 	for (let i = 0; i < req.body.booking.length; i++) {
 		req.body.booking[i] = parseInt(req.body.booking[i]);

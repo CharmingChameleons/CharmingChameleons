@@ -48,8 +48,8 @@ class Login extends React.Component{
 				'username': username,
 				'password': password
 			},
-			success: (data) => {
-				console.log('success', data)
+			success: (response) => {
+				console.log('success', header, data)
 				loginUser()
 			},
 			error: (err) => {

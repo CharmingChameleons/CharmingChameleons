@@ -22,9 +22,13 @@ class App extends React.Component {
       currentUser: {
         id: 3,
         username: 'Shihao',
-      }
+      },
+      promptLoginModal: false
     };
+
     this.loginUser = this.loginUser.bind(this)
+    this.resetLoginModal = this.resetLoginModal.bind(this)
+    this.setPromptLoginModal = this.setPromptLoginModal.bind(this)
 	}
 
 	loginUser() {
@@ -34,6 +38,18 @@ class App extends React.Component {
 		})
     console.log('login', this.state.login);
 	}
+
+  resetLoginModal() {
+    this.setState({
+      promptLoginModal: false
+    })
+  }
+
+  setPromptLoginModal() {
+    this.setState({
+      promptLoginModal: true
+    })
+  }
 
   currentRender() {
     var render = this.state.currentRender;
@@ -96,19 +112,23 @@ class App extends React.Component {
 
   handleConfirmBooking(listing) {
     let data = [listing.id, this.state.currentUser.id];
-
-    $.ajax({
-      type: 'POST',
-      url: '/confirm-booking',
-      data: { booking: data },
-      success: (data) => {
-        alert('Your item was booked! Please contact your vendor to arrange a pickup/delivery'); 
-        // create button with state
-      },
-      error: (err) => {
-        console.log('failed booking', err);
-      }
-    })
+ 
+    if (this.state.login) {
+      $.ajax({
+        type: 'POST',
+        url: '/confirm-booking',
+        data: { booking: data },
+        success: (data) => {
+          console.log('data', data);
+          // create button with state
+        },
+        error: (err) => {
+          console.log('failed booking', err);
+        }
+      })
+    } else {
+        this.setPromptLoginModal()
+    }
   }
 
 
@@ -132,12 +152,9 @@ class App extends React.Component {
 	render () {
 		return (
 			  <div>
-			    <NavB 
-            login={this.state.login} 
-            loginUser={this.loginUser} 
-            onLogoClick={this.handleLogoClick.bind(this)} 
-            onCreateClick={this.handleCreateListing.bind(this)}
-          />
+			    <NavB login={this.state.login} loginUser={this.loginUser} promptLoginModal={this.state.promptLoginModal} 
+            resetLoginModal={this.resetLoginModal} onLogoClick={this.handleLogoClick.bind(this)} 
+            onCreateClick={this.handleCreateListing.bind(this)}/>
 			    {this.currentRender()}
 
 			  </div>
