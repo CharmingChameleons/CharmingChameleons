@@ -6,7 +6,7 @@ import HelpBlock from 'react-bootstrap/lib/HelpBlock'
 import Button from 'react-bootstrap/lib/Button'
 import Col from 'react-bootstrap/lib/Col'
 var $ = require('jquery');
-
+import Dropzone from 'react-dropzone'
 
 const CreateListing = React.createClass({
   getInitialState() {
@@ -74,6 +74,25 @@ const CreateListing = React.createClass({
     
   },
 
+  uploadFile(files) {
+    let data = new FormData();
+    data.append('image', files[0])
+
+     $.ajax({
+      url: '/createlistingimage',
+      method: 'POST',
+      processData: false,
+      contentType: false,
+      data: data,
+      success: (data) => {
+        console.log('success', data)
+      },
+      error: (err) => {
+        console.log('error', err)
+      } 
+    })
+  },
+
 
   render() {
     return (
@@ -115,12 +134,9 @@ const CreateListing = React.createClass({
             <Col componentClass={ControlLabel} sm={2}>
                <h3> Add Images </h3>
             </Col>
-           <FormControl
-              id="formControlsFile"
-              type="file"
-              label="File"
-              help="Upload image"
-            />
+        
+
+            <Dropzone onDrop={this.uploadFile} name='image'/>
 
            <Col componentClass={ControlLabel} sm={2}>
               <h3> Enter Tags </h3>

@@ -3,7 +3,7 @@ const pg = require('pg');
 const url = require('url');
 
 let config = {
-  user: "Priyanka", // name of the user account
+  user: "sara", // name of the user account
   //host: "localhost",
   //password: "test",
   database: "shareio",
