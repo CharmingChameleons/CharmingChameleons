@@ -6,6 +6,26 @@ var session = require('./models/session');
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
 
+var multer  = require('multer')
+
+
+
+
+var storage = multer.diskStorage({
+	destination: function(req, file, callback) {
+		callback(null, './public/images/listings')
+	},
+	filename: function(req, file, callback) {
+		console.log(file)
+		callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+	}
+})
+
+
+
+//var upload = multer({ dest: 'uploads/' })
+
+
 var app = express();
 var util = require('./lib/hashUtils');
 var middleware = require('./middleware');
@@ -194,6 +214,21 @@ app.delete('/deletebooking',
       console.log('booking deleted');
       res.end(JSON.stringify(data));
     });
+});
+
+//var type = upload.single('image');
+
+app.post('/createlistingimage', (req, res) => {
+
+	var upload = multer({
+		storage: storage
+	}).single('image')
+	upload(req, res, function(err) {
+		res.end('File is uploaded')
+	})
+
+	// console.log(req.file);
+ // 	res.end();
 });
 
 app.listen(port, function(req, res) {
