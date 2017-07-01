@@ -51,15 +51,6 @@ class CreateListing extends React.Component{
   }
 
   postData(p) {
-
-    // image stuff
-    // var _data = new FormData();
-    // var imagedata = document.querySelector('input[type="file"]').files[0];
-    // //var imagedata = $('#formControlsFile')[0].files;
-    // console.log(imagedata);
-    // _data.append("data", imagedata);
-    console.log('createlisting params',p);
-
     var state = this.state;
     $.ajax({
 
@@ -84,6 +75,7 @@ class CreateListing extends React.Component{
   uploadFile(files) {
     let data = new FormData();
     data.append('image', files[0])
+    data.append('p', ['s', 's',22,'blue'])
 
      $.ajax({
       url: '/createlistingimage',
@@ -97,7 +89,7 @@ class CreateListing extends React.Component{
       error: (err) => {
         console.log('error', err)
       } 
-    })
+    }, 'json')
   },
 
 
@@ -143,7 +135,7 @@ class CreateListing extends React.Component{
             </Col>
         
 
-            <Dropzone onDrop={this.uploadFile} name='image'/>
+            <Dropzone onDrop = {this.uploadFile} name='image'/>
 
            <Col componentClass={ControlLabel} sm={2}>
               <h3> Enter Tags </h3>

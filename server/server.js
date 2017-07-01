@@ -12,7 +12,7 @@ var multer  = require('multer')
 
 var storage = multer.diskStorage({
 	destination: function(req, file, callback) {
-		callback(null, './public/images/listings')
+		callback(null, './client/public/images/listings')
 	},
 	filename: function(req, file, callback) {
 		console.log(file)
@@ -211,7 +211,9 @@ app.delete('/deletelisting', (req, res) => {
 
 app.post('/createlisting',
 (req, res) => {
+	req.body.params
   db.createListing(req.body.params)
+  console.log()
     .then((data) => {
       console.log('Created an entry');
       res.end(JSON.stringify(data));
@@ -221,13 +223,17 @@ app.post('/createlisting',
 //var type = upload.single('image');
 
 app.post('/createlistingimage', (req, res) => {
-
+console.log(req);
 	var upload = multer({
 		storage: storage
 	}).single('image')
 	upload(req, res, function(err) {
+		console.log('file-->',req.file)
 		res.end('File is uploaded')
 	})
+	// need to send more data with formdata
+	//on the other thought I assume formdata sends the right thing
+	//and try access it here 
 
 	// console.log(req.file);
  // 	res.end();
