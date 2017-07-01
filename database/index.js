@@ -145,7 +145,8 @@ module.exports = {
   //Input: Replace the following with its values[userid]
   //Output: Returns all the listings that belongs to one user-> array
   getListingsForUser: (params) => {
-    var queryString = 'SELECT * FROM listings LEFT OUTER JOIN bookings \
+    var queryString = 'SELECT listings.id, listings.name, listings.description, listings.cost,\
+              listings.tags, listings.lenderid FROM listings LEFT OUTER JOIN bookings \
               ON (listings.id = bookings.listingId) \
                 WHERE listings.lenderId = $1'
     var queryArgs = params

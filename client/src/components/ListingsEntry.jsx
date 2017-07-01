@@ -16,8 +16,9 @@ const ListingsEntry = (props) => (
         <p>
           <Button onClick={ function() { props.onBookingClick(props.listing) } } bsStyle="primary">Book</Button>&nbsp;
           <Button onClick={ function() { props.onListingClick(props.listing) } } bsStyle="default">Show listing</Button>
-          <Button onClick={ function() { deleteListing(props.listing.id) } } bsStyle="default">deleteListing</Button>
-
+          {props.currentUserId === props.listing.lenderid  &&
+            <Button onClick={ function() { deleteListing(props.listing.id) } } bsStyle="default">deleteListing</Button>
+          }
         </p>
       </Thumbnail>
     </Col>

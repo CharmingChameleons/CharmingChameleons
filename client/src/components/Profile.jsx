@@ -10,7 +10,8 @@ class Profile extends React.Component {
 	constructor (props) {
 		super(props);
     this.state = {
-    	listings: []
+    	listings: [],
+      currentUserId: props.currentUserId
     };
 	}
 
@@ -18,6 +19,10 @@ class Profile extends React.Component {
     $.ajax({
       type: 'GET',
       url: '/userlisting',
+      data: {
+        params: this.state.currentUserId
+
+      },
       success: (data) => {
         console.log(data);
         this.setState({
@@ -35,11 +40,11 @@ class Profile extends React.Component {
    return (
        <div>
          <Button onClick={ function() {this.props.onBackClick()}.bind(this) } bsStyle="primary">Back</Button>
-         <h1>LOL</h1>
            {this.state.listings.map((listing,index) =>
              <ListingsEntry
                key={index}
                listing={listing}
+               currentUserId={this.props.currentUserId}
              />
            )}
        </div>

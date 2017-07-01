@@ -64,6 +64,7 @@ class App extends React.Component {
         onListingClick={this.handleSelectListing.bind(this)}
         onBookingClick={this.handleBookingClick.bind(this)}
         listings={this.state.listings}
+        currentUserId={this.state.currentUser.id}
       />;
     } else if (render === 'selectedListing') {
       return <SelectedListing
@@ -84,6 +85,8 @@ class App extends React.Component {
     } else if(render === 'profile'){
       return <Profile
         onBackClick={this.handleBackClick.bind(this)}
+        currentUserId={this.state.currentUser.id}
+
       />;
     }
 

@@ -164,8 +164,9 @@ app.post('/confirm-booking',
 });
 
 app.get('/userlisting', (req, res) => {
-  console.log('request received userlisting');
-  db.getListingsForUser([1])
+  console.log('request received userlisting for', req.query);
+  var params = [req.query.params];
+  db.getListingsForUser(params)
     .then((data) => {
       console.log('grabbed all listings for ...', data);
       res.end(JSON.stringify(data));
