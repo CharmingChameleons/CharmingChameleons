@@ -5,7 +5,7 @@ import FormControl from 'react-bootstrap/lib/FormControl'
 import HelpBlock from 'react-bootstrap/lib/HelpBlock'
 import Button from 'react-bootstrap/lib/Button'
 import Col from 'react-bootstrap/lib/Col'
-import UploadScreen from './fileupload.jsx'
+
 var $ = require('jquery');
 import Dropzone from 'react-dropzone'
 
@@ -18,7 +18,6 @@ class CreateListing extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.postData = this.postData.bind(this)
     this.uploadFile = this.uploadFile.bind(this)
-
   }
   handleChange(e) {
     var p = [];
@@ -59,10 +58,9 @@ class CreateListing extends React.Component {
     return (
       <form id='createListng'>
       <ControlLabel>Create a listing</ControlLabel>
-        <FormGroup
-        >
+        <FormGroup>
           <Col componentClass={ControlLabel} sm={2}>
-              <h3> Enter Name </h3>
+            <h3> Enter Name </h3>
           </Col>
           <FormControl
             type="text"
@@ -100,9 +98,7 @@ class CreateListing extends React.Component {
             id='tags'
             placeholder="Enter Tags"
           />
-
-        <Button onClick={this.handleChange.bind(this)}>Create</Button>
-
+          <Button onClick={this.handleChange}>Create</Button>
         </FormGroup>
       </form>
     );
