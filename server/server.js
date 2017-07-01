@@ -3,7 +3,6 @@ var cors = require('cors');
 var express = require('express');
 var db = require('../database');
 var session = require('./models/session');
-
 var multer  = require('multer')
 
 var storage = multer.diskStorage({
@@ -11,11 +10,9 @@ var storage = multer.diskStorage({
 		callback(null, './client/public/images/listings')
 	},
 	filename: function(req, file, callback) {
-		console.log(file)
 		callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
 	}
 })
-
 
 var app = express();
 var util = require('./lib/hashUtils');
@@ -172,19 +169,17 @@ app.post('/confirm-booking', middleware.authenticate,
 		});
 });
 
-
 app.post('/createlisting', 
 (req, res) => {
 	var upload = multer({
 		storage: storage
 	}).single('image')
 	upload(req, res, function(err) {
-		 db.createListing(req.body.params.split(','))
-    .then((data) => {
-      res.end(JSON.stringify(data));
-    });
-	})
-
+		db.createListing(req.body.params.split(','))
+    	.then((data) => {
+      	res.end(JSON.stringify(data));
+    	});
+		})
 });
 
 app.listen(port, function(req, res) {
