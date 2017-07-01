@@ -4,10 +4,10 @@ const url = require('url');
 
 
 let config = {
-  user: "henri", // name of the user account
-  host: "localhost",
-  password: "test",
-  database: "henri",
+  user: "Priyanka", // name of the user account
+  //host: "localhost",
+  //password: "test",
+  database: "shareio",
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
 };
@@ -31,7 +31,6 @@ if (process.env.DATABASE_URL) {
 //create connection
 var pool = new pg.Pool(config);
 
-<<<<<<< HEAD
 module.exports = {
   //Select all listings
   getAllListings: () => {
@@ -63,42 +62,7 @@ module.exports = {
     )
   },
 
- 		//Input: replace the following with its values[name, description, cost, tags]
-=======
-var pool = new pg.Pool(config)
-
- module.exports = {
- //Select all listings
- 	getAllListings: () => {
-		return new Promise (
- 			(resolve, reject) => {
- 				pool.query('SELECT * from listings ', function (err, result) {
-				    if (err) {
-				      console.log(err)
-				      reject(err)
-				    }
-				    else {
-				    	resolve(JSON.parse(JSON.stringify(result.rows)))
-				    }
-				})
-  		})
- 	},
-
-   	getAvailableListings: () => {
-    	return new Promise (
-      		(resolve, reject) => {
-        		pool.query('SELECT * FROM listings WHERE listings.id NOT IN (SELECT listingid FROM bookings)', function (err, result) {
-          		if (err) {
-            		reject(err);
-          		} else {
-            		resolve(JSON.parse(JSON.stringify(result.rows)));
-          		}
-        	});
-      	})
-  	},
-
  	//Input: replace the following with its values[name, description, cost, tags]
->>>>>>> With passport and localStorage
  	//Output: returns the id of the listing object created => [{id: 1}]
  	createListing: (params) => {
 		var queryString = 'INSERT INTO listings (name, description, cost, tags,) VALUES ($1, $2, $3, $4) returning id'

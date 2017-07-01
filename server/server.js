@@ -12,14 +12,6 @@ var middleware = require('./middleware');
 
 var cors = require('cors');
 
-<<<<<<< HEAD
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const cookieSession = require('cookie-session')
-
-=======
 const redis = require('redis')
 const expressSession = require('express-session')
 const redisStore = require('connect-redis')(expressSession)
@@ -27,7 +19,6 @@ const passport = require('Passport');
 const config = require('./config/passport');
 const bodyParser = require('body-parser');
 var client = redis.createClient();
->>>>>>> With passport and localStorage
 
 var port = process.env.PORT || 3000;
 
@@ -45,20 +36,7 @@ app.set('trust proxy', 1) // trust first proxy
 //Initialize passport and express
 app.use(passport.initialize());
 app.use(passport.session());
-<<<<<<< HEAD
 
-
-app.use(cookieSession({
-  name: 'session',
-  keys: ['sessionmgmt'],
-
-  // Cookie Options
-  cookie: {
-  	httpOnly: true,
-  	secure: true
-   },
-  maxAge: 5 * 60 * 60 * 1000 // 5 hours
-=======
 require('./config/passport')(passport);
 
 app.use(expressSession({
@@ -71,97 +49,8 @@ app.use(expressSession({
 	}),
 	saveUninitialized: false,
 	resave: false
->>>>>>> With passport and localStorage
 }))
 
-
-<<<<<<< HEAD
-	//check authenticated user
-	middleware.authenticateLogin(req.body.username, req.body.password)
-		.then((result) => {
-			//If yes, create/overwrite session details
-			if (result !== false) {
-				var user = {
-					id: result.id,
-					username: result.username
-				}
-				session.createNewSession(req.headers['user-agent'], req.body.username)
-				.then((session) => {
-					//req.session.id = session.sessionId //token based on user-agent
-					req.session.username = session.username   //username
-					req.session.save();
-
-					//store in db?? No for now
-					console.log('In app.post/Login before res')
-		    		res.status(201).send(user)
-				})
-				.catch((err) => {
-					res.redirect('/')
-				})
-		    } else {
-		   		throw result
-			}
-		})
-		.catch((err) => {
-			//If no, not a authenticated user
-				//clear cookies and redirect to signup page
-			res.redirect('/')
-		})
-		.error((err) => {
-			console.log(err)
-			res.redirect('/')
-		})
-});
-
-app.post('/signup', function(req, res, next) {
-
-	var user = {}
-	middleware.authenticateLogin(req.body.username, req.body.password)
-	.then((result) => {
-		if(result) {
-			//User found
-			console.log('User found')
-			res.status(201).send('User Exists')
-		} else {
-
-			//Create new salt and hash for the user
-			var salt = util.createSalt()
-			var hash = util.createHash(req.body.password, salt)
-			var args = [];
-
-			args.push(req.body.username)
-			args.push(hash)
-			args.push(salt)
-			db.createUser(args)
-			.then((data) => {
-				console.log('signup', data[0].id)
-				user = {
-					id: data[0].id,
-					username: req.body.username
-				};
-				console.log('user created')
-				//Create new session cookie
-				return session.createNewSession(req.headers['user-agent'], req.body.username)
-			})
-			.then((session) => {
-				req.session.id = session.sessionId 		  //token based on user-agent
-				req.session.username = session.username   //username
-				req.session.save()
-				res.status(201).send(user)
-
-
-			})
-			.catch((err) => {
-				console.log('err in creating new user', err)
-				res.status(500).send('User not created')
-			})
-		}
-	})
-	.catch((err) => {
-		console.log('err in authenticating user', err)
-		res.status(500).send('User not authenticated')
-	})
-=======
 app.post('/login', function(req, res, next) {
     passport.authenticate('local-login', function(err, user, info) {
         if (err) { 
@@ -190,7 +79,6 @@ app.post('/signup', function(req, res, next) {
       console.log('In app.post user', user)
       res.status(201).send(user)
     })(req, res, next);
->>>>>>> With passport and localStorage
 });
 
 app.get('/listings',
@@ -240,14 +128,7 @@ app.delete('/deletelisting', (req, res) => {
 });
 
 
-
-
-<<<<<<< HEAD
-
-app.post('/createlisting',
-=======
 app.post('/createlisting', 
->>>>>>> With passport and localStorage
 (req, res) => {
   db.createListing(req.body.params)
     .then((data) => {

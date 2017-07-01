@@ -9,8 +9,6 @@ import Profile from './Profile.jsx'
 
 const $ = require('jquery');
 
-
-
 class App extends React.Component {
 	constructor (props) {
 		super(props);
@@ -29,6 +27,7 @@ class App extends React.Component {
     };
 
     this.loginUser = this.loginUser.bind(this)
+    this.logoutUser = this.logoutUser.bind(this)
     this.resetLoginModal = this.resetLoginModal.bind(this)
     this.setPromptLoginModal = this.setPromptLoginModal.bind(this)
 	}
@@ -48,6 +47,19 @@ class App extends React.Component {
     localStorage.setItem('loggedin', true)
     console.log('login, currentUser', this.state.login, this.state.currentUser);
 	}
+
+  logoutUser() {
+    console.log('reached logout')
+    this.setState({
+      login: false,
+      currentUser: {
+        id: 0,
+        username: ''
+      }
+    })
+
+    localStorage.clear();
+  }
 
   resetLoginModal() {
     this.setState({
@@ -160,8 +172,6 @@ class App extends React.Component {
 
   }
 
-
-
   componentDidMount() {
     $.ajax({
       type: 'GET',
@@ -184,6 +194,7 @@ class App extends React.Component {
 			    <NavB
             login={this.state.login}
             loginUser={this.loginUser}
+            logoutUser={this.logoutUser}
             promptLoginModal={this.state.promptLoginModal}
             resetLoginModal={this.resetLoginModal}
             onLogoClick={this.handleLogoClick.bind(this)}
