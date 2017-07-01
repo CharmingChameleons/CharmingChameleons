@@ -49,6 +49,7 @@ class CreateListing extends React.Component {
   }
 
   uploadFile(files) {
+    console.log(files);
     this.setState({
       images: files
     })
@@ -90,6 +91,11 @@ class CreateListing extends React.Component {
             onDrop = {this.uploadFile} 
             name='image'
           />
+          <ul>
+            {
+              this.state.images.map(f => <li>{f.name} - {f.size} bytes</li>)
+            }
+         </ul>
           <Col componentClass={ControlLabel} sm={2}>
             <h3> Enter Tags </h3>
           </Col>
