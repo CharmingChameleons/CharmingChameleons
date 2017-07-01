@@ -4,11 +4,7 @@ var express = require('express');
 var db = require('../database');
 var session = require('./models/session');
 
-
 var multer  = require('multer')
-
-
-
 
 var storage = multer.diskStorage({
 	destination: function(req, file, callback) {
@@ -19,10 +15,6 @@ var storage = multer.diskStorage({
 		callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
 	}
 })
-
-
-
-//var upload = multer({ dest: 'uploads/' })
 
 
 var app = express();
@@ -181,36 +173,18 @@ app.post('/confirm-booking', middleware.authenticate,
 });
 
 
-
-
 app.post('/createlisting', 
 (req, res) => {
-	req.body.params
-  db.createListing(req.body.params)
-  console.log()
-    .then((data) => {
-      console.log('Created an entry');
-      res.end(JSON.stringify(data));
-    });
-});
-
-//var type = upload.single('image');
-
-app.post('/createlistingimage', (req, res) => {
-console.log(req);
 	var upload = multer({
 		storage: storage
 	}).single('image')
 	upload(req, res, function(err) {
-		console.log('file-->',req.file)
-		res.end('File is uploaded')
+		 db.createListing(req.body.params.split(','))
+    .then((data) => {
+      res.end(JSON.stringify(data));
+    });
 	})
-	// need to send more data with formdata
-	//on the other thought I assume formdata sends the right thing
-	//and try access it here 
 
-	// console.log(req.file);
- // 	res.end();
 });
 
 app.listen(port, function(req, res) {
