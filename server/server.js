@@ -12,12 +12,22 @@ var middleware = require('./middleware');
 
 var cors = require('cors');
 
+<<<<<<< HEAD
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session')
 
+=======
+const redis = require('redis')
+const expressSession = require('express-session')
+const redisStore = require('connect-redis')(expressSession)
+const passport = require('Passport');
+const config = require('./config/passport');
+const bodyParser = require('body-parser');
+var client = redis.createClient();
+>>>>>>> Workin login
 
 var port = process.env.PORT || 3000;
 
@@ -36,6 +46,7 @@ app.set('trust proxy', 1) // trust first proxy
 //Initialize passport and express
 app.use(passport.initialize());
 app.use(passport.session());
+<<<<<<< HEAD
 
 
 app.use(cookieSession({
@@ -137,6 +148,51 @@ app.post('/signup', function(req, res, next) {
 		console.log('err in authenticating user', err)
 		res.status(500).send('User not authenticated')
 	})
+=======
+
+require('./config/passport')(passport);
+
+app.use(expressSession({
+  	name: 'session',
+  	secret: 'test',
+  	store: new redisStore({
+  		host: 'localhost',
+  		post: 6379,
+  		client,ttl: 260
+	}),
+	saveUninitialized: false,
+	resave: false
+}))
+
+app.post('/login', function(req, res, next) {
+    passport.authenticate('local-login', function(err, user, info) {
+        if (err) { 
+        	res.status(409).send(info.errMsg);
+        }
+        if (!user) { 
+        	res.status(409).send(info.errMsg);
+        }
+        console.log('In app.post user', user)
+
+		req.login(req.body, function(err) {
+      		if (err) { throw new Error(err); }
+    	});
+        res.status(201).send(user)
+    })(req, res, next);
+});
+
+app.post('/signup', function(req, res, next) {
+	passport.authenticate('local-signup', function(err, user, info) {
+      if (err) {
+      	res.status(500).send(info.errMsg); // will generate a 500 error
+      }
+      if (!user) {
+      	res.status(409).send(info.errMsg);
+      }
+      console.log('In app.post user', user)
+      res.status(201).send(user)
+    })(req, res, next);
+>>>>>>> Workin login
 });
 
 app.get('/listings',
@@ -196,10 +252,14 @@ app.delete('/deletelisting', (req, res) => {
 });
 
 
+<<<<<<< HEAD
 
 
 
 app.post('/createlisting',
+=======
+app.post('/createlisting', 
+>>>>>>> Workin login
 (req, res) => {
   db.createListing(req.body.params)
     .then((data) => {

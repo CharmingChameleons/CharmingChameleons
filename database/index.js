@@ -4,10 +4,10 @@ const url = require('url');
 
 
 let config = {
-  user: "henri", // name of the user account
-  host: "localhost",
-  password: "test",
-  database: "henri",
+  user: "Priyanka", // name of the user account
+  //host: "localhost",
+  //password: "test",
+  database: "shareio",
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
 };
@@ -65,7 +65,7 @@ module.exports = {
     )
   },
 
- 		//Input: replace the following with its values[name, description, cost, tags]
+ 	//Input: replace the following with its values[name, description, cost, tags]
  	//Output: returns the id of the listing object created => [{id: 1}]
  	createListing: (params) => {
 		var queryString = 'INSERT INTO listings (name, description, cost, tags) VALUES ($1, $2, $3, $4) returning id'
