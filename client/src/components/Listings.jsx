@@ -9,12 +9,13 @@ const Listings = (props) => (
     <Grid>
     <h3>Listings:</h3>
         <Row>
-        {props.listings.map((listing, index) => 
-          <ListingsEntry 
-            key={index} 
+        {props.listings.map((listing, index) =>
+          <ListingsEntry
+            key={index}
             listing={listing}
             onListingClick={props.onListingClick}
             onBookingClick={props.onBookingClick}
+            currentUserId={props.currentUserId}
           />
         )}
         </Row>

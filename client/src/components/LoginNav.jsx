@@ -65,8 +65,8 @@ class LoginNav extends React.Component {
 
 			return (
 				<Nav pullRight>
-					<NavItem eventKey={1} href="#">Successful Login</NavItem>
-	       		</Nav>
+					<NavItem eventKey={1} onClick={this.props.handleSelectProfile}  href="#">#THIS IS USER</NavItem>
+	       </Nav>
 			)
 
 		} else {
@@ -102,5 +102,5 @@ class LoginNav extends React.Component {
 		}
 	}
 }
-       
+
 export default LoginNav

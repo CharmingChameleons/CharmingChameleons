@@ -7,14 +7,15 @@ const SelectedListing = (props) => (
   <div>
     <Grid>
     <h2>{props.listing.name}</h2>
-    <Button onClick={ function() {props.onBackClick()} } bsStyle="primary">Back</Button> 
+    <Button onClick={ function() {props.onBackClick()} } bsStyle="primary">Back</Button>
     <br/>
     <br/>
       <Row>
         <img className='listing' src={'./images/listings/' + props.listing.id + '/1.jpg'} alt="242x200"/> <br/>
-        <br/> 
+        <br/>
         Description: {props.listing.description} <br/>
         Price: ${props.listing.cost} <br/>
+        Lender: {props.listing.username} <br/>
         Tags: {props.listing.tags} <br/>
         <br/>
         <p>

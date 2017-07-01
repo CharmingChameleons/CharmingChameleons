@@ -8,16 +8,20 @@ import Col from 'react-bootstrap/lib/Col'
 var $ = require('jquery');
 
 
-const CreateListing = React.createClass({
-  getInitialState() {
-    return {
+class CreateListing extends React.Component{
+  constructor(props) {
+    super(props);
+
+    this.state = {
       name: '',
       description: '',
       cost: 0,
       tags: '',
-      images: []
+      images: [],
+      currentUserId: props.currentUserId
     };
-  },
+  }
+
 
   //validate dats later
   // getValidationState() {
@@ -41,9 +45,11 @@ const CreateListing = React.createClass({
     p.push($('#description').val());
     p.push($('#cost').val());
     p.push($('#tags').val());
+    p.push(this.state.currentUserId);
     //p.push($('#formControlsFile')[0].files);
     this.postData(p);
-  },
+  }
+
   postData(p) {
 
     // image stuff
@@ -52,6 +58,7 @@ const CreateListing = React.createClass({
     // //var imagedata = $('#formControlsFile')[0].files;
     // console.log(imagedata);
     // _data.append("data", imagedata);
+    console.log('createlisting params',p);
 
     var state = this.state;
     $.ajax({
@@ -69,10 +76,10 @@ const CreateListing = React.createClass({
       },
       error: (err) => {
         console.log('error', err)
-      } 
+      }
     })
-    
-  },
+
+  }
 
 
   render() {
@@ -83,7 +90,7 @@ const CreateListing = React.createClass({
           //controlId="formBasicText"
           //validationState={this.getValidationState()}
         >
-          
+
            <Col componentClass={ControlLabel} sm={2}>
               <h3> Enter Name </h3>
             </Col>
@@ -132,7 +139,7 @@ const CreateListing = React.createClass({
             placeholder="Enter Tags"
           />
 
-          <Button onClick={this.handleChange}>Create</Button>
+        <Button onClick={this.handleChange.bind(this)}>Create</Button>
 
           <FormControl.Feedback />
           <HelpBlock>Validation is based on string length.</HelpBlock>
@@ -140,8 +147,7 @@ const CreateListing = React.createClass({
       </form>
     );
   }
-});
+};
 
 
 export default CreateListing
-

@@ -12,13 +12,12 @@ var middleware = require('./middleware');
 
 var cors = require('cors');
 
-
-const passport = require('passport');   
+const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session')
 
-var cookieSession = require('cookie-session')
 
 var port = process.env.PORT || 3000;
 
@@ -44,7 +43,7 @@ app.use(cookieSession({
   keys: ['sessionmgmt'],
 
   // Cookie Options
-  cookie: { 
+  cookie: {
   	httpOnly: true,
   	secure: true
    },
@@ -64,9 +63,10 @@ app.post('/login', function(req, res, next) {
 				}
 				session.createNewSession(req.headers['user-agent'], req.body.username)
 				.then((session) => {
-					req.session.id = session.sessionId //token based on user-agent
-					req.session.username = session.username   //username 
+					//req.session.id = session.sessionId //token based on user-agent
+					req.session.username = session.username   //username
 					req.session.save();
+
 					//store in db?? No for now
 					console.log('In app.post/Login before res')
 		    		res.status(201).send(user)
@@ -121,9 +121,11 @@ app.post('/signup', function(req, res, next) {
 			})
 			.then((session) => {
 				req.session.id = session.sessionId 		  //token based on user-agent
-				req.session.username = session.username   //username 
+				req.session.username = session.username   //username
 				req.session.save()
 				res.status(201).send(user)
+
+
 			})
 			.catch((err) => {
 				console.log('err in creating new user', err)
@@ -139,13 +141,14 @@ app.post('/signup', function(req, res, next) {
 
 app.get('/listings',
 (req, res) => {
-  db.getAvailableListings()
+  db.getAllListings()
     .then((data) => {
       res.end(JSON.stringify(data));
     });
 });
 
-app.post('/confirm-booking', middleware.authenticate, 
+app.post('/confirm-booking',
+
 (req, res) => {
 	for (let i = 0; i < req.body.booking.length; i++) {
 		req.body.booking[i] = parseInt(req.body.booking[i]);
@@ -160,10 +163,33 @@ app.post('/confirm-booking', middleware.authenticate,
 		});
 });
 
+app.get('/userlisting', (req, res) => {
+  console.log('request received userlisting for', req.query);
+  var params = [req.query.params];
+  db.getListingsForUser(params)
+    .then((data) => {
+      console.log('grabbed all listings for ...', data);
+      res.end(JSON.stringify(data));
+    });
+});
+
+app.delete('/deletelisting', (req, res) => {
+  console.log('request received deletelisting');
+  var params = [req.body.params];
+  db.deleteListing(params)
+  .then((data) => {
+    res.status(201).send('listing deleted');
+  })
+  .catch((err) => {
+    res.status(500).send('listing not deleted', err);
+  });
+});
 
 
 
-app.post('/createlisting', 
+
+
+app.post('/createlisting',
 (req, res) => {
   db.createListing(req.body.params)
     .then((data) => {
