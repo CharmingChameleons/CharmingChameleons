@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/lib/Button'
 
 import Login from './Login.jsx'
 import Signup from './Signup.jsx'
+import FacebookLogin from './FacebookLogin.jsx'
 
 class LoginNav extends React.Component {
 
@@ -83,6 +84,7 @@ class LoginNav extends React.Component {
 				         	<Login closeLoginModal={this.closeLoginModal} login={this.props.login} loginUser={this.props.loginUser}/>
 				        </Modal.Body>
 				        <Modal.Footer>
+				        	<FacebookLogin />
 				         	<Button onClick={this.handleSignUp}>New User?</Button>
 				        </Modal.Footer>
 		      		</Modal>
@@ -94,6 +96,7 @@ class LoginNav extends React.Component {
 				         	<Signup closeSignUpModal={this.closeSignUpModal} login={this.props.login} loginUser={this.props.loginUser}/>
 				        </Modal.Body>
 				        <Modal.Footer>
+				        	<FacebookLogin />
 				         	<Button onClick={this.handleLogin}>Registered Users Login Here</Button>
 				        </Modal.Footer>
 		      		</Modal>

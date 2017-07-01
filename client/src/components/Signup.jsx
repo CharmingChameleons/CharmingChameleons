@@ -1,6 +1,5 @@
 import React from 'react'
 import NavB from './NavB.jsx'
-import Listings from './Listings.jsx'
 import Form from 'react-bootstrap/lib/Form'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
@@ -8,6 +7,8 @@ import Col from 'react-bootstrap/lib/Col'
 import Button from 'react-bootstrap/lib/Button'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import $ from 'jquery'
+
+import Listings from './Listings.jsx'
 
 class Signup extends React.Component{
 	constructor (props) {
@@ -28,6 +29,10 @@ class Signup extends React.Component{
 			username: event.target.value
 		})
 	}
+
+	responseFacebook(response) {
+      console.log(response);
+    }
 
 	handlePassword (event) {
 		this.setState({
