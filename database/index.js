@@ -31,6 +31,7 @@ if (process.env.DATABASE_URL) {
 //create connection
 var pool = new pg.Pool(config);
 
+<<<<<<< HEAD
 module.exports = {
   //Select all listings
   getAllListings: () => {
@@ -63,9 +64,44 @@ module.exports = {
   },
 
  		//Input: replace the following with its values[name, description, cost, tags]
+=======
+var pool = new pg.Pool(config)
+
+ module.exports = {
+ //Select all listings
+ 	getAllListings: () => {
+		return new Promise (
+ 			(resolve, reject) => {
+ 				pool.query('SELECT * from listings ', function (err, result) {
+				    if (err) {
+				      console.log(err)
+				      reject(err)
+				    }
+				    else {
+				    	resolve(JSON.parse(JSON.stringify(result.rows)))
+				    }
+				})
+  		})
+ 	},
+
+   	getAvailableListings: () => {
+    	return new Promise (
+      		(resolve, reject) => {
+        		pool.query('SELECT * FROM listings WHERE listings.id NOT IN (SELECT listingid FROM bookings)', function (err, result) {
+          		if (err) {
+            		reject(err);
+          		} else {
+            		resolve(JSON.parse(JSON.stringify(result.rows)));
+          		}
+        	});
+      	})
+  	},
+
+ 	//Input: replace the following with its values[name, description, cost, tags]
+>>>>>>> With passport and localStorage
  	//Output: returns the id of the listing object created => [{id: 1}]
  	createListing: (params) => {
-		var queryString = 'INSERT INTO listings (name, description, cost, tags) VALUES ($1, $2, $3, $4) returning id'
+		var queryString = 'INSERT INTO listings (name, description, cost, tags,) VALUES ($1, $2, $3, $4) returning id'
 		var queryArgs = params
 
 		return new Promise (
@@ -82,9 +118,6 @@ module.exports = {
 			}
 		)
 	},
-
-
-
 
 	createBookings: (params) => {
 
@@ -149,21 +182,20 @@ module.exports = {
               listings.tags, listings.lenderid FROM listings LEFT OUTER JOIN bookings \
               ON (listings.id = bookings.listingId) \
                 WHERE listings.lenderId = $1'
-    var queryArgs = params
+   		var queryArgs = params
 
-    return new Promise (
-      (resolve, reject) => {
-        pool.query(queryString, queryArgs, (err, rows) => {
-          if (err) {
-            reject (err)
-          } else {
-            console.log('got listing for user');
-            resolve(JSON.parse(JSON.stringify(rows.rows)))
-          }
-        })
-      }
-    )
-  },
+	    return new Promise (
+	      (resolve, reject) => {
+	        pool.query(queryString, queryArgs, (err, rows) => {
+	          if (err) {
+	            reject (err)
+	          } else {
+	            console.log('got listing for user');
+	            resolve(JSON.parse(JSON.stringify(rows.rows)))
+	          }
+	        })
+	    })
+  	},
 
   //Input: Replace the following with its values[userid]
   //Output: Returns the row containing that user id -> array
