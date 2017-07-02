@@ -49,11 +49,8 @@ app.use(cors());
 
 app.set('trust proxy', 1) // trust first proxy
 
-<<<<<<< HEAD
 app.use(fileUpload());
 
-=======
->>>>>>> working files
 //Initialize passport and express
 app.use(passport.initialize());
 app.use(passport.session());
@@ -138,7 +135,6 @@ app.post('/confirm-booking',
 		});
 });
 
-<<<<<<< HEAD
 app.get('/userlisting', (req, res) => {
   console.log('request received userlisting for', req.query);
   var params = [req.query.params];
@@ -232,6 +228,16 @@ app.delete('/deletebooking',
 //     	});
 // 	})
 // });
+
+app.get('/search', (req, res) => {
+	console.log('this query',req.query.param);
+	db.searchListings(req.query.param)
+	.then ((data) => {
+		console.log('searched the database');
+		res.end(JSON.stringify(data));
+	})
+})
+
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);

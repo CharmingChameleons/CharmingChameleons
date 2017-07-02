@@ -187,11 +187,81 @@ module.exports = {
             reject (err)
           } else {
             resolve(JSON.parse(JSON.stringify(data.rows)))
+	getUserName: (params) => {
+		var queryString = "SELECT * FROM users WHERE id = $1"
+		var queryArgs = params
+
+		return new Promise (
+			(resolve, reject) => {
+				pool.query(queryString, queryArgs, (err, rows) => {
+					if (err) {
+						reject (err)
+					} else {
+						console.log('got username');
+						// resolve(JSON.parse(JSON.stringify(rows.rows)))
+					}
+				})
+			}
+		)
+	},
+
+	//Input: Replace the following with its values['username']
+  	//Output: Returns the row containing that name -> arra
+
+
+	getUserId: (params) => {
+		var queryString = "SELECT * FROM users WHERE username = $1"
+		var queryArgs = params
+
+		return new Promise (
+			(resolve, reject) => {
+				pool.query(queryString, queryArgs, (err, data) => {
+					if (err) {
+						reject (err)
+					} else {
+						resolve(JSON.parse(JSON.stringify(data.rows)))
+					}
+				})
+			}
+		)
+	},
+	  searchListings: (term) => {
+    term = " '%'|| '"+term+"' ||'%'";
+    var queryString = 'SELECT * FROM listings WHERE tags ILIKE' +term
+    return new Promise (
+      (resolve, reject) => {
+        pool.query(queryString, (err, data) => {
+          if (err) {
+            reject (err)
+          } else {
+            resolve(JSON.parse(JSON.stringify(data.rows)));
           }
         })
       }
     )
   },
+
+	//Create New User
+	createUser: (params) => {
+
+		var queryString = 'INSERT INTO users (username, hash, salt) VALUES ($1, $2, $3) returning id'
+		var queryArgs = params
+
+		return new Promise (
+			(resolve, reject) => {
+				pool.query(queryString, queryArgs, (err, rows) => {
+					if (err) {
+						reject (err)
+						console.log(err);
+					} else {
+						console.log('user id');
+						resolve(JSON.parse(JSON.stringify(rows.rows)))
+
+					}
+				})
+			}
+		)
+	}
 
   //Create New User
   createUser: (params) => {
