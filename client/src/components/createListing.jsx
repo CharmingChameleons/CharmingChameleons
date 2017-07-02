@@ -90,6 +90,7 @@ class CreateListing extends React.Component {
           <Dropzone 
             onDrop = {this.uploadFile} 
             name='image'
+            accept='image/jpeg, image/png'
           />
           <ul>
             {
