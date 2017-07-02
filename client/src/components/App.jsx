@@ -6,10 +6,7 @@ import Signup from './Signup.jsx'
 import Booking from './Booking.jsx'
 import CreateListing from './createListing.jsx'
 import Profile from './Profile.jsx'
-
 const $ = require('jquery');
-
-
 
 class App extends React.Component {
 	constructor (props) {
@@ -20,7 +17,7 @@ class App extends React.Component {
     	listings: [],
     	listing: {},
     	login: false,
-      // dummydata
+      // dummyUser
       currentUser: {
         id: 3,
         username: 'Shihao',
