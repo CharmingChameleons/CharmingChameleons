@@ -173,16 +173,6 @@ app.get('/userlisting', (req, res) => {
     });
 });
 
-app.get('/borrowerlistings', (req, res) => {
-  console.log('request received borrowerlistings for', req.query);
-  var params = [req.query.params];
-  db.getListingsForBorrower(params)
-    .then((data) => {
-      console.log('grabbed all borrower listings for ...', data);
-      res.end(JSON.stringify(data));
-    });
-});
-
 app.delete('/deletelisting', (req, res) => {
   console.log('request received deletelisting');
   var params = [req.body.params];
@@ -231,15 +221,6 @@ app.post('/createlisting',
 		});
 });
 
-app.delete('/deletebooking',
-(req, res) => {
-  var params = [req.body.params];
-  db.deleteBooking(params)
-    .then((data) => {
-      console.log('booking deleted');
-      res.end(JSON.stringify(data));
-    });
-});
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);
