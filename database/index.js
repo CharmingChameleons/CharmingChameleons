@@ -36,7 +36,7 @@ module.exports = {
   getAllListings: () => {
     return new Promise (
       (resolve, reject) => {
-        pool.query('select listings.id, listings.name, listings.description, listings.cost, listings.tags, listings.lenderid, users.username from listings inner join users on users.id = listings.lenderid', function (err, result) {
+        pool.query('select listings.id, listings.name, listings.description, listings.cost,listings.tags, listings.lenderid, users.username from listings inner join users on users.id = listings.lenderid', function (err, result) {
             if (err) {
               console.log(err);
               reject(err);
@@ -51,7 +51,10 @@ module.exports = {
   getAvailableListings: () => {
     return new Promise (
       (resolve, reject) => {
-        pool.query('SELECT * FROM listings WHERE listings.id NOT IN (SELECT listingid FROM bookings)', function (err, result) {
+        pool.query('SELECT listings.id, listings.name, listings.description, listings.cost,listings.tags, listings.lenderid, users.username \
+                      FROM listings  \
+                      INNER JOIN users on users.id = listings.lenderid \
+                      WHERE listings.id NOT IN (SELECT listingid FROM bookings)', function (err, result) {
           if (err) {
             reject(err);
           } else {
@@ -146,10 +149,11 @@ module.exports = {
   //Output: Returns all the listings that belongs to one user-> array
   getListingsForUser: (params) => {
     var queryString = 'SELECT listings.id, listings.name, listings.description, listings.cost,\
-	                       listings.tags, listings.lenderid,  users.username, bookings.borrowerid \
+	                       listings.tags, listings.lenderid,  lu.username, bookings.borrowerid, bu.username AS borrowername \
 		                   FROM listings \
 			                     LEFT OUTER JOIN bookings ON (listings.id = bookings.listingId) \
-			                     INNER JOIN users on users.id = listings.lenderid \
+			                     INNER JOIN users AS lu on lu.id = listings.lenderid \
+                           LEFT OUTER JOIN users AS bu on bu.id = bookings.borrowerid \
                        WHERE listings.lenderId = $1'
     var queryArgs = params
 

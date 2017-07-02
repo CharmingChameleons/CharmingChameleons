@@ -141,7 +141,7 @@ app.post('/signup', function(req, res, next) {
 
 app.get('/listings',
 (req, res) => {
-  db.getAllListings()
+  db.getAvailableListings()
     .then((data) => {
       res.end(JSON.stringify(data));
     });

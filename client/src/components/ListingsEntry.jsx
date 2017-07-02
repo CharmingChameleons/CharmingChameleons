@@ -12,7 +12,9 @@ const ListingsEntry = (props) => (
       <Thumbnail src={'./images/listings/' + props.listing.id + '/1.jpg'} alt="242x200">
         <h4>{props.listing.description}</h4>
         <p>lender: {props.listing.username}</p>
-        <p>borrowerId: {props.listing.borrowerid}</p>
+        {props.listing.borrowername != null &&
+          <p>borrower: {props.listing.borrowername}</p>
+        }
         <p>tags: {props.listing.tags}</p>
         <p>
 
