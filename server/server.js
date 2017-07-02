@@ -4,23 +4,26 @@ var express = require('express');
 var db = require('../database');
 var session = require('./models/session');
 var multer  = require('multer')
+var mkdirp = require('mkdirp');
 
+// saving the pictures in the folder
+var dirNum = 0; 
 var storage = multer.diskStorage({
 	destination: function(req, file, callback) {
-		callback(null, './client/public/images/listings')
+			var path = './client/public/images/listings/'+(++dirNum);
+			mkdirp(path, function(err) { 
+	   	callback(null, path)
+		});
 	},
 	filename: function(req, file, callback) {
-		callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+		callback(null, 1+ path.extname(file.originalname))
 	}
 })
 
 var app = express();
 var util = require('./lib/hashUtils');
 var middleware = require('./middleware');
-
-
 var cors = require('cors');
-
 
 const passport = require('passport');   
 const LocalStrategy = require('passport-local').Strategy
@@ -179,7 +182,8 @@ app.post('/createlisting',
     	.then((data) => {
       	res.end(JSON.stringify(data));
     	});
-		})
+	})
+
 });
 
 app.listen(port, function(req, res) {
