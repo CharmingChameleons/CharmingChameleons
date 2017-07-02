@@ -61,6 +61,19 @@ class App extends React.Component {
     localStorage.clear();
   }
 
+  logoutUser() {
+    console.log('reached logout')
+    this.setState({
+      login: false,
+      currentUser: {
+        id: 0,
+        username: ''
+      }
+    })
+
+    localStorage.clear();
+  }
+
   resetLoginModal() {
     this.setState({
       promptLoginModal: false

@@ -12,16 +12,27 @@ var middleware = require('./middleware');
 
 var cors = require('cors');
 
+<<<<<<< HEAD
 const expressSession = require('express-session')
 const passport = require('Passport');
 const config = require('./config/passport');
 const bodyParser = require('body-parser');
+=======
+const redis = require('redis')
+const expressSession = require('express-session')
+const redisStore = require('connect-redis')(expressSession)
+const passport = require('Passport');
+const config = require('./config/passport');
+const bodyParser = require('body-parser');
+var client = redis.createClient();
+>>>>>>> 4ebcdc095ba3477aa49204f838ffe247b6cdacde
 
 var port = process.env.PORT || 3000;
 
 app.use(cors());
 app.options('*', cors())
-//Use body parser for parsing the request querystring
+
+//Use body parser for parsing the request
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/public')));
@@ -32,6 +43,7 @@ app.set('trust proxy', 1) // trust first proxy
 //Initialize passport and express
 app.use(passport.initialize());
 app.use(passport.session());
+<<<<<<< HEAD
 require('./config/passport')(passport);
 
 //Start --- Commented for redis-heroku deployment
@@ -57,6 +69,22 @@ require('./config/passport')(passport);
 // 	  resave: false
 // }))
 //End --- Commented for redis-heroku deployment
+=======
+
+require('./config/passport')(passport);
+
+app.use(expressSession({
+  	name: 'session',
+  	secret: 'test',
+  	store: new redisStore({
+  		host: 'localhost',
+  		post: 6379,
+  		client,ttl: 260
+	}),
+	saveUninitialized: false,
+	resave: false
+}))
+>>>>>>> 4ebcdc095ba3477aa49204f838ffe247b6cdacde
 
 app.post('/login', function(req, res, next) {
     passport.authenticate('local-login', function(err, user, info) {
@@ -146,6 +174,7 @@ app.delete('/deletelisting', (req, res) => {
 
 
 app.post('/createlisting', 
+<<<<<<< HEAD
   (req, res) => {
     db.createListing(req.body.params)
       .then((data) => {
@@ -155,6 +184,8 @@ app.post('/createlisting',
 });
 
 app.delete('/deletebooking',
+=======
+>>>>>>> 4ebcdc095ba3477aa49204f838ffe247b6cdacde
 (req, res) => {
   var params = [req.body.params];
   db.deleteBooking(params)

@@ -68,7 +68,7 @@ module.exports = {
  	//Input: replace the following with its values[name, description, cost, tags]
  	//Output: returns the id of the listing object created => [{id: 1}]
  	createListing: (params) => {
-		var queryString = 'INSERT INTO listings (name, description, cost, tags) VALUES ($1, $2, $3, $4) returning id'
+		var queryString = 'INSERT INTO listings (name, description, cost, tags,) VALUES ($1, $2, $3, $4) returning id'
 		var queryArgs = params
 
 		return new Promise (
@@ -85,9 +85,6 @@ module.exports = {
 			}
 		)
 	},
-
-
-
 
 	createBookings: (params) => {
 
