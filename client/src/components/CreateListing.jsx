@@ -8,7 +8,6 @@ import Col from 'react-bootstrap/lib/Col'
 import Grid from 'react-bootstrap/lib/Grid'
 var $ = require('jquery');
 
-
 const CreateListing = (props) => (
   <Grid>
   <h3>Create Your Listing:</h3>
@@ -33,6 +32,5 @@ const CreateListing = (props) => (
     </form>
   </Grid>
 );
-
 
 export default CreateListing;
