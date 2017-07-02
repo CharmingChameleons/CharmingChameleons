@@ -40,6 +40,7 @@ class NavB extends React.Component {
               promptLoginModal={this.props.promptLoginModal}
               resetLoginModal={this.props.resetLoginModal}
               handleSelectProfile={this.props.handleSelectProfile}
+              currentUsername={this.props.currentUsername}
               />
           </Navbar.Collapse>
         </Navbar>
