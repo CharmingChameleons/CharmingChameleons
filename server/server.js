@@ -198,8 +198,7 @@ app.delete('/deletelisting', (req, res) => {
   });
 });
 
-app.post('/createlisting', 
-(req, res) => {
+app.post('/createlisting', (req, res) => {
 	var upload = multer({
 		storage: storage
 	}).single('image')
