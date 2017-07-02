@@ -13,7 +13,7 @@ var middleware = require('./middleware');
 var cors = require('cors');
 
 const expressSession = require('express-session')
-const passport = require('Passport');
+const passport = require('passport');
 const config = require('./config/passport');
 const bodyParser = require('body-parser');
 
