@@ -38,6 +38,7 @@ app.use(fileUpload());
 app.use(passport.initialize());
 app.use(passport.session());
 
+<<<<<<< HEAD
 require('./config/passport')(passport);
 
 //Start --- Commented for redis-heroku deployment
@@ -63,6 +64,19 @@ require('./config/passport')(passport);
 // 	  resave: false
 // }))
 //End --- Commented for redis-heroku deployment
+=======
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['sessionmgmt'],
+  // Cookie Options
+  cookie: {
+  	httpOnly: true,
+  	secure: true
+   },
+  maxAge: 5 * 60 * 60 * 1000 // 5 hours
+}))
+>>>>>>> 528c1515871b93c93fb1f7b85881334ad6c06e6d
 
 app.post('/login', function(req, res, next) {
     passport.authenticate('local-login', function(err, user, info) {
