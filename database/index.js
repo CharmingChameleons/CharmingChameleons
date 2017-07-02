@@ -4,10 +4,11 @@ const url = require('url');
 
 
 let config = {
-  user: "henri", // name of the user account
+
+  user: "postgres", // name of the user account
   host: "localhost",
   password: "test",
-  database: "henri",
+  database: "shareio",
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
 };

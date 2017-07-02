@@ -3,7 +3,8 @@ var cors = require('cors');
 var express = require('express');
 var db = require('../database');
 var session = require('./models/session');
-
+const fs = require('fs');
+const fileUpload = require('express-fileupload');
 
 var app = express();
 var util = require('./lib/hashUtils');
@@ -31,7 +32,7 @@ app.use(cors());
 
 app.set('trust proxy', 1) // trust first proxy
 
-
+app.use(fileUpload());
 
 //Initialize passport and express
 app.use(passport.initialize());
@@ -163,6 +164,7 @@ app.post('/confirm-booking',
 		});
 });
 
+<<<<<<< 342095bd0ab5b1e18236103ff5a71395c08c57cd
 app.get('/userlisting', (req, res) => {
   console.log('request received userlisting for', req.query);
   var params = [req.query.params];
@@ -189,14 +191,45 @@ app.delete('/deletelisting', (req, res) => {
 
 
 
+=======
+>>>>>>> added minimum createlisting implementation
 app.post('/createlisting',
 (req, res) => {
-  db.createListing(req.body.params)
-    .then((data) => {
-      console.log('Created an entry');
-      res.end(JSON.stringify(data));
-    });
+	if (JSON.stringify(req.body) === '{}') {
+		return res.status(400).send('No files/inputs were uploaded.');
+	}
+
+	var params = [
+		req.body.name, 
+		req.body.description, 
+		req.body.cost, 
+		req.body.tags
+	];
+
+	db.createListing(params)
+		.then(data => {
+			let imageFile = req.files.listingImage;
+
+			if (imageFile === undefined) {
+				res.status(201).redirect('/');
+			} else {
+				fs.exists('./client/public/images/listings/' + data[0].id, (exists) => {
+					if (!exists) {
+						fs.mkdir('./client/public/images/listings/' + data[0].id);
+					}
+
+					imageFile.mv('./client/public/images/listings/' + data[0].id + '/1.jpg', function(err) {
+						if (err) {
+							res.status(500).send(err);
+						} else {
+							res.status(201).redirect('/');
+						}
+					});
+				});
+			}
+		});
 });
+
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);
