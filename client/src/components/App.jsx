@@ -86,7 +86,6 @@ class App extends React.Component {
       return <Profile
         onBackClick={this.handleBackClick.bind(this)}
         currentUserId={this.state.currentUser.id}
-
       />;
     }
 
@@ -185,6 +184,8 @@ class App extends React.Component {
             onLogoClick={this.handleLogoClick.bind(this)}
             onCreateClick={this.handleCreateListing.bind(this)}
             handleSelectProfile={this.handleSelectProfile.bind(this)}
+            currentUsername={this.state.currentUser.username}
+
           />
 			    {this.currentRender()}
 
