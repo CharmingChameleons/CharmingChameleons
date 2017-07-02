@@ -280,7 +280,7 @@ module.exports = {
     console.log('inside deleteListing')
     console.log(params);
 
-    var queryString = 'DELETE FROM bookings WHERE id = $1'
+    var queryString = 'DELETE FROM bookings WHERE listingid = $1'
     var queryArgs = params;
 
     return new Promise (

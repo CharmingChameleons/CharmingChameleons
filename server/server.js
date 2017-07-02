@@ -210,7 +210,8 @@ app.post('/createlisting',
 
 app.delete('/deletebooking',
 (req, res) => {
-  db.deleteBooking(req.body.params)
+  var params = [req.body.params];
+  db.deleteBooking(params)
     .then((data) => {
       console.log('booking deleted');
       res.end(JSON.stringify(data));

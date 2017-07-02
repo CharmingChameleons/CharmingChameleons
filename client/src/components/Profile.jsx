@@ -58,6 +58,7 @@ class Profile extends React.Component {
               key={index}
               listing={listing}
               currentUserId={this.props.currentUserId}
+              reRender={this.componentDidMount.bind(this)}
             />
           )}
         </Row>

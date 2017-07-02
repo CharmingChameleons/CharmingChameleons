@@ -22,7 +22,7 @@ const ListingsEntry = (props) => (
             <Button onClick={ function() { deleteListing(props.listing.id, props.reRender) } } bsStyle="default">Delete item</Button>
           }
           {props.currentUserId === props.listing.borrowerid &&
-            <Button onClick={ function() { returnItem(props.listing.id) } } bsStyle="default">Return</Button>
+            <Button onClick={ function() { returnItem(props.listing.id, props.reRender) } } bsStyle="default">Return</Button>
           }
         </p>
       </Thumbnail>

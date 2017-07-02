@@ -57,7 +57,7 @@ const deleteListing = (listingId, cb)=>{
   })
 };
 
-const returnItem = (listingId)=>{
+const returnItem = (listingId, cb)=>{
   console.log('returning:', listingId );
   $.ajax({
     url: '/deletebooking',
@@ -67,11 +67,12 @@ const returnItem = (listingId)=>{
 
     },
     success: (data) => {
-      console.log('success', data)
-      alert('booking deleted')
+      console.log('success', data);
+      alert('booking deleted');
+      cb();
     },
     error: (err) => {
-      console.log('error', err)
+      console.log('error', err);
     }
   })
 };
