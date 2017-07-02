@@ -12,9 +12,7 @@ var middleware = require('./middleware');
 
 var cors = require('cors');
 
-const redis = require('redis')
 const expressSession = require('express-session')
-const redisStore = require('connect-redis')(expressSession)
 const passport = require('Passport');
 const config = require('./config/passport');
 const bodyParser = require('body-parser');
@@ -31,32 +29,34 @@ app.use(cors());
 
 app.set('trust proxy', 1) // trust first proxy
 
-
-
 //Initialize passport and express
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport')(passport);
 
-var client;
-if (process.env.REDIS_URL) {
-  client = require('redis').createClient(process.env.REDIS_URL)
-} else {
-  client = redis.createClient(6379, 'localhost');
-}
+//Start --- Commented for redis-heroku deployment
+//const redis = require('redis')
+//const redisStore = require('connect-redis')(expressSession)
+// var client;
+// if (process.env.REDIS_URL) {
+//   client = require('redis').createClient(process.env.REDIS_URL)
+// } else {
+//   client = redis.createClient(6379, 'localhost');
+// }
 
-app.use(expressSession({
-  	name: 'session',
-  	secret: 'test',
-    store: new redisStore(),
-  	// store: new redisStore({
-  	// 	host: 'localhost',
-  	// 	post: 6379,
-  	// 	client,ttl: 260
-	  // }),
-	  saveUninitialized: false,
-	  resave: false
-}))
+// app.use(expressSession({
+//   	name: 'session',
+//   	secret: 'test',
+//     store: new redisStore(),
+//   	// store: new redisStore({
+//   	// 	host: 'localhost',
+//   	// 	post: 6379,
+//   	// 	client,ttl: 260
+// 	  // }),
+// 	  saveUninitialized: false,
+// 	  resave: false
+// }))
+//End --- Commented for redis-heroku deployment
 
 app.post('/login', function(req, res, next) {
     passport.authenticate('local-login', function(err, user, info) {

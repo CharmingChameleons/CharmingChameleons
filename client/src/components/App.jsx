@@ -17,11 +17,11 @@ class App extends React.Component {
     	currentRender: 'landing',
     	listings: [],
     	listing: {},
-    	login: false,
+    	login: localStorage.getItem('loggedin') || false,
       // dummydata
       currentUser: {
-        id: 3,
-        username: 'Shihao',
+        id: localStorage.getItem('id') || 3,
+        username: localStorage.getItem('username') || 'Shihao',
       },
       promptLoginModal: false
     };
@@ -33,16 +33,20 @@ class App extends React.Component {
 	}
 
 	loginUser(user) {
-		console.log('reached loginUser')
-		this.setState({
-			login: true,
+    console.log('reached loginUser')
+    this.setState({
+      login: true,
       currentUser: {
         id: user.id,
-        username: user.username
+        username: user.username,
       }
-		})
+    })
+
+    localStorage.setItem('id', user.id)
+    localStorage.setItem('username', user.username)
+    localStorage.setItem('loggedin', true)
     console.log('login, currentUser', this.state.login, this.state.currentUser);
-	}
+  }
 
   logoutUser() {
     console.log('reached logout')
