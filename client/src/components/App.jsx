@@ -167,8 +167,18 @@ class App extends React.Component {
         data: { booking: data },
         success: (data) => {
           alert('Your item was booked! Please contact your vendor to arrange a pickup/delivery');
-          console.log('data', data);
-          // create button with state
+          $.ajax({
+            type: 'GET',
+            url: '/listings',
+            success: (data) => {
+              this.setState({
+                listings: JSON.parse(data)
+              })
+            },
+            error: (err) => {
+              console.log('failed', err);
+            }
+          });
         },
         error: (err) => {
           console.log('failed booking', err);
