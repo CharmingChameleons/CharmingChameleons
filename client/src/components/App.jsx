@@ -6,7 +6,6 @@ import Signup from './Signup.jsx'
 import Booking from './Booking.jsx'
 import CreateListing from './createListing.jsx'
 import Profile from './Profile.jsx'
-
 const $ = require('jquery');
 
 class App extends React.Component {
@@ -18,7 +17,6 @@ class App extends React.Component {
     	listings: [],
     	listing: {},
     	login: localStorage.getItem('loggedin') || false,
-      // dummydata
       currentUser: {
         id: localStorage.getItem('id') || 3,
         username: localStorage.getItem('username') || 'Shihao',
