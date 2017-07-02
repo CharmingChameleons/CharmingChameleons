@@ -7,7 +7,7 @@ import exampleData from '../dummyData.js'
 const Listings = (props) => (
   <div>
     <Grid>
-    <h3>Listings:</h3>
+    <h3>Listings </h3>
         <Row>
         {props.listings.map((listing, index) =>
           <ListingsEntry

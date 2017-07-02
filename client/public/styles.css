@@ -26,4 +26,10 @@
 .button-book {
   display: block;
   margin: auto;
+
+}
+
+#input {
+	margin-left: 10%; 
+	margin-right: 1%; 
 }

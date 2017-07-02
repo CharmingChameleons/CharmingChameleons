@@ -204,7 +204,6 @@ class App extends React.Component {
       console.log('state change',this.state.listing);
     })
   }
-
   }
 
   componentDidMount() {

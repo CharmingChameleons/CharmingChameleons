@@ -5,7 +5,6 @@ import Form from 'react-bootstrap/lib/Form'
 
 const $ = require('jquery');
 
-
 class Search extends React.Component {
   constructor (props) {
     super (props)
@@ -17,7 +16,7 @@ class Search extends React.Component {
     
   }
   getSearch() {
-  	 $.ajax({
+	 $.ajax({
       url: '/search',
       method: 'GET',
       data: {'param' : this.state.term},
@@ -29,9 +28,9 @@ class Search extends React.Component {
       }
     })
   }
+
   handleClick() {
   	var inpt = $('#input').val()
-    console.log('inpt-->', inpt);
   	if(inpt !== '') {
   		this.setState({
 	  		term: inpt
@@ -42,8 +41,8 @@ class Search extends React.Component {
   render(){
   	return (
       <Form inline>
-        <FormControl id='input' type="text" placeholder="Search by tags" />
-  		  <Button bsStyle="primary" type='submit' onClick={this.handleClick}> Search </Button>
+        <input id='input' type="text" placeholder="Search by tags" />
+  		  <Button bsStyle="primary" onClick={this.handleClick}> Search </Button>
       </Form>
   		)
   	}
