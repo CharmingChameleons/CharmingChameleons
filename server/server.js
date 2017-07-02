@@ -7,14 +7,14 @@ const fs = require('fs');
 const fileUpload = require('express-fileupload');
 var multer  = require('multer')
 var mkdirp = require('mkdirp');
+var fs = require('fs');
 
 // saving the pictures in the folder
-var dirNum = 0; 
 var storage = multer.diskStorage({
 	destination: function(req, file, callback) {
-			var path = './client/public/images/listings/'+(++dirNum);
-			mkdirp(path, function(err) { 
-	   	callback(null, path)
+		var path = './client/public/images/listings/temp';
+		mkdirp(path, function(err) { 
+	   		callback(null, path)
 		});
 	},
 	filename: function(req, file, callback) {
@@ -49,8 +49,11 @@ app.use(cors());
 
 app.set('trust proxy', 1) // trust first proxy
 
+<<<<<<< HEAD
 app.use(fileUpload());
 
+=======
+>>>>>>> working files
 //Initialize passport and express
 app.use(passport.initialize());
 app.use(passport.session());
@@ -135,6 +138,7 @@ app.post('/confirm-booking',
 		});
 });
 
+<<<<<<< HEAD
 app.get('/userlisting', (req, res) => {
   console.log('request received userlisting for', req.query);
   var params = [req.query.params];
@@ -211,7 +215,23 @@ app.delete('/deletebooking',
       console.log('booking deleted');
       res.end(JSON.stringify(data));
     });
-});
+//works with multer
+// app.post('/createlisting', (req, res) => {
+// 	var upload = multer({
+// 		storage: storage
+// 	}).single('image')
+// 	upload(req, res, function(err) {
+// 		db.createListing(req.body.params.split(','))
+//     	.then((data) => {
+//     		console.log(data[0].id);
+//     	fs.rename('./client/public/images/listings/temp', './client/public/images/listings/'+data[0].id, function (err) {
+// 		  if (err) throw err;
+// 		  console.log('renamed complete');
+// 		});
+//       	res.end(JSON.stringify(data));
+//     	});
+// 	})
+// });
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);
