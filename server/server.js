@@ -187,6 +187,37 @@ app.post('/createlisting',
 		});
 });
 
+	var params = [
+		req.body.name, 
+		req.body.description, 
+		req.body.cost, 
+		req.body.tags
+	];
+
+	db.createListing(params)
+		.then(data => {
+			let imageFile = req.files.listingImage;
+
+			if (imageFile === undefined) {
+				res.status(201).redirect('/');
+			} else {
+				fs.exists('./client/public/images/listings/' + data[0].id, (exists) => {
+					if (!exists) {
+						fs.mkdir('./client/public/images/listings/' + data[0].id);
+					}
+
+					imageFile.mv('./client/public/images/listings/' + data[0].id + '/1.jpg', function(err) {
+						if (err) {
+							res.status(500).send(err);
+						} else {
+							res.status(201).redirect('/');
+						}
+					});
+				});
+			}
+		});
+});
+
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);
