@@ -3,7 +3,8 @@ var cors = require('cors');
 var express = require('express');
 var db = require('../database');
 var session = require('./models/session');
-
+const fs = require('fs');
+const fileUpload = require('express-fileupload');
 
 var app = express();
 var util = require('./lib/hashUtils');
@@ -31,10 +32,13 @@ app.use(cors());
 
 app.set('trust proxy', 1) // trust first proxy
 
+app.use(fileUpload());
+
 //Initialize passport and express
 app.use(passport.initialize());
 app.use(passport.session());
 
+<<<<<<< HEAD
 require('./config/passport')(passport);
 
 //Start --- Commented for redis-heroku deployment
@@ -60,6 +64,19 @@ require('./config/passport')(passport);
 // 	  resave: false
 // }))
 //End --- Commented for redis-heroku deployment
+=======
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['sessionmgmt'],
+  // Cookie Options
+  cookie: {
+  	httpOnly: true,
+  	secure: true
+   },
+  maxAge: 5 * 60 * 60 * 1000 // 5 hours
+}))
+>>>>>>> 528c1515871b93c93fb1f7b85881334ad6c06e6d
 
 app.post('/login', function(req, res, next) {
     passport.authenticate('local-login', function(err, user, info) {
@@ -125,16 +142,6 @@ app.get('/userlisting', (req, res) => {
     });
 });
 
-app.get('/borrowerlistings', (req, res) => {
-  console.log('request received borrowerlistings for', req.query);
-  var params = [req.query.params];
-  db.getListingsForBorrower(params)
-    .then((data) => {
-      console.log('grabbed all borrower listings for ...', data);
-      res.end(JSON.stringify(data));
-    });
-});
-
 app.delete('/deletelisting', (req, res) => {
   console.log('request received deletelisting');
   var params = [req.body.params];
@@ -147,25 +154,42 @@ app.delete('/deletelisting', (req, res) => {
   });
 });
 
+app.post('/createlisting',
+(req, res) => {
+	if (JSON.stringify(req.body) === '{}') {
+		return res.status(400).send('No files/inputs were uploaded.');
+	}
 
-app.post('/createlisting', 
-  (req, res) => {
-    db.createListing(req.body.params)
-      .then((data) => {
-        console.log('Created an entry');
-        res.end(JSON.stringify(data));
-      });
+	var params = [
+		req.body.name, 
+		req.body.description, 
+		req.body.cost, 
+		req.body.tags,
+		req.body.id
+	];
+
+	db.createListing(params)
+		.then(data => {
+			let imageFile = req.files.listingImage;
+
+			if (imageFile === undefined) {
+				res.status(201).redirect('/');
+			} else {
+				if (!fs.existsSync('./client/public/images/listings/' + data[0].id)) {
+					fs.mkdir('./client/public/images/listings/' + data[0].id);
+				}
+
+				imageFile.mv('./client/public/images/listings/' + data[0].id + '/1.jpg', function(err) {
+					if (err) {
+						res.status(500).send(err);
+					} else {
+						res.status(201).redirect('/');
+					}
+				});
+			}
+		});
 });
 
-app.delete('/deletebooking',
-  (req, res) => {
-    var params = [req.body.params];
-    db.deleteBooking(params)
-      .then((data) => {
-        console.log('booking deleted');
-        res.end(JSON.stringify(data));
-      });
-});
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);

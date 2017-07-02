@@ -4,9 +4,8 @@ import Listings from './Listings.jsx'
 import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
 import Booking from './Booking.jsx'
-import CreateListing from './createListing.jsx'
+import CreateListing from './CreateListing.jsx'
 import Profile from './Profile.jsx'
-
 const $ = require('jquery');
 
 class App extends React.Component {
@@ -18,7 +17,6 @@ class App extends React.Component {
     	listings: [],
     	listing: {},
     	login: localStorage.getItem('loggedin') || false,
-      // dummydata
       currentUser: {
         id: localStorage.getItem('id') || 3,
         username: localStorage.getItem('username') || 'Shihao',
@@ -121,7 +119,6 @@ class App extends React.Component {
   }
 
   handleSelectListing(listing) {
-    console.log('button clicked!', listing);
     this.setState({
       listing: listing,
       currentRender: 'selectedListing'
@@ -148,7 +145,6 @@ class App extends React.Component {
   }
 
   handleLogoClick() {
-    console.log('boom boom');
     this.setState({
       currentRender: 'landing'
     })
@@ -171,8 +167,18 @@ class App extends React.Component {
         data: { booking: data },
         success: (data) => {
           alert('Your item was booked! Please contact your vendor to arrange a pickup/delivery');
-          console.log('data', data);
-          // create button with state
+          $.ajax({
+            type: 'GET',
+            url: '/listings',
+            success: (data) => {
+              this.setState({
+                listings: JSON.parse(data)
+              })
+            },
+            error: (err) => {
+              console.log('failed', err);
+            }
+          });
         },
         error: (err) => {
           console.log('failed booking', err);
