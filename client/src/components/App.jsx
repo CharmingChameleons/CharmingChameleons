@@ -18,8 +18,8 @@ class App extends React.Component {
     	listing: {},
     	login: localStorage.getItem('loggedin') || false,
       currentUser: {
-        id: localStorage.getItem('id') || 3,
-        username: localStorage.getItem('username') || 'Shihao',
+        id: parseInt(localStorage.getItem('id')) || null,
+        username: localStorage.getItem('username') || null,
       },
       promptLoginModal: false
     };
@@ -35,7 +35,7 @@ class App extends React.Component {
     this.setState({
       login: true,
       currentUser: {
-        id: user.id,
+        id: parseInt(user.id),
         username: user.username,
       }
     })
