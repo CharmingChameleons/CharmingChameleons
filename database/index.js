@@ -65,47 +65,6 @@ module.exports = {
     )
   },
 
- 	//Input: replace the following with its values[name, description, cost, tags]
- 	//Output: returns the id of the listing object created => [{id: 1}]
- 	createListing: (params) => {
-		var queryString = 'INSERT INTO listings (name, description, cost, tags,) VALUES ($1, $2, $3, $4) returning id'
-		var queryArgs = params
-
-		return new Promise (
-			(resolve, reject) => {
-				pool.query(queryString, queryArgs, (err, rows) => {
-					if (err) {
-						reject (err)
-						console.log(err);
-					} else {
-						console.log('added this item to DB');
-						resolve(JSON.parse(JSON.stringify(rows.rows)))
-					}
-				})
-			}
-		)
-	},
-
-	createBookings: (params) => {
-
-		var queryString = 'INSERT INTO bookings (listingId, borrowerId) VALUES ($1, $2) returning id'
-		var queryArgs = params
-
-		return new Promise (
-			(resolve, reject) => {
-				pool.query(queryString, queryArgs, (err, rows) => {
-					if (err) {
-						reject (err)
-						console.log(err);
-					} else {
-						console.log('got data from createBookings');
-						resolve(JSON.parse(JSON.stringify(rows.rows)))
-					}
-				})
-			}
-		)
-	},
-
   createListing: (params) => {
     var queryString = 'INSERT INTO listings (name, description, cost, tags, lenderId) VALUES ($1, $2, $3, $4, $5) returning id'
     var queryArgs = params

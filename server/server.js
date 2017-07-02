@@ -160,7 +160,8 @@ app.post('/createlisting',
 		req.body.name, 
 		req.body.description, 
 		req.body.cost, 
-		req.body.tags
+		req.body.tags,
+		req.body.id
 	];
 
 	db.createListing(params)
@@ -170,18 +171,16 @@ app.post('/createlisting',
 			if (imageFile === undefined) {
 				res.status(201).redirect('/');
 			} else {
-				fs.exists('./client/public/images/listings/' + data[0].id, (exists) => {
-					if (!exists) {
-						fs.mkdir('./client/public/images/listings/' + data[0].id);
-					}
+				if (!fs.existsSync('./client/public/images/listings/' + data[0].id)) {
+					fs.mkdir('./client/public/images/listings/' + data[0].id);
+				}
 
-					imageFile.mv('./client/public/images/listings/' + data[0].id + '/1.jpg', function(err) {
-						if (err) {
-							res.status(500).send(err);
-						} else {
-							res.status(201).redirect('/');
-						}
-					});
+				imageFile.mv('./client/public/images/listings/' + data[0].id + '/1.jpg', function(err) {
+					if (err) {
+						res.status(500).send(err);
+					} else {
+						res.status(201).redirect('/');
+					}
 				});
 			}
 		});
