@@ -4,9 +4,9 @@ const url = require('url');
 
 
 let config = {
-  user: "postgres", // name of the user account
-  host: "localhost",
-  password: "test",
+  user: "sara", // name of the user account
+  // host: "localhost",
+  // password: "test",
   database: "shareio",
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
@@ -175,18 +175,6 @@ module.exports = {
   //Input: Replace the following with its values['username']
   //Output: Returns the row containing that name -> arra
 
-
-  getUserId: (params) => {
-    var queryString = "SELECT * FROM users WHERE username = $1"
-    var queryArgs = params
-
-    return new Promise (
-      (resolve, reject) => {
-        pool.query(queryString, queryArgs, (err, data) => {
-          if (err) {
-            reject (err)
-          } else {
-            resolve(JSON.parse(JSON.stringify(data.rows)))
 	getUserName: (params) => {
 		var queryString = "SELECT * FROM users WHERE id = $1"
 		var queryArgs = params
@@ -240,28 +228,6 @@ module.exports = {
       }
     )
   },
-
-	//Create New User
-	createUser: (params) => {
-
-		var queryString = 'INSERT INTO users (username, hash, salt) VALUES ($1, $2, $3) returning id'
-		var queryArgs = params
-
-		return new Promise (
-			(resolve, reject) => {
-				pool.query(queryString, queryArgs, (err, rows) => {
-					if (err) {
-						reject (err)
-						console.log(err);
-					} else {
-						console.log('user id');
-						resolve(JSON.parse(JSON.stringify(rows.rows)))
-
-					}
-				})
-			}
-		)
-	}
 
   //Create New User
   createUser: (params) => {

@@ -7,7 +7,6 @@ const fs = require('fs');
 const fileUpload = require('express-fileupload');
 var multer  = require('multer')
 var mkdirp = require('mkdirp');
-var fs = require('fs');
 
 // saving the pictures in the folder
 var storage = multer.diskStorage({
@@ -227,7 +226,7 @@ app.delete('/deletebooking',
 //       	res.end(JSON.stringify(data));
 //     	});
 // 	})
-// });
+ });
 
 app.get('/search', (req, res) => {
 	console.log('this query',req.query.param);

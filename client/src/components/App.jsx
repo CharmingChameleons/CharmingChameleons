@@ -4,12 +4,10 @@ import Listings from './Listings.jsx'
 import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
 import Booking from './Booking.jsx'
-import CreateListing from './CreateListing.jsx'
+import CreateListing from './CreateListings.jsx'
 import Profile from './Profile.jsx'
 const $ = require('jquery');
 import Search from './Search.jsx'
-
-var $ = require('jquery');
 
 
 class App extends React.Component {
@@ -204,7 +202,7 @@ class App extends React.Component {
       console.log('state change',this.state.listing);
     })
   }
-  }
+  
 
   componentDidMount() {
     $.ajax({
@@ -238,12 +236,6 @@ class App extends React.Component {
 
           />
 			    {this.currentRender()}
-
-			    <NavB login={this.state.login} loginUser={this.loginUser} promptLoginModal={this.state.promptLoginModal} 
-            resetLoginModal={this.resetLoginModal} onLogoClick={this.handleLogoClick.bind(this)} 
-            onCreateClick={this.handleCreateListing.bind(this)}/>
-
-          {this.currentRender()}
 
 			  </div>
 		)
