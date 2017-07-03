@@ -2,6 +2,7 @@ import React from 'react'
 import Button from 'react-bootstrap/lib/Button'
 import FormControl from 'react-bootstrap/lib/FormControl'
 import Form from 'react-bootstrap/lib/Form'
+import FormGroup from 'react-bootstrap/lib/FormGroup'
 
 const $ = require('jquery');
 
@@ -13,7 +14,7 @@ class Search extends React.Component {
     }
     this.handleClick = this.handleClick.bind(this);
     this.getSearch = this.getSearch.bind(this);
-    
+
   }
   getSearch() {
 	 $.ajax({
@@ -36,9 +37,13 @@ class Search extends React.Component {
 
   render(){
   	return (
-      <Form inline>
-        <input id='input' type="text" placeholder="Search by tags" />
-  		  <Button bsStyle="primary" onClick={this.handleClick}> Search </Button>
+      <Form inline id='search-form'>
+        <FormGroup bsSize="large">
+          <FormControl id='input' type="text" placeholder="Search by tags" />
+          {' '}
+          <Button type="button" bsStyle="primary" onClick={this.handleClick}> Search </Button>
+        </FormGroup>
+
       </Form>
   		)
   	}
