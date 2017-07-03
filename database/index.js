@@ -172,26 +172,6 @@ module.exports = {
     )
   },
 
-  //Input: Replace the following with its values['username']
-  //Output: Returns the row containing that name -> arra
-
-  getUserName: (params) => {
-    var queryString = "SELECT * FROM users WHERE id = $1"
-    var queryArgs = params
-
-    return new Promise (
-      (resolve, reject) => {
-        pool.query(queryString, queryArgs, (err, rows) => {
-          if (err) {
-            reject (err)
-          } else {
-            console.log('got username');
-            // resolve(JSON.parse(JSON.stringify(rows.rows)))
-          }
-        })
-      }
-    )
-  },
 
   //Input: Replace the following with its values['username']
     //Output: Returns the row containing that name -> arra
