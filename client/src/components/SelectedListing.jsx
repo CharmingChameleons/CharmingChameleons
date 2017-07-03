@@ -56,7 +56,7 @@ class SelectedListing extends React.Component {
                 {this.props.listing.tags}
               </Panel>
             </Panel>
-            <ReviewsView listingId={props.listing.id}/>
+            <ReviewsView listingId={this.props.listing.id}/>
             <GettingStartedGoogleMap
               containerElement={
                 <div style={{ height: `50%` }} />
