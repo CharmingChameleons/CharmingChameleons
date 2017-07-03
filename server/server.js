@@ -277,7 +277,7 @@ app.post('/listingreview',
 	db.createListingReview(params)
   .then ((data) => {
 		console.log('created review');
-		res.end(JSON.stringify(data));
+		res.status(201).redirect('/');
 	});
 });
 
