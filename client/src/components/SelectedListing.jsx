@@ -59,11 +59,11 @@ class SelectedListing extends React.Component {
             <ReviewsView listingId={props.listing.id}/>
             <GettingStartedGoogleMap
               containerElement={
-                <div style={{ height: `100%` }} />
+                <div style={{ height: `50%` }} />
               }
               mapElement={
                 <div style={{ 
-                  height: `50%`,
+                  height: `100%`,
                   width: `50%`,
                   margin: `auto`
                 }} />
