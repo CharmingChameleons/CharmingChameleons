@@ -13,10 +13,10 @@ class SelectedListing extends React.Component {
     this.state = {
       markers: [{
         position: {
-          lat: 25.0112183,
-          lng: 121.52067570000001,
+          lat: parseFloat(props.listing.latitude),
+          lng: parseFloat(props.listing.longitude),
         },
-        key: `Taiwan`,
+        key: `United States`,
         defaultAnimation: 2,
       }],
     };

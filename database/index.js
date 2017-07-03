@@ -51,7 +51,7 @@ module.exports = {
   getAvailableListings: () => {
     return new Promise (
       (resolve, reject) => {
-        pool.query('SELECT listings.id, listings.name, listings.description, listings.cost,listings.tags, listings.lenderid, users.username \
+        pool.query('SELECT listings.id, listings.name, listings.description, listings.cost,listings.tags, listings.lenderid, users.username, listings.latitude, listings.longitude \
                       FROM listings  \
                       INNER JOIN users on users.id = listings.lenderid \
                       WHERE listings.id NOT IN (SELECT listingid FROM bookings)', function (err, result) {
