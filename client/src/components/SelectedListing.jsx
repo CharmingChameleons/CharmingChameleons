@@ -98,7 +98,7 @@ class SelectedListing extends React.Component{
               <Button onClick={ function() {this.props.onBookingClick(this.props.listing)} } bsStyle="primary">Book</Button>&nbsp;
             </p>
         </Grid>
-        <ReviewsView listingId={props.listing.id}/>
+        <ReviewsView listingId={this.props.listing.id}/>
       </div>
     )
   }
