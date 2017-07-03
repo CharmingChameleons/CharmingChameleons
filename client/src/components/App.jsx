@@ -7,8 +7,6 @@ import Booking from './Booking.jsx'
 import CreateListing from './CreateListings.jsx'
 import Profile from './Profile.jsx'
 const $ = require('jquery');
-import Search from './Search.jsx'
-
 
 class App extends React.Component {
 	constructor (props) {
@@ -89,15 +87,12 @@ class App extends React.Component {
   currentRender() {
     var render = this.state.currentRender;
     if (render === 'landing') {
-      return( 
-      <div>
-        <Search handleSearchRender={this.handleSearchRender.bind(this)}/>
-        <Listings 
-          onListingClick={this.handleSelectListing.bind(this)} 
-          onBookingClick={this.handleBookingClick.bind(this)}
-          listings={this.state.listings}
-        />;
-      </div>)
+      return <Listings 
+        handleSearchRender={this.handleSearchRender.bind(this)}
+        onListingClick={this.handleSelectListing.bind(this)} 
+        onBookingClick={this.handleBookingClick.bind(this)}
+        listings={this.state.listings}
+      />;
     } else if (render === 'selectedListing') {
       return <SelectedListing
         onBackClick={this.handleBackClick.bind(this)}
@@ -194,7 +189,7 @@ class App extends React.Component {
       console.log('state change',this.state.listing);
     })
   }
-  
+
   renderListings() {
     $.ajax({
       type: 'GET',

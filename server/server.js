@@ -124,7 +124,7 @@ app.post('/signup', function(req, res, next) {
 });
 
 app.get('/listings',
-(req, res) => {
+  (req, res) => {
   db.getAvailableListings()
     .then((data) => {
       res.end(JSON.stringify(data));
@@ -132,8 +132,7 @@ app.get('/listings',
 });
 
 app.post('/confirm-booking',
-
-(req, res) => {
+  (req, res) => {
 	for (let i = 0; i < req.body.booking.length; i++) {
 		req.body.booking[i] = parseInt(req.body.booking[i]);
 	}
@@ -223,6 +222,7 @@ app.delete('/deletebooking',
       console.log('booking deleted');
       res.end(JSON.stringify(data));
     });
+    
 //works with multer
 // app.post('/createlisting', (req, res) => {
 // 	var upload = multer({

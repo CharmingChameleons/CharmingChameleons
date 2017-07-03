@@ -4,9 +4,9 @@ const url = require('url');
 
 
 let config = {
-  user: "sara", // name of the user account
-  //host: "localhost",
-  //password: "test",
+  user: "postgres", // name of the user account
+  host: "localhost",
+  password: "test",
   database: "shareio",
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
@@ -105,10 +105,10 @@ module.exports = {
   //Output: Returns all the listings that belongs to one user-> array
   getListingsForUser: (params) => {
     var queryString = 'SELECT listings.id, listings.name, listings.description, listings.cost,\
-	                       listings.tags, listings.lenderid,  lu.username, bookings.borrowerid, bu.username AS borrowername \
-		                   FROM listings \
-			                     LEFT OUTER JOIN bookings ON (listings.id = bookings.listingId) \
-			                     INNER JOIN users AS lu on lu.id = listings.lenderid \
+                         listings.tags, listings.lenderid,  lu.username, bookings.borrowerid, bu.username AS borrowername \
+                       FROM listings \
+                           LEFT OUTER JOIN bookings ON (listings.id = bookings.listingId) \
+                           INNER JOIN users AS lu on lu.id = listings.lenderid \
                            LEFT OUTER JOIN users AS bu on bu.id = bookings.borrowerid \
                        WHERE listings.lenderId = $1'
     var queryArgs = params
@@ -129,9 +129,9 @@ module.exports = {
 
   getListingsForBorrower: (params) => {
     var queryString = 'SELECT listings.id, listings.name, listings.description, listings.cost,\
-	                       listings.tags, listings.lenderid,  users.username, bookings.borrowerid \
-		                   FROM listings \
-			                     INNER JOIN bookings on listings.id = bookings.listingid \
+                         listings.tags, listings.lenderid,  users.username, bookings.borrowerid \
+                       FROM listings \
+                           INNER JOIN bookings on listings.id = bookings.listingid \
                            INNER JOIN users on users.id = listings.lenderid \
                        WHERE bookings.borrowerid = $1'
     var queryArgs = params
@@ -175,47 +175,48 @@ module.exports = {
   //Input: Replace the following with its values['username']
   //Output: Returns the row containing that name -> arra
 
-	getUserName: (params) => {
-		var queryString = "SELECT * FROM users WHERE id = $1"
-		var queryArgs = params
+  getUserName: (params) => {
+    var queryString = "SELECT * FROM users WHERE id = $1"
+    var queryArgs = params
 
-		return new Promise (
-			(resolve, reject) => {
-				pool.query(queryString, queryArgs, (err, rows) => {
-					if (err) {
-						reject (err)
-					} else {
-						console.log('got username');
-						// resolve(JSON.parse(JSON.stringify(rows.rows)))
-					}
-				})
-			}
-		)
-	},
+    return new Promise (
+      (resolve, reject) => {
+        pool.query(queryString, queryArgs, (err, rows) => {
+          if (err) {
+            reject (err)
+          } else {
+            console.log('got username');
+            // resolve(JSON.parse(JSON.stringify(rows.rows)))
+          }
+        })
+      }
+    )
+  },
 
-	//Input: Replace the following with its values['username']
-  	//Output: Returns the row containing that name -> arra
+  //Input: Replace the following with its values['username']
+    //Output: Returns the row containing that name -> arra
 
 
-	getUserId: (params) => {
-		var queryString = "SELECT * FROM users WHERE username = $1"
-		var queryArgs = params
+  getUserId: (params) => {
+    var queryString = "SELECT * FROM users WHERE username = $1"
+    var queryArgs = params
 
-		return new Promise (
-			(resolve, reject) => {
-				pool.query(queryString, queryArgs, (err, data) => {
-					if (err) {
-						reject (err)
-					} else {
-						resolve(JSON.parse(JSON.stringify(data.rows)))
-					}
-				})
-			}
-		)
-	},
-	  searchListings: (term) => {
-    term = " '%'|| '"+term+"' ||'%'";
-    var queryString = 'SELECT * FROM listings WHERE tags ILIKE' +term
+    return new Promise (
+      (resolve, reject) => {
+        pool.query(queryString, queryArgs, (err, data) => {
+          if (err) {
+            reject (err)
+          } else {
+            resolve(JSON.parse(JSON.stringify(data.rows)))
+          }
+        })
+      }
+    )
+  },
+
+  searchListings: (term) => {
+    term = " '%'|| '" + term + "' ||'%'";
+    var queryString = 'SELECT * FROM listings WHERE tags ILIKE' + term
     return new Promise (
       (resolve, reject) => {
         pool.query(queryString, (err, data) => {
@@ -231,7 +232,6 @@ module.exports = {
 
   //Create New User
   createUser: (params) => {
-
     var queryString = 'INSERT INTO users (username, hash, salt) VALUES ($1, $2, $3) returning id'
     var queryArgs = params
 

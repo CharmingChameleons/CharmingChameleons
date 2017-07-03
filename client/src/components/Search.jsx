@@ -31,11 +31,11 @@ class Search extends React.Component {
 
   handleClick() {
   	var inpt = $('#input').val()
-  	if(inpt !== '') {
+  	// if (inpt !== '') {
   		this.setState({
 	  		term: inpt
 	  	}, this.getSearch)
-  	}
+  	// }
   }
 
   render(){
