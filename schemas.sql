@@ -21,14 +21,14 @@
 -- ---
 
 --.open shareio
-CREATE DATABASE shareio;
+CREATE DATABASE henri;
 
 -- ---
 -- Table users
 --
 -- ---
 
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE users (
   ID        SERIAL PRIMARY KEY,
@@ -41,7 +41,7 @@ CREATE TABLE users (
 --
 -- ---
 
-DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS sessions CASCADE;
 
 CREATE TABLE sessions (
   ID       SERIAL PRIMARY KEY,
@@ -54,7 +54,7 @@ CREATE TABLE sessions (
 --
 -- ---
 
-DROP TABLE IF EXISTS listings;
+DROP TABLE IF EXISTS listings CASCADE;
 
 CREATE TABLE listings (
   ID          SERIAL PRIMARY KEY,
@@ -71,7 +71,7 @@ CREATE TABLE listings (
 --
 -- ---
 
-DROP TABLE IF EXISTS bookings;
+DROP TABLE IF EXISTS bookings CASCADE;
 
 CREATE TABLE bookings (
   ID         SERIAL PRIMARY KEY,
