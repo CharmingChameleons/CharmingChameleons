@@ -4,12 +4,11 @@
     overflow: auto;
 }
 
-.thumbnail  img {
+.thumbnail img {
   height: 120px;
   width: 190px;
   border: solid 1px #cccccc;
 }
-
 
 .listing {
   display: block;
