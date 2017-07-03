@@ -18,8 +18,8 @@ class App extends React.Component {
     	listing: {},
     	login: localStorage.getItem('loggedin') || false,
       currentUser: {
-        id: parseInt(localStorage.getItem('id')) || null,
-        username: localStorage.getItem('username') || null,
+        id: parseInt(localStorage.getItem('id')) || 0,
+        username: localStorage.getItem('username') || '',
       },
       promptLoginModal: false
     };
@@ -92,6 +92,7 @@ class App extends React.Component {
         onListingClick={this.handleSelectListing.bind(this)} 
         onBookingClick={this.handleBookingClick.bind(this)}
         listings={this.state.listings}
+        currentUserId={this.state.currentUser.id}
       />;
     } else if (render === 'selectedListing') {
       return <SelectedListing

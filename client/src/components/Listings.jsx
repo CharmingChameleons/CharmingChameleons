@@ -21,7 +21,6 @@ const Listings = (props) => (
             onListingClick={props.onListingClick}
             onBookingClick={props.onBookingClick}
             currentUserId={props.currentUserId}
-            currentPage={props.currentPage}
           />
         )}
         </Row>

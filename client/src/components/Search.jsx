@@ -30,12 +30,8 @@ class Search extends React.Component {
   }
 
   handleClick() {
-  	var inpt = $('#input').val()
-  	if (inpt !== '') {
-  		this.setState({
-	  		term: inpt
-	  	}, this.getSearch)
-  	}
+  	var input = $('#input').val()
+		this.setState({ term: input }, this.getSearch);
   }
 
   render(){
