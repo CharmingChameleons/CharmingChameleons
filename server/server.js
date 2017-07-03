@@ -6,8 +6,9 @@ var session = require('./models/session');
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
 
-var multer  = require('multer')
-var mkdirp = require('mkdirp');
+
+// var multer  = require('multer')
+// var mkdirp = require('mkdirp');
 
 // saving the pictures in the folder
 // var storage = multer.diskStorage({
@@ -15,6 +16,18 @@ var mkdirp = require('mkdirp');
 // 		var path = './client/public/images/listings/temp';
 // 		mkdirp(path, function(err) { 
 // 	   		callback(null, path)
+// 		});
+// 	},
+// 	filename: function(req, file, callback) {
+// 		callback(null, 1+ path.extname(file.originalname))
+// 	}
+// })
+// var dirNum = 0; 
+// var storage = multer.diskStorage({
+// 	destination: function(req, file, callback) {
+// 			var path = './client/public/images/listings/'+(++dirNum);
+// 			mkdirp(path, function(err) { 
+// 	   	callback(null, path)
 // 		});
 // 	},
 // 	filename: function(req, file, callback) {
