@@ -14,7 +14,7 @@ const fileUpload = require('express-fileupload');
 // var storage = multer.diskStorage({
 // 	destination: function(req, file, callback) {
 // 		var path = './client/public/images/listings/temp';
-// 		mkdirp(path, function(err) { 
+// 		mkdirp(path, function(err) {
 // 	   		callback(null, path)
 // 		});
 // 	},
@@ -22,11 +22,11 @@ const fileUpload = require('express-fileupload');
 // 		callback(null, 1+ path.extname(file.originalname))
 // 	}
 // })
-// var dirNum = 0; 
+// var dirNum = 0;
 // var storage = multer.diskStorage({
 // 	destination: function(req, file, callback) {
 // 			var path = './client/public/images/listings/'+(++dirNum);
-// 			mkdirp(path, function(err) { 
+// 			mkdirp(path, function(err) {
 // 	   	callback(null, path)
 // 		});
 // 	},
@@ -42,7 +42,7 @@ var cors = require('cors');
 
 const expressSession = require('express-session')
 const passport = require('passport');
-const config = require('./config/passport'); 
+const config = require('./config/passport');
 const LocalStrategy = require('passport-local').Strategy
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -95,10 +95,10 @@ require('./config/passport')(passport);
 
 app.post('/login', function(req, res, next) {
     passport.authenticate('local-login', function(err, user, info) {
-        if (err) { 
+        if (err) {
         	res.status(409).send(info.errMsg);
         }
-        if (!user) { 
+        if (!user) {
         	res.status(409).send(info.errMsg);
         }
         console.log('In app.post user', user)
@@ -185,9 +185,9 @@ app.post('/createlisting',
 	}
 
 	var params = [
-		req.body.name, 
-		req.body.description, 
-		req.body.cost, 
+		req.body.name,
+		req.body.description,
+		req.body.cost,
 		req.body.tags,
 		req.body.id
 	];
@@ -222,7 +222,7 @@ app.delete('/deletebooking',
       console.log('booking deleted');
       res.end(JSON.stringify(data));
     });
-    
+
 //works with multer
 // app.post('/createlisting', (req, res) => {
 // 	var upload = multer({
@@ -248,7 +248,19 @@ app.get('/search', (req, res) => {
 		console.log('searched the database');
 		res.end(JSON.stringify(data));
 	})
-})
+});
+
+app.get('/listingreview', (req, res) => {
+	console.log(' get request for ',req.query);
+  var params = [req.query.params];
+	db.getListingReviews(params)
+	.then ((data) => {
+		console.log('searched the database');
+		res.end(JSON.stringify(data));
+	})
+});
+
+
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);

@@ -14,6 +14,7 @@ class Search extends React.Component {
     }
     this.handleClick = this.handleClick.bind(this);
     this.getSearch = this.getSearch.bind(this);
+    this.submit = this.submit.bind(this);
 
   }
   getSearch() {
@@ -35,9 +36,14 @@ class Search extends React.Component {
 		this.setState({ term: input }, this.getSearch);
   }
 
+  submit(e) {
+    e.preventDefault();
+    this.handleClick();
+  }
+
   render(){
   	return (
-      <Form inline id='search-form'>
+      <Form inline id='search-form' onSubmit={this.submit}>
         <FormGroup bsSize="large">
           <FormControl id='input' type="text" placeholder="Search by tags" />
           {' '}

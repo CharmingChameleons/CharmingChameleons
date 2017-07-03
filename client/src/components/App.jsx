@@ -87,9 +87,9 @@ class App extends React.Component {
   currentRender() {
     var render = this.state.currentRender;
     if (render === 'landing') {
-      return <Listings 
+      return <Listings
         handleSearchRender={this.handleSearchRender.bind(this)}
-        onListingClick={this.handleSelectListing.bind(this)} 
+        onListingClick={this.handleSelectListing.bind(this)}
         onBookingClick={this.handleBookingClick.bind(this)}
         listings={this.state.listings}
         currentUserId={this.state.currentUser.id}
@@ -99,6 +99,7 @@ class App extends React.Component {
         onBackClick={this.handleBackClick.bind(this)}
         onBookingClick={this.handleBookingClick.bind(this)}
         listing={this.state.listing}
+        currentUserId={this.state.currentUser.id}
       />;
     } else if (render === 'booking') {
       return <Booking

@@ -277,4 +277,25 @@ module.exports = {
       }
     )
   },
+
+  getListingReviews: (params) => {
+    var queryString = "SELECT reviews.id, reviews.review, reviews.stars, users.username \
+                      FROM reviews \
+                        INNER JOIN users on users.id = reviews.borrowerid \
+                      WHERE reviews.listingid = $1";
+    var queryArgs = params;
+
+    return new Promise (
+      (resolve, reject) => {
+        pool.query(queryString, queryArgs, function (err, result) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(JSON.parse(JSON.stringify(result.rows)));
+          }
+        });
+      }
+    )
+  },
+
 }

@@ -84,6 +84,17 @@ CREATE TABLE bookings (
 -- --
 -- -- ---
 
+-- -- ---
+-- -- review Table
+DROP TABLE IF EXISTS reviews CASCADE;
+
+CREATE TABLE reviews (
+  ID  SERIAL PRIMARY KEY,
+  LISTINGID  INT REFERENCES listings(ID) NULL,
+  BORROWERID INT REFERENCES users(ID) NULL,
+  REVIEW VARCHAR(510) NULL,
+  STARS DECIMAL(16) NULL,
+);
 
 
 -- -- ---

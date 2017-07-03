@@ -77,5 +77,24 @@ const returnItem = (listingId, cb)=>{
   })
 };
 
+const getListingReviews = (listingId,cb)=> {
+  console.log('getting reviews for:', listingId );
+  $.ajax({
+    url: '/listingreview',
+    method: 'GET',
+    data: {
+      params: listingId,
 
-export {getUserListings, getBorrowerListings, returnItem, deleteListing};
+    },
+    success: (data) => {
+      console.log('success', data);
+      cb(data);
+    },
+    error: (err) => {
+      console.log('error', err);
+    }
+  })
+}
+
+
+export {getUserListings, getBorrowerListings, returnItem, deleteListing, getListingReviews};
