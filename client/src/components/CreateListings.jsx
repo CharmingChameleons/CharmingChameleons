@@ -7,13 +7,13 @@ import Button from 'react-bootstrap/lib/Button'
 import Col from 'react-bootstrap/lib/Col'
 import Grid from 'react-bootstrap/lib/Grid'
 var $ = require('jquery');
-import Dropzone from 'react-dropzone'
-  
+//import Dropzone from 'react-dropzone'
+
 
 const CreateListing = (props) => (
   <Grid>
   <h3>Create Your Listing:</h3>
-    <form 
+    <form
       ref='createListing'
       id='createListing'
       action='/createlisting'

@@ -4,10 +4,10 @@ const url = require('url');
 
 
 let config = {
-  user: "postgres", // name of the user account
+  user: "henri", // name of the user account
   host: "localhost",
   password: "test",
-  database: "shareio",
+  database: "henri",
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
 };
@@ -196,7 +196,11 @@ module.exports = {
 
   searchListings: (term) => {
     term = " '%'|| '" + term + "' ||'%'";
-    var queryString = 'SELECT * FROM listings WHERE tags ILIKE' + term
+    var queryString = 'SELECT listings.id, listings.name, listings.description, listings.cost,listings.tags, listings.lenderid, users.username \
+	                       FROM listings \
+  	                         INNER JOIN users on users.id = listings.lenderid \
+                         WHERE listings.id NOT IN (SELECT listingid FROM bookings) AND \
+	                         listings.tags ILIKE' + term ;
     return new Promise (
       (resolve, reject) => {
         pool.query(queryString, (err, data) => {
