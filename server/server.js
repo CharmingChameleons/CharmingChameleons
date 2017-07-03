@@ -175,7 +175,7 @@ app.get('/getNumberOfFiles', (req, res) => {
     if (err) {
       res.status(200).send('Image not found');
     } else {
-      console.log('NUmber of images', data.length)
+      console.log('Number of images', data.length)
       res.status(200).send(JSON.stringify(data.length));
     }
   })
