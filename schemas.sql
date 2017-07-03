@@ -62,7 +62,9 @@ CREATE TABLE listings (
   DESCRIPTION VARCHAR(500)  NULL,
   COST        INT           NULL,
   TAGS        VARCHAR(255)  NULL,
-  LENDERID    INT REFERENCES users (ID)
+  LENDERID    INT REFERENCES users (ID),
+  LONGITUDE   DECIMAL       NULL,
+  LATITUDE    DECIMAL       NULL
 
 );
 
@@ -113,9 +115,9 @@ INSERT INTO users (username) VALUES ('Shihao');
 -- --
 -- -- ---
 
-INSERT INTO listings (name, description, cost, tags, lenderId) VALUES ('IKEA Table', 'MALM TABLE', 10, 'table, IKEA', 1);
-INSERT INTO listings (name, description, cost, tags, lenderId) VALUES ('RED Tent', 'Tent for 4 people', 100, 'Red, tent', 4);
-INSERT INTO listings (name, description, cost, tags, lenderId) VALUES ('Tandem Bicycle', 'Tandem Bicycle', 30, 'Tandem Bicycle, 2, sunset', 1);
+INSERT INTO listings (name, description, cost, tags, lenderId, longitude, latitude) VALUES ('IKEA Table', 'MALM TABLE', 10, 'table, IKEA', 1, -122.4091105, 37.783742);
+INSERT INTO listings (name, description, cost, tags, lenderId, longitude, latitude) VALUES ('RED Tent', 'Tent for 4 people', 100, 'Red, tent', 4, -122.4091105, 37.783742);
+INSERT INTO listings (name, description, cost, tags, lenderId, longitude, latitude) VALUES ('Tandem Bicycle', 'Tandem Bicycle', 30, 'Tandem Bicycle, 2, sunset', 1, -122.4091105, 37.783742);
 
 
 -- INSERT into bookings table
