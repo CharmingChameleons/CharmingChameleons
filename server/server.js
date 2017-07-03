@@ -5,22 +5,22 @@ var db = require('../database');
 var session = require('./models/session');
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
+
 var multer  = require('multer')
 var mkdirp = require('mkdirp');
 
 // saving the pictures in the folder
-var storage = multer.diskStorage({
-	destination: function(req, file, callback) {
-		var path = './client/public/images/listings/temp';
-		mkdirp(path, function(err) { 
-	   		callback(null, path)
-		});
-	},
-	filename: function(req, file, callback) {
-		callback(null, 1+ path.extname(file.originalname))
-	}
-})
-
+// var storage = multer.diskStorage({
+// 	destination: function(req, file, callback) {
+// 		var path = './client/public/images/listings/temp';
+// 		mkdirp(path, function(err) { 
+// 	   		callback(null, path)
+// 		});
+// 	},
+// 	filename: function(req, file, callback) {
+// 		callback(null, 1+ path.extname(file.originalname))
+// 	}
+// })
 
 var app = express();
 var util = require('./lib/hashUtils');
@@ -236,7 +236,6 @@ app.get('/search', (req, res) => {
 		res.end(JSON.stringify(data));
 	})
 })
-
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);
