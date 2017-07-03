@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 //import Facebook from 'react-facebook-login';
  
 class FacebookLogin extends React.Component {

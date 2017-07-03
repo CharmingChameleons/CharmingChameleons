@@ -7,8 +7,6 @@ import Booking from './Booking.jsx'
 import CreateListing from './CreateListings.jsx'
 import Profile from './Profile.jsx'
 const $ = require('jquery');
-import Search from './Search.jsx'
-
 
 class App extends React.Component {
 	constructor (props) {
@@ -20,43 +18,43 @@ class App extends React.Component {
     	listing: {},
     	login: localStorage.getItem('loggedin') || false,
       currentUser: {
-        id: parseInt(localStorage.getItem('id')) || null,
-        username: localStorage.getItem('username') || null,
+        id: parseInt(localStorage.getItem('id')) || 0,
+        username: localStorage.getItem('username') || '',
       },
       promptLoginModal: false
     };
 
-    this.loginUser = this.loginUser.bind(this)
-    this.logoutUser = this.logoutUser.bind(this)
-    this.resetLoginModal = this.resetLoginModal.bind(this)
-    this.setPromptLoginModal = this.setPromptLoginModal.bind(this)
+    this.loginUser = this.loginUser.bind(this);
+    this.logoutUser = this.logoutUser.bind(this);
+    this.resetLoginModal = this.resetLoginModal.bind(this);
+    this.setPromptLoginModal = this.setPromptLoginModal.bind(this);
 	}
 
 	loginUser(user) {
-    console.log('reached loginUser')
+    console.log('reached loginUser');
     this.setState({
       login: true,
       currentUser: {
         id: parseInt(user.id),
         username: user.username,
       }
-    })
+    });
 
-    localStorage.setItem('id', user.id)
-    localStorage.setItem('username', user.username)
-    localStorage.setItem('loggedin', true)
+    localStorage.setItem('id', user.id);
+    localStorage.setItem('username', user.username);
+    localStorage.setItem('loggedin', true);
     console.log('login, currentUser', this.state.login, this.state.currentUser);
   }
 
   logoutUser() {
-    console.log('reached logout')
+    console.log('reached logout');
     this.setState({
       login: false,
       currentUser: {
         id: 0,
         username: ''
       }
-    })
+    });
 
     localStorage.clear();
   }
@@ -69,7 +67,7 @@ class App extends React.Component {
         id: 0,
         username: ''
       }
-    })
+    });
 
     localStorage.clear();
   }
@@ -77,27 +75,25 @@ class App extends React.Component {
   resetLoginModal() {
     this.setState({
       promptLoginModal: false
-    })
+    });
   }
 
   setPromptLoginModal() {
     this.setState({
       promptLoginModal: true
-    })
+    });
   }
 
   currentRender() {
     var render = this.state.currentRender;
     if (render === 'landing') {
-      return( 
-      <div>
-        <Search handleSearchRender={this.handleSearchRender.bind(this)}/>
-        <Listings 
-          onListingClick={this.handleSelectListing.bind(this)} 
-          onBookingClick={this.handleBookingClick.bind(this)}
-          listings={this.state.listings}
-        />;
-      </div>)
+      return <Listings 
+        handleSearchRender={this.handleSearchRender.bind(this)}
+        onListingClick={this.handleSelectListing.bind(this)} 
+        onBookingClick={this.handleBookingClick.bind(this)}
+        listings={this.state.listings}
+        currentUserId={this.state.currentUser.id}
+      />;
     } else if (render === 'selectedListing') {
       return <SelectedListing
         onBackClick={this.handleBackClick.bind(this)}
@@ -132,34 +128,35 @@ class App extends React.Component {
   handleCreateListing() {
     this.setState({
       currentRender: 'createlisting'
-    })
+    });
   }
 
   handleSelectProfile() {
     console.log('GO to Profile')
     this.setState({
       currentRender: 'profile'
-    })
+    });
   }
 
-
   handleBackClick() {
+    this.renderListings();
     this.setState({
       currentRender: 'landing'
-    })
+    });
   }
 
   handleLogoClick() {
+    this.renderListings();
     this.setState({
       currentRender: 'landing'
-    })
+    });
   }
 
   handleBookingClick(listing) {
     this.setState({
       listing: listing,
       currentRender: 'booking'
-    })
+    });
   }
 
   handleConfirmBooking(listing) {
@@ -172,27 +169,18 @@ class App extends React.Component {
         data: { booking: data },
         success: (data) => {
           alert('Your item was booked! Please contact your vendor to arrange a pickup/delivery');
-          $.ajax({
-            type: 'GET',
-            url: '/listings',
-            success: (data) => {
-              this.setState({
-                listings: JSON.parse(data)
-              })
-            },
-            error: (err) => {
-              console.log('failed', err);
-            }
-          });
+          this.renderListings();
+          this.setState({
+            currentRender: 'profile'
+          })
         },
         error: (err) => {
           console.log('failed booking', err);
         }
       })
     } else {
-        this.setPromptLoginModal()
+        this.setPromptLoginModal();
     }
-
   }
 
   handleSearchRender(data){
@@ -202,9 +190,8 @@ class App extends React.Component {
       console.log('state change',this.state.listing);
     })
   }
-  
 
-  componentDidMount() {
+  renderListings() {
     $.ajax({
       type: 'GET',
       url: '/listings',
@@ -216,31 +203,31 @@ class App extends React.Component {
       error: (err) => {
         console.log('failed', err);
       }
-
     });
+  }
+
+  componentDidMount() {
+    this.renderListings();
   }
 
 	render () {
 		return (
-			  <div>
-			    <NavB
-            login={this.state.login}
-            loginUser={this.loginUser}
-            logoutUser={this.logoutUser}
-            promptLoginModal={this.state.promptLoginModal}
-            resetLoginModal={this.resetLoginModal}
-            onLogoClick={this.handleLogoClick.bind(this)}
-            onCreateClick={this.handleCreateListing.bind(this)}
-            handleSelectProfile={this.handleSelectProfile.bind(this)}
-            currentUsername={this.state.currentUser.username}
-
-          />
-			    {this.currentRender()}
-
-			  </div>
+		  <div>
+		    <NavB
+          login={this.state.login}
+          loginUser={this.loginUser}
+          logoutUser={this.logoutUser}
+          promptLoginModal={this.state.promptLoginModal}
+          resetLoginModal={this.resetLoginModal}
+          onLogoClick={this.handleLogoClick.bind(this)}
+          onCreateClick={this.handleCreateListing.bind(this)}
+          handleSelectProfile={this.handleSelectProfile.bind(this)}
+          currentUsername={this.state.currentUser.username}
+        />
+		    {this.currentRender()}
+		  </div>
 		)
 	}
-
 }
 
-export default App
+export default App;
