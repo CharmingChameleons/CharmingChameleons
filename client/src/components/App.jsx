@@ -4,11 +4,10 @@ import Listings from './Listings.jsx'
 import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
 import Booking from './Booking.jsx'
-import CreateListing from './createListing.jsx'
+import CreateListing from './CreateListings.jsx'
 import Profile from './Profile.jsx'
-
 const $ = require('jquery');
-
+import Search from './Search.jsx'
 
 
 class App extends React.Component {
@@ -19,31 +18,61 @@ class App extends React.Component {
     	currentRender: 'landing',
     	listings: [],
     	listing: {},
-    	login: false,
-      // dummydata
+    	login: localStorage.getItem('loggedin') || false,
       currentUser: {
-        id: 3,
-        username: 'Shihao',
+        id: parseInt(localStorage.getItem('id')) || null,
+        username: localStorage.getItem('username') || null,
       },
       promptLoginModal: false
     };
 
     this.loginUser = this.loginUser.bind(this)
+    this.logoutUser = this.logoutUser.bind(this)
     this.resetLoginModal = this.resetLoginModal.bind(this)
     this.setPromptLoginModal = this.setPromptLoginModal.bind(this)
 	}
 
 	loginUser(user) {
-		console.log('reached loginUser')
-		this.setState({
-			login: true,
+    console.log('reached loginUser')
+    this.setState({
+      login: true,
       currentUser: {
-        id: user.id,
-        username: user.username
+        id: parseInt(user.id),
+        username: user.username,
       }
-		})
+    })
+
+    localStorage.setItem('id', user.id)
+    localStorage.setItem('username', user.username)
+    localStorage.setItem('loggedin', true)
     console.log('login, currentUser', this.state.login, this.state.currentUser);
-	}
+  }
+
+  logoutUser() {
+    console.log('reached logout')
+    this.setState({
+      login: false,
+      currentUser: {
+        id: 0,
+        username: ''
+      }
+    })
+
+    localStorage.clear();
+  }
+
+  logoutUser() {
+    console.log('reached logout')
+    this.setState({
+      login: false,
+      currentUser: {
+        id: 0,
+        username: ''
+      }
+    })
+
+    localStorage.clear();
+  }
 
   resetLoginModal() {
     this.setState({
@@ -60,12 +89,15 @@ class App extends React.Component {
   currentRender() {
     var render = this.state.currentRender;
     if (render === 'landing') {
-      return <Listings
-        onListingClick={this.handleSelectListing.bind(this)}
-        onBookingClick={this.handleBookingClick.bind(this)}
-        listings={this.state.listings}
-        currentUserId={this.state.currentUser.id}
-      />;
+      return( 
+      <div>
+        <Search handleSearchRender={this.handleSearchRender.bind(this)}/>
+        <Listings 
+          onListingClick={this.handleSelectListing.bind(this)} 
+          onBookingClick={this.handleBookingClick.bind(this)}
+          listings={this.state.listings}
+        />;
+      </div>)
     } else if (render === 'selectedListing') {
       return <SelectedListing
         onBackClick={this.handleBackClick.bind(this)}
@@ -86,14 +118,12 @@ class App extends React.Component {
       return <Profile
         onBackClick={this.handleBackClick.bind(this)}
         currentUserId={this.state.currentUser.id}
-
       />;
     }
 
   }
 
   handleSelectListing(listing) {
-    console.log('button clicked!', listing);
     this.setState({
       listing: listing,
       currentRender: 'selectedListing'
@@ -120,7 +150,6 @@ class App extends React.Component {
   }
 
   handleLogoClick() {
-    console.log('boom boom');
     this.setState({
       currentRender: 'landing'
     })
@@ -143,8 +172,18 @@ class App extends React.Component {
         data: { booking: data },
         success: (data) => {
           alert('Your item was booked! Please contact your vendor to arrange a pickup/delivery');
-          console.log('data', data);
-          // create button with state
+          $.ajax({
+            type: 'GET',
+            url: '/listings',
+            success: (data) => {
+              this.setState({
+                listings: JSON.parse(data)
+              })
+            },
+            error: (err) => {
+              console.log('failed', err);
+            }
+          });
         },
         error: (err) => {
           console.log('failed booking', err);
@@ -156,7 +195,14 @@ class App extends React.Component {
 
   }
 
-
+  handleSearchRender(data){
+    this.setState({
+      listings: data
+    }, ()=> {
+      console.log('state change',this.state.listing);
+    })
+  }
+  
 
   componentDidMount() {
     $.ajax({
@@ -180,11 +226,14 @@ class App extends React.Component {
 			    <NavB
             login={this.state.login}
             loginUser={this.loginUser}
+            logoutUser={this.logoutUser}
             promptLoginModal={this.state.promptLoginModal}
             resetLoginModal={this.resetLoginModal}
             onLogoClick={this.handleLogoClick.bind(this)}
             onCreateClick={this.handleCreateListing.bind(this)}
             handleSelectProfile={this.handleSelectProfile.bind(this)}
+            currentUsername={this.state.currentUser.username}
+
           />
 			    {this.currentRender()}
 
