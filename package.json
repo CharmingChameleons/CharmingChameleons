@@ -5,7 +5,8 @@
   "author": "",
   "license": "",
   "engines": {
-    "node": "7.10.0"
+    "node": "7.10.0",
+    "npm": "6.3.0"
   },
   "scripts": {
     "start": "node server/server.js",
