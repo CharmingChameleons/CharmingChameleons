@@ -297,5 +297,22 @@ module.exports = {
       }
     )
   },
+  createListingReview: (params) => {
+    var queryString = 'INSERT INTO reviews (LISTINGID, BORROWERID, REVIEW, STARS) VALUES ($1, $2, $3, $4) returning id'
+    var queryArgs = params
 
+    return new Promise (
+      (resolve, reject) => {
+        pool.query(queryString, queryArgs, (err, rows) => {
+          if (err) {
+            reject (err)
+            console.log(err);
+          } else {
+            console.log('added this review to DB');
+            resolve(JSON.parse(JSON.stringify(rows.rows)))
+          }
+        })
+      }
+    )
+  }
 }

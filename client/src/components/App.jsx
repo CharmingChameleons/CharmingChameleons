@@ -6,6 +6,7 @@ import Signup from './Signup.jsx'
 import Booking from './Booking.jsx'
 import CreateListing from './CreateListings.jsx'
 import Profile from './Profile.jsx'
+import CreateReview from './CreateReview.jsx'
 const $ = require('jquery');
 
 class App extends React.Component {
@@ -99,7 +100,6 @@ class App extends React.Component {
         onBackClick={this.handleBackClick.bind(this)}
         onBookingClick={this.handleBookingClick.bind(this)}
         listing={this.state.listing}
-        currentUserId={this.state.currentUser.id}
       />;
     } else if (render === 'booking') {
       return <Booking
@@ -115,6 +115,14 @@ class App extends React.Component {
       return <Profile
         onBackClick={this.handleBackClick.bind(this)}
         currentUserId={this.state.currentUser.id}
+        handleCreateReview={this.handleCreateReview.bind(this)}
+
+      />;
+  } else if(render === 'createReview'){
+      return <CreateReview
+        onBackClick={this.handleBackClick.bind(this)}
+        currentUserId={this.state.currentUser.id}
+        listingId={this.state.listing.id}
       />;
     }
 
@@ -157,6 +165,12 @@ class App extends React.Component {
     this.setState({
       listing: listing,
       currentRender: 'booking'
+    });
+  }
+
+  handleCreateReview(){
+    this.setState({
+      currentRender: 'createReview'
     });
   }
 

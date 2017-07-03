@@ -10,7 +10,7 @@ const Listings = (props) => (
     <Grid>
     <Search
       handleSearchRender={props.handleSearchRender}
-    /> 
+    />
 
     <h3>Listings </h3>
         <Row>
@@ -21,6 +21,8 @@ const Listings = (props) => (
             onListingClick={props.onListingClick}
             onBookingClick={props.onBookingClick}
             currentUserId={props.currentUserId}
+            handleCreateReview={props.handleCreateReview}
+
           />
         )}
         </Row>
