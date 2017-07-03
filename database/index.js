@@ -66,8 +66,8 @@ module.exports = {
   },
 
   createListing: (params) => {
-    var queryString = 'INSERT INTO listings (name, description, cost, tags, lenderId) VALUES ($1, $2, $3, $4, $5) returning id'
-    var queryArgs = params
+    var queryString = 'INSERT INTO listings (name, description, cost, tags, lenderId, longitude, latitude) VALUES ($1, $2, $3, $4, $5, $6, $7) returning id';
+    var queryArgs = params;
 
     return new Promise (
       (resolve, reject) => {

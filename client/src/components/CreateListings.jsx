@@ -20,14 +20,17 @@ class CreateListing extends React.Component {
 
     this.showPosition = this.showPosition.bind(this);
     this.getGeoLocation = this.getGeoLocation.bind(this);
+
+    console.log(this.state.latitude);
+    console.log(this.state.longitude);
   }
 
   showPosition(position) {
     console.log('lat', position.coords.latitude, 'long', position.coords.longitude)
-    this.setState = {
+    this.setState({
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
-    };
+    });
   }
 
   getGeoLocation() {
@@ -64,6 +67,8 @@ class CreateListing extends React.Component {
           <input type='file' name='listingImage' /> <br/>
           <input type='submit' value='Submit!' /> <br/>
           <input type='hidden' name='id' value={this.props.currentUserId} />
+          <input type='hidden' name='latitude' value={this.state.latitude} />
+          <input type='hidden' name='longitude' value={this.state.longitude} />
         </form>
       </Grid>
     )
