@@ -6,16 +6,45 @@ var session = require('./models/session');
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
 
+
+// var multer  = require('multer')
+// var mkdirp = require('mkdirp');
+
+// saving the pictures in the folder
+// var storage = multer.diskStorage({
+// 	destination: function(req, file, callback) {
+// 		var path = './client/public/images/listings/temp';
+// 		mkdirp(path, function(err) { 
+// 	   		callback(null, path)
+// 		});
+// 	},
+// 	filename: function(req, file, callback) {
+// 		callback(null, 1+ path.extname(file.originalname))
+// 	}
+// })
+// var dirNum = 0; 
+// var storage = multer.diskStorage({
+// 	destination: function(req, file, callback) {
+// 			var path = './client/public/images/listings/'+(++dirNum);
+// 			mkdirp(path, function(err) { 
+// 	   	callback(null, path)
+// 		});
+// 	},
+// 	filename: function(req, file, callback) {
+// 		callback(null, 1+ path.extname(file.originalname))
+// 	}
+// })
+
 var app = express();
 var util = require('./lib/hashUtils');
 var middleware = require('./middleware');
-
-
 var cors = require('cors');
 
 const expressSession = require('express-session')
 const passport = require('passport');
-const config = require('./config/passport');
+const config = require('./config/passport'); 
+const LocalStrategy = require('passport-local').Strategy
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 
@@ -194,7 +223,32 @@ app.delete('/deletebooking',
       console.log('booking deleted');
       res.end(JSON.stringify(data));
     });
-});
+//works with multer
+// app.post('/createlisting', (req, res) => {
+// 	var upload = multer({
+// 		storage: storage
+// 	}).single('image')
+// 	upload(req, res, function(err) {
+// 		db.createListing(req.body.params.split(','))
+//     	.then((data) => {
+//     		console.log(data[0].id);
+//     	fs.rename('./client/public/images/listings/temp', './client/public/images/listings/'+data[0].id, function (err) {
+// 		  if (err) throw err;
+// 		  console.log('renamed complete');
+// 		});
+//       	res.end(JSON.stringify(data));
+//     	});
+// 	})
+ });
+
+app.get('/search', (req, res) => {
+	console.log('this query',req.query.param);
+	db.searchListings(req.query.param)
+	.then ((data) => {
+		console.log('searched the database');
+		res.end(JSON.stringify(data));
+	})
+})
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);

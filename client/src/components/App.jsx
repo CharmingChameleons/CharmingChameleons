@@ -4,9 +4,11 @@ import Listings from './Listings.jsx'
 import SelectedListing from './SelectedListing.jsx'
 import Signup from './Signup.jsx'
 import Booking from './Booking.jsx'
-import CreateListing from './CreateListing.jsx'
+import CreateListing from './CreateListings.jsx'
 import Profile from './Profile.jsx'
 const $ = require('jquery');
+import Search from './Search.jsx'
+
 
 class App extends React.Component {
 	constructor (props) {
@@ -87,12 +89,15 @@ class App extends React.Component {
   currentRender() {
     var render = this.state.currentRender;
     if (render === 'landing') {
-      return <Listings
-        onListingClick={this.handleSelectListing.bind(this)}
-        onBookingClick={this.handleBookingClick.bind(this)}
-        listings={this.state.listings}
-        currentUserId={this.state.currentUser.id}
-      />;
+      return( 
+      <div>
+        <Search handleSearchRender={this.handleSearchRender.bind(this)}/>
+        <Listings 
+          onListingClick={this.handleSelectListing.bind(this)} 
+          onBookingClick={this.handleBookingClick.bind(this)}
+          listings={this.state.listings}
+        />;
+      </div>)
     } else if (render === 'selectedListing') {
       return <SelectedListing
         onBackClick={this.handleBackClick.bind(this)}
@@ -189,6 +194,15 @@ class App extends React.Component {
     }
 
   }
+
+  handleSearchRender(data){
+    this.setState({
+      listings: data
+    }, ()=> {
+      console.log('state change',this.state.listing);
+    })
+  }
+  
 
   componentDidMount() {
     $.ajax({
