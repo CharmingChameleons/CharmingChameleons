@@ -3,11 +3,13 @@ import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row'
 import Button from 'react-bootstrap/lib/Button'
 import Panel from 'react-bootstrap/lib/Panel'
+import ReviewsView from './ReviewsView.jsx'
+
 
 const SelectedListing = (props) => (
   <div>
     <Grid>
-    <Button onClick={ function() {props.onBackClick()} } bsStyle="primary">Back</Button> 
+    <Button onClick={ function() {props.onBackClick()} } bsStyle="primary">Back</Button>
     <br/>
     <br/>
     <Panel bsStyle="primary">
@@ -16,7 +18,7 @@ const SelectedListing = (props) => (
     <br/>
     <br/>
         <img className='listing' src={'./images/listings/' + props.listing.id + '/1.jpg'} alt="242x200"/> <br/>
-        <br/> 
+        <br/>
         <Panel header={props.listing.name} bsStyle="primary">
           <Panel header='Details' bsStyle="info">
             {props.listing.description}
@@ -32,6 +34,7 @@ const SelectedListing = (props) => (
           <Button onClick={ function() {props.onBookingClick(props.listing)} } bsStyle="primary">Book</Button>&nbsp;
         </p>
     </Grid>
+    <ReviewsView listingId={props.listing.id}/>
   </div>
 )
 
