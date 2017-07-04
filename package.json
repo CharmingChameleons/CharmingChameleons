@@ -5,7 +5,8 @@
   "author": "",
   "license": "",
   "engines": {
-    "node": "7.10.0"
+    "node": "7.10.0",
+    "npm": "6.3.0"
   },
   "scripts": {
     "start": "node server/server.js",
@@ -40,6 +41,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-dropzone": "^3.13.3",
+    "react-google-maps": "^6.3.0",
     "sqlite3": "^3.1.8",
     "superagent": "^3.5.2",
     "validate-npm-package-license": "^3.0.1",

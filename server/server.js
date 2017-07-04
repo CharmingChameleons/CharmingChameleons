@@ -189,7 +189,9 @@ app.post('/createlisting',
 		req.body.description,
 		req.body.cost,
 		req.body.tags,
-		req.body.id
+		req.body.id,
+    req.body.longitude,
+    req.body.latitude
 	];
 
 	db.createListing(params)

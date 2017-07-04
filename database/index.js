@@ -4,10 +4,10 @@ const url = require('url');
 
 
 let config = {
-  user: "henri", // name of the user account
+  user: "postgres", // name of the user account
   host: "localhost",
   password: "test",
-  database: "henri",
+  database: "shareio",
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
 };
@@ -51,7 +51,7 @@ module.exports = {
   getAvailableListings: () => {
     return new Promise (
       (resolve, reject) => {
-        pool.query('SELECT listings.id, listings.name, listings.description, listings.cost,listings.tags, listings.lenderid, users.username \
+        pool.query('SELECT listings.id, listings.name, listings.description, listings.cost,listings.tags, listings.lenderid, users.username, listings.latitude, listings.longitude \
                       FROM listings  \
                       INNER JOIN users on users.id = listings.lenderid \
                       WHERE listings.id NOT IN (SELECT listingid FROM bookings)', function (err, result) {
@@ -66,8 +66,8 @@ module.exports = {
   },
 
   createListing: (params) => {
-    var queryString = 'INSERT INTO listings (name, description, cost, tags, lenderId) VALUES ($1, $2, $3, $4, $5) returning id'
-    var queryArgs = params
+    var queryString = 'INSERT INTO listings (name, description, cost, tags, lenderId, longitude, latitude) VALUES ($1, $2, $3, $4, $5, $6, $7) returning id';
+    var queryArgs = params;
 
     return new Promise (
       (resolve, reject) => {
