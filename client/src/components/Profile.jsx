@@ -53,6 +53,7 @@ class Profile extends React.Component {
               listing={listing}
               currentUserId={this.props.currentUserId}
               reRender={this.componentDidMount.bind(this)}
+              handleCreateReview={this.props.handleCreateReview}
             />
           )}
         </Row>

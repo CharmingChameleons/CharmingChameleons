@@ -261,6 +261,28 @@ app.get('/listingreview', (req, res) => {
 });
 
 
+app.post('/listingreview',
+(req, res) => {
+	if (JSON.stringify(req.body) === '{}') {
+		return res.status(400).send('No/inputs were uploaded.');
+	}
+
+	var params = [
+    req.body.listingId,
+    req.body.userId,
+		req.body.review,
+		req.body.stars,
+	];
+
+	db.createListingReview(params)
+  .then ((data) => {
+		console.log('created review');
+		res.status(201).redirect('/');
+	});
+});
+
+
+
 
 app.listen(port, function(req, res) {
   console.log('App running on port ' + port);
