@@ -5,6 +5,7 @@ var db = require('../database');
 var session = require('./models/session');
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
+var Busboy = require('busboy');
 
 
 // var multer  = require('multer')
@@ -166,6 +167,20 @@ app.get('/borrowerlistings', (req, res) => {
     });
 });
 
+app.get('/getNumberOfFiles', (req, res) => {
+  console.log('request received /getNumberOfFiles for', req.query.params);
+  var dirname = './client/public' + req.query.params.slice(1) 
+  console.log(dirname)
+  fs.readdir(dirname, (err, data) => {
+    if (err) {
+      res.status(200).send('Image not found');
+    } else {
+      console.log('Number of images', data.length)
+      res.status(200).send(JSON.stringify(data.length));
+    }
+  })
+});
+
 app.delete('/deletelisting', (req, res) => {
   console.log('request received deletelisting');
   var params = [req.body.params];
@@ -180,39 +195,51 @@ app.delete('/deletelisting', (req, res) => {
 
 app.post('/createlisting',
 (req, res) => {
-	if (JSON.stringify(req.body) === '{}') {
-		return res.status(400).send('No files/inputs were uploaded.');
-	}
+  if (JSON.stringify(req.body) === '{}') {
+    return res.status(400).send('No files/inputs were uploaded.');
+  }
 
-	var params = [
-		req.body.name,
-		req.body.description,
-		req.body.cost,
-		req.body.tags,
-		req.body.id
-	];
+  var params = [
+    req.body.name, 
+    req.body.description, 
+    req.body.cost, 
+    req.body.tags,
+    req.body.id
+  ];
 
-	db.createListing(params)
-		.then(data => {
-			let imageFile = req.files.listingImage;
+  db.createListing(params)
+    .then(data => {
 
-			if (imageFile === undefined) {
-				res.status(201).redirect('/');
-			} else {
-				if (!fs.existsSync('./client/public/images/listings/' + data[0].id)) {
-					fs.mkdir('./client/public/images/listings/' + data[0].id);
-				}
+      let imageFile = req.files.listingImage;
 
-				imageFile.mv('./client/public/images/listings/' + data[0].id + '/1.jpg', function(err) {
-					if (err) {
-						res.status(500).send(err);
-					} else {
-						res.status(201).redirect('/');
-					}
-				});
-			}
-		});
+      if (imageFile === undefined) {
+        res.status(201).redirect('/');
+      } else {
+        if (!fs.existsSync('./client/public/images/listings/' + data[0].id)) {
+          fs.mkdir('./client/public/images/listings/' + data[0].id);
+        }
+        console.log('imageFile1.length', imageFile.length)
+        if (imageFile.length === undefined) {
+          imageFile.mv('./client/public/images/listings/' + data[0].id + '/1.jpg', function(err) {
+            if (err) {
+              res.status(500).send(err);
+            } 
+          });
+        } else {
+          for (var i = 0; i < imageFile.length; i++) {
+            imageFile[i].mv('./client/public/images/listings/' + data[0].id + '/' + (i + 1) + '.jpg', function(err) {
+              if (err) {
+                res.status(500).send(err);
+              } 
+            });
+          }
+        }
+        res.status(201).redirect('/');
+      }
+
+    });
 });
+
 
 app.delete('/deletebooking',
 (req, res) => {
